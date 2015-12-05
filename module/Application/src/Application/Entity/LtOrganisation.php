@@ -5,13 +5,22 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * LtOrganistation
+ * LtOrganisation
  *
- * @ORM\Table(name="lt_organistation")
+ * @ORM\Table(name="lt_organisation")
  * @ORM\Entity
  */
-class LtOrganistation
+class LtOrganisation
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="organisationId", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $organisationid;
+
     /**
      * @var string
      *
@@ -22,7 +31,7 @@ class LtOrganistation
     /**
      * @var string
      *
-     * @ORM\Column(name="contactPersonEmail", type="string", length=150, nullable=false)
+     * @ORM\Column(name="contactPersonEmail", type="string", length=300, nullable=false)
      */
     private $contactpersonemail;
 
@@ -43,52 +52,28 @@ class LtOrganistation
     /**
      * @var string
      *
-     * @ORM\Column(name="organisationWebsite", type="string", length=150, nullable=true)
+     * @ORM\Column(name="organisationWebsite", type="string", length=250, nullable=true)
      */
     private $organisationwebsite;
 
-    /**
-     * @var \Application\Entity\LtUser
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="organistationId", referencedColumnName="userId")
-     * })
-     */
-    private $organistationid;
+
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * Get organisationid
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtEvent", inversedBy="organisationid")
-     * @ORM\JoinTable(name="lt_organisation_creates_event",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="organisationId", referencedColumnName="organistationId")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="eventId", referencedColumnName="eventId")
-     *   }
-     * )
+     * @return integer
      */
-    private $eventid;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
+    public function getOrganisationid()
     {
-        $this->eventid = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->organisationid;
     }
-
 
     /**
      * Set contactpersonname
      *
      * @param string $contactpersonname
      *
-     * @return LtOrganistation
+     * @return LtOrganisation
      */
     public function setContactpersonname($contactpersonname)
     {
@@ -112,7 +97,7 @@ class LtOrganistation
      *
      * @param string $contactpersonemail
      *
-     * @return LtOrganistation
+     * @return LtOrganisation
      */
     public function setContactpersonemail($contactpersonemail)
     {
@@ -136,7 +121,7 @@ class LtOrganistation
      *
      * @param string $contactpersonphone
      *
-     * @return LtOrganistation
+     * @return LtOrganisation
      */
     public function setContactpersonphone($contactpersonphone)
     {
@@ -160,7 +145,7 @@ class LtOrganistation
      *
      * @param string $organisationdescription
      *
-     * @return LtOrganistation
+     * @return LtOrganisation
      */
     public function setOrganisationdescription($organisationdescription)
     {
@@ -184,7 +169,7 @@ class LtOrganistation
      *
      * @param string $organisationwebsite
      *
-     * @return LtOrganistation
+     * @return LtOrganisation
      */
     public function setOrganisationwebsite($organisationwebsite)
     {
@@ -201,63 +186,5 @@ class LtOrganistation
     public function getOrganisationwebsite()
     {
         return $this->organisationwebsite;
-    }
-
-    /**
-     * Set organistationid
-     *
-     * @param \Application\Entity\LtUser $organistationid
-     *
-     * @return LtOrganistation
-     */
-    public function setOrganistationid(\Application\Entity\LtUser $organistationid)
-    {
-        $this->organistationid = $organistationid;
-
-        return $this;
-    }
-
-    /**
-     * Get organistationid
-     *
-     * @return \Application\Entity\LtUser
-     */
-    public function getOrganistationid()
-    {
-        return $this->organistationid;
-    }
-
-    /**
-     * Add eventid
-     *
-     * @param \Application\Entity\LtEvent $eventid
-     *
-     * @return LtOrganistation
-     */
-    public function addEventid(\Application\Entity\LtEvent $eventid)
-    {
-        $this->eventid[] = $eventid;
-
-        return $this;
-    }
-
-    /**
-     * Remove eventid
-     *
-     * @param \Application\Entity\LtEvent $eventid
-     */
-    public function removeEventid(\Application\Entity\LtEvent $eventid)
-    {
-        $this->eventid->removeElement($eventid);
-    }
-
-    /**
-     * Get eventid
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEventid()
-    {
-        return $this->eventid;
     }
 }

@@ -44,21 +44,6 @@ class LtVolunteer
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtEvent", inversedBy="volunteercreateid")
-     * @ORM\JoinTable(name="lt_volunteer_creates_event",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="volunteerCreateId", referencedColumnName="volunteerId")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="eventCreateId", referencedColumnName="eventId")
-     *   }
-     * )
-     */
-    private $eventcreateid;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Application\Entity\LtLanguage", inversedBy="volunteerid")
      * @ORM\JoinTable(name="lt_volunteer_knows_languages",
      *   joinColumns={
@@ -83,7 +68,6 @@ class LtVolunteer
      */
     public function __construct()
     {
-        $this->eventcreateid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->langcode = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventid = new \Doctrine\Common\Collections\ArrayCollection();
     }

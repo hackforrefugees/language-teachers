@@ -13,6 +13,11 @@ return array(
             'allow' => array(
                 'Application\Controller\Index' => array(
                     'index' => 'anonymous',
+                ),
+                'User\Controller\Index' => array(
+                    'index' => 'anonymous',
+                    'login' => 'anonymous',
+                    'logout' => 'student',
                 )
             )
         )

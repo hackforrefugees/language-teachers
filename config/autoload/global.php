@@ -14,7 +14,7 @@
 return array(
     'db' => array(
         'driver' => 'Pdo',
-        'dsn' => 'mysql:dbname=languageteacher;host=localhost',
+        'dsn' => 'mysql:dbname=languageteachers;host=localhost',
         'username' => 'languageteacher',
         'password' => 'hackforrefugees',
         'driver_options' => array(
