@@ -27,13 +27,14 @@
 //            $location.url('/');
 //        };
 
-        $rootScope.appUrl = "http://localhost";
+        $rootScope.appUrl = "http://language.teacher.se";
 
     });
 
     as.controller('AlbumListCtrl', function($scope, $rootScope, $http, $location) {
         var load = function() {
             console.log('call load()...');
+            console.log($rootScope.appUrl + '/albums');
             $http.get($rootScope.appUrl + '/albums')
                     .success(function(data, status, headers, config) {
                         $scope.albums = data.data;
@@ -74,6 +75,7 @@
             $http.post($rootScope.appUrl + '/albums', $scope.album)
                     .success(function(data, status, headers, config) {
                         console.log('success...');
+                        console.log($location.path('/albums'));
                         $location.path('/albums');
                     })
                     .error(function(data, status, headers, config) {
@@ -121,6 +123,38 @@
         };
 
         load();  
+    });
+
+    as.controller('LoginCtrl', function($routeParams, $location){
+        var vm = this;
+        vm.username = undefined;
+        vm.password = undefined;
+        vm.login = login();
+
+
+        /////////////////////////////////////////////////////////////
+
+        function login(username, password){
+
+        }
+
+
+    });
+
+    as.controller('RegisterCtrl', function(){
+        var vm = this;
+        vm.username = undefined;
+        vm.password = undefined;
+        vm.type = undefined;
+        vm.selectType = selectType(type);
+
+        ///////////////////////////////////////////////////////////
+
+        function selectType(type){
+            vm.type = type;
+            vm.loadType(type);
+        }
+
     });
 
 }());

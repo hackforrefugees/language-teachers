@@ -11,7 +11,8 @@
 
     as.config(function($routeProvider, $httpProvider) {
         $routeProvider
-                .when('/albums', {templateUrl: 'partials/albums.html', controller: 'AlbumListCtrl'})
+                .when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'})
+                .when('/register', {templateUrl: 'partials/register.html', controller: 'RegisterCtrl'})
                 .when('/new', {templateUrl: 'partials/new.html', controller: 'NewAlbumCtrl'})
                 .when('/edit/:id', {templateUrl: 'partials/edit.html', controller: 'EditAlbumCtrl'})
                 .when('/album/:id', {templateUrl: 'partials/album.html', controller: 'AlbumCtrl'})

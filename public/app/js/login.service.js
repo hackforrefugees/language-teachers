@@ -1,3 +1,5 @@
-/**
- * Created by Mathmose on 2015-12-05.
- */
+(function () {
+    var as = angular.module('myApp.services');
+
+
+})

@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div ng-controller="RegisterCtrl">
 
-</body>
-</html>
+    <div class="form-group">
+        <label for="inputEmail">Email address</label>
+        <input ng-model="email" type="text" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input ng-model="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+
+    <div class="form-group">
+        <label for="inputPassword">Dropdown</label>
+        <input ng-model="dropdown" type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+
+    <button ng-click="register()" class="btn btn-success">Register</button>
+
+    <button class="btn">Register</button>
+
+</div>
