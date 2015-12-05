@@ -1,5 +1,4 @@
 <?php
-
 namespace User\Form;
 
 /**
@@ -14,16 +13,15 @@ use Zend\Form\Form;
  */
 class RegisterForm extends Form
 {
-
     /**
-     * Constructor which adds the Form Elements
-     * @param string $name
+     * Constructor
+     * @param null $name
      */
     public function __construct($name = null)
     {
-        parent::__construct('Register');
-
+        parent::__construct('Login');
         $this->setAttribute("method", "post");
+        $this->setAttribute("id", "loginForm");
         $this->setAttribute("enctype", "multipart/form-data");
 
         $this->add(array(
@@ -38,24 +36,78 @@ class RegisterForm extends Form
             'options' => array(
                 'label' => 'Email',
                 'label_attributes' => array(
-                    'class' => 'control-label'
+                    'class' => 'col-md-12 control-label'
                 )
             )
         ));
 
         $this->add(array(
-            'name' => 'passwordRegister',
-            'type' => '\Zend\Form\Element\Password',
+            'name' => 'userType',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => 'required',
+                'class' => 'form-control',
+            ),
+            'options' => array(
+                'label' => 'Register as:',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                ),
+                'empty_option' => '-- Please select --',
+                'value_options' => array(
+                    'student' => 'Student',
+                    'volunteer' => 'Volunteer',
+                    'organisation' => 'Organisation',
+                ),
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'contactName',
+            'type' => '\Zend\Form\Element\Text',
             'attributes' => array(
                 'class' => 'form-control',
-                'id' => 'passwordRegister',
-                'placeholder' => 'Password',
+                'id' => 'contactName',
+                'placeholder' => 'Name',
                 'required' => 'required'
+            ),
+            'options' => array(
+                'label' => 'Name',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'phone',
+            'type' => '\Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'phone',
+                'placeholder' => 'Phone',
+            ),
+            'options' => array(
+                'label' => 'Phone',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'password',
+            'type' => '\Zend\Form\Element\Password',
+            'attributes' => array(
+                'id' => 'password',
+                'class' => 'form-control',
+                'required' => 'required',
+                'placeholder' => 'Password',
             ),
             'options' => array(
                 'label' => 'Password',
                 'label_attributes' => array(
-                    'class' => 'control-label'
+                    'class' => 'col-md-12 control-label'
                 )
             )
         ));
@@ -64,382 +116,34 @@ class RegisterForm extends Form
             'name' => 'confirmPassword',
             'type' => '\Zend\Form\Element\Password',
             'attributes' => array(
-                'class' => 'form-control',
                 'id' => 'confirmPassword',
-                'placeholder' => 'Repeat password',
-                'required' => 'required'
+                'class' => 'form-control',
+                'required' => 'required',
+                'placeholder' => 'Repeat-Password',
             ),
             'options' => array(
-                'label' => 'Repeat password',
+                'label' => 'Repeat-Password',
                 'label_attributes' => array(
-                    'class' => 'control-label'
+                    'class' => 'col-md-12 control-label'
                 )
             )
         ));
 
         $this->add(array(
-            'name' => 'passwordStrength',
-            'type' => 'Zend\Form\Element\Hidden',
-            'attributes' => array(
-                'id' => 'passwordStrength',
-                'required' => 'required'
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'passwordStrengthScore',
-            'type' => 'Zend\Form\Element\Hidden',
-            'attributes' => array(
-                'id' => 'passwordStrengthScore',
-                'required' => 'required'
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'userGroupId',
-            'type' => '\Zend\Form\Element\Select',
-            'attributes' => array(
-                'id' => 'userGroupId',
-                'class' => 'form-control',
-                'required' => 'required'
-            ),
-            'options' => array(
-                'label' => 'User-Type',
-                'label_attributes' => array(
-                    'class' => 'control-label',
-                ),
-                'disable_in_array_validator' => true,
-                'empty_option' => '-- Please select --'
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'firstName',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'firstName',
-                'placeholder' => 'Firstname',
-                'required' => 'required'
-            ),
-            'options' => array(
-                'label' => 'Firstname',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'lastName',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'lastName',
-                'placeholder' => 'Lastname',
-                'required' => 'required'
-            ),
-            'options' => array(
-                'label' => 'Lastname',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'birthDate',
-            'type' => '\Zend\Form\Element\Date',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'birthDate',
-                'placeholder' => 'Birthday',
-            ),
-            'options' => array(
-                'label' => 'Birthday',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'gender',
-            'type' => '\Zend\Form\Element\Radio',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'gender',
-            ),
-            'options' => array(
-                'label' => 'Gender',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                ),
-                'value_options' => array(
-                    'm' => 'Male',
-                    'w' => 'Female'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'minBudget',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'minBudget',
-                'placeholder' => 'Minimum-Budget'
-            ),
-            'options' => array(
-                'label' => 'Minimum-Budget',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'maxBudget',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'maxBudget',
-                'placeholder' => 'Maximum-Budget'
-            ),
-            'options' => array(
-                'label' => 'Maximum-Budget',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'minRent',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'minRent',
-                'placeholder' => 'Minimum-Rent'
-            ),
-            'options' => array(
-                'label' => 'Minimum-Rent',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'maxRent',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'maxRent',
-                'placeholder' => 'Maximum-Rent'
-            ),
-            'options' => array(
-                'label' => 'Maximum-Rent',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'currencyId',
-            'type' => '\Zend\Form\Element\Select',
-            'attributes' => array(
-                'id' => 'currencyId',
-                'class' => 'form-control',
-            ),
-            'options' => array(
-                'label' => 'Preferred Currency',
-                'label_attributes' => array(
-                    'class' => 'control-label',
-                ),
-                'disable_in_array_validator' => true,
-                'empty_option' => '-- Please select --'
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'areaUnitId',
-            'type' => '\Zend\Form\Element\Select',
-            'attributes' => array(
-                'id' => 'areaUnitId',
-                'class' => 'form-control',
-            ),
-            'options' => array(
-                'label' => 'Preferred Area-Unit',
-                'label_attributes' => array(
-                    'class' => 'control-label',
-                ),
-                'disable_in_array_validator' => true,
-                'empty_option' => '-- Please select --'
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'shortDescription',
-            'type' => '\Zend\Form\Element\Textarea',
-            'attributes' => array(
-                'id' => 'shortDescription',
-                'class' => 'form-control',
-                'placeholder' => 'Short-Description',
-            ),
-            'options' => array(
-                'label' => 'Short-Description',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'description',
-            'type' => '\Zend\Form\Element\Textarea',
-            'attributes' => array(
-                'id' => 'description',
-                'class' => 'form-control',
-                'placeholder' => 'Description',
-            ),
-            'options' => array(
-                'label' => 'Description',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'street',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'street',
-                'class' => 'form-control',
-                'placeholder' => 'Street'
-            ),
-            'options' => array(
-                'label' => 'Street',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'streetNumber',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'streetNumber',
-                'class' => 'form-control',
-                'placeholder' => 'Street-Number'
-            ),
-            'options' => array(
-                'label' => 'Street-Number',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'zipCode',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'zipCode',
-                'class' => 'form-control',
-                'placeholder' => 'Zip-Code'
-            ),
-            'options' => array(
-                'label' => 'Zip-Code',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'city',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'city',
-                'class' => 'form-control',
-                'placeholder' => 'City'
-            ),
-            'options' => array(
-                'label' => 'City',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'state',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'state',
-                'class' => 'form-control',
-                'placeholder' => 'State'
-            ),
-            'options' => array(
-                'label' => 'State',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'country',
-            'type' => '\Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'country',
-                'class' => 'form-control',
-                'placeholder' => 'Country'
-            ),
-            'options' => array(
-                'label' => 'Country',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'profilePicture',
+            'name' => 'profilePicturePath',
             'type' => '\Zend\Form\Element\File',
             'attributes' => array(
-                'class' => 'avatar-input',
-                'id' => 'profilePicture',
-                'accept' => 'image/*',
+                'id' => 'profilePicturePath',
+                'class' => 'form-control',
+                'required' => 'required',
+                'accept' => 'image/*'
             ),
             'options' => array(
                 'label' => 'Profile-Picture',
                 'label_attributes' => array(
-                    'class' => 'col-md-2 col-xs-12 control-label'
+                    'class' => 'col-md-12 control-label'
                 )
             )
-        ));
-
-        $this->add(array(
-            'name' => 'profilePictureSrc',
-            'type' => '\Zend\Form\Element\Hidden',
-            'attributes' => array(
-                'class' => 'avatar-src',
-                'id' => 'avatar-src',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'profilePictureData',
-            'type' => '\Zend\Form\Element\Hidden',
-            'attributes' => array(
-                'class' => 'avatar-data',
-                'id' => 'avatar-data',
-            ),
         ));
 
         $this->add(array(
@@ -475,13 +179,118 @@ class RegisterForm extends Form
             )
         ));
 
+        //Organisation specific fields
         $this->add(array(
-            'name' => 'register',
-            'type' => '\Zend\Form\Element\Submit',
+            'name' => 'contactPersonName',
+            'type' => '\Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'register',
-                'class' => 'btn btn-xl',
-                'value' => 'Register'
+                'class' => 'form-control',
+                'id' => 'phone',
+                'placeholder' => 'Name of Contact-Person',
+            ),
+            'options' => array(
+                'label' => 'Name of Contact-Person',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'contactPersonEmail',
+            'type' => '\Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'contactPersonEmail',
+                'placeholder' => 'Email of Contact-Person',
+            ),
+            'options' => array(
+                'label' => 'Email of Contact-Person',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'contactPersonPhone',
+            'type' => '\Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'contactPersonPhone',
+                'placeholder' => 'Phone of Contact-Person',
+            ),
+            'options' => array(
+                'label' => 'Phone of Contact-Person',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'organisationDescription',
+            'type' => '\Zend\Form\Element\Textarea',
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'organisationDescription',
+                'placeholder' => 'Description of Organisation',
+            ),
+            'options' => array(
+                'label' => 'Description of Organisation',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'organisationWebsite',
+            'type' => '\Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'organisationWebsite',
+                'placeholder' => 'Website of Organisation',
+            ),
+            'options' => array(
+                'label' => 'Website of Organisation',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        //Volunteer specific fields
+        $this->add(array(
+            'name' => 'region',
+            'type' => '\Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'region',
+                'placeholder' => 'Region you help in',
+            ),
+            'options' => array(
+                'label' => 'Region you help in',
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        //Volunteer & Student specific fields
+        $this->add(array(
+            'name' => 'nativeLanguage',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'class' => 'form-control',
+            ),
+            'options' => array(
+                'label' => 'Native-Language:',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                ),
+                'disable_inarray_validator' => true,
+                'empty_option' => '-- Please select --'
             )
         ));
     }

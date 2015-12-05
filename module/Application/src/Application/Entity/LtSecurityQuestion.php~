@@ -40,20 +40,6 @@ class LtSecurityQuestion
      */
     private $langcode;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtUser", mappedBy="securityquestionid")
-     */
-    private $userid;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->userid = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 }
 

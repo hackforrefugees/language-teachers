@@ -1,5 +1,4 @@
 <?php
-
 namespace User\Form;
 
 /**
@@ -8,36 +7,34 @@ namespace User\Form;
 use Zend\Form\Form;
 
 /**
- * Class AddDescriptionForm
- *
- * @category User
- * @package User_Form
+ * Class LoginForm
+ * @package User\Form
  * @author Dominik Einkemmer
  */
-class AddDescriptionForm extends Form
+class LoginForm extends Form
 {
-
     /**
-     * Constructor which adds the Form Elements
-     * @param string $name
+     * Constructor
+     * @param null $name
      */
     public function __construct($name = null)
     {
-        parent::__construct('Add Translation');
+        parent::__construct('Login');
         $this->setAttribute("method", "post");
+        $this->setAttribute("id", "loginForm");
         $this->setAttribute("enctype", "multipart/form-data");
 
         $this->add(array(
-            'name' => 'shortDescription',
-            'type' => '\Zend\Form\Element\Textarea',
+            'name' => 'email',
+            'type' => '\Zend\Form\Element\Email',
             'attributes' => array(
-                'id' => 'shortDescription',
                 'class' => 'form-control',
-                'required' => 'required',
-                'placeholder' => 'Short-Description',
+                'id' => 'email',
+                'placeholder' => 'Email',
+                'required' => 'required'
             ),
             'options' => array(
-                'label' => 'Short-Description',
+                'label' => 'Email',
                 'label_attributes' => array(
                     'class' => 'col-md-12 control-label'
                 )
@@ -45,16 +42,16 @@ class AddDescriptionForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'description',
-            'type' => '\Zend\Form\Element\Textarea',
+            'name' => 'password',
+            'type' => '\Zend\Form\Element\Password',
             'attributes' => array(
-                'id' => 'description',
+                'id' => 'password',
                 'class' => 'form-control',
                 'required' => 'required',
-                'placeholder' => 'Description',
+                'placeholder' => 'Password',
             ),
             'options' => array(
-                'label' => 'Description',
+                'label' => 'Password',
                 'label_attributes' => array(
                     'class' => 'col-md-12 control-label'
                 )
@@ -62,13 +59,18 @@ class AddDescriptionForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'submit',
-            'type' => '\Zend\Form\Element\Submit',
+            'name' => 'rememberMe',
+            'type' => '\Zend\Form\Element\Checkbox',
             'attributes' => array(
-                'id' => 'submit',
-                'class' => 'btn btn-xl',
-                'value' => 'Save description'
+                'id' => 'rememberMe',
+                'placeholder' => 'Remember me?',
             ),
+            'options' => array(
+                'label' => 'Remember me?',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
+            )
         ));
     }
 

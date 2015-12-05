@@ -49,5 +49,86 @@ class LtStudent
         $this->eventid = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-}
 
+    /**
+     * Set nativelanguage
+     *
+     * @param \Application\Entity\LtLanguage $nativelanguage
+     *
+     * @return LtStudent
+     */
+    public function setNativelanguage(\Application\Entity\LtLanguage $nativelanguage = null)
+    {
+        $this->nativelanguage = $nativelanguage;
+
+        return $this;
+    }
+
+    /**
+     * Get nativelanguage
+     *
+     * @return \Application\Entity\LtLanguage
+     */
+    public function getNativelanguage()
+    {
+        return $this->nativelanguage;
+    }
+
+    /**
+     * Set studentid
+     *
+     * @param \Application\Entity\LtUser $studentid
+     *
+     * @return LtStudent
+     */
+    public function setStudentid(\Application\Entity\LtUser $studentid)
+    {
+        $this->studentid = $studentid;
+
+        return $this;
+    }
+
+    /**
+     * Get studentid
+     *
+     * @return \Application\Entity\LtUser
+     */
+    public function getStudentid()
+    {
+        return $this->studentid;
+    }
+
+    /**
+     * Add eventid
+     *
+     * @param \Application\Entity\LtEvent $eventid
+     *
+     * @return LtStudent
+     */
+    public function addEventid(\Application\Entity\LtEvent $eventid)
+    {
+        $this->eventid[] = $eventid;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventid
+     *
+     * @param \Application\Entity\LtEvent $eventid
+     */
+    public function removeEventid(\Application\Entity\LtEvent $eventid)
+    {
+        $this->eventid->removeElement($eventid);
+    }
+
+    /**
+     * Get eventid
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventid()
+    {
+        return $this->eventid;
+    }
+}

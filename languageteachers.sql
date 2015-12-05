@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 05. Dez 2015 um 13:41
+-- Erstellungszeit: 05. Dez 2015 um 16:22
 -- Server-Version: 5.6.24
 -- PHP-Version: 5.6.8
 
@@ -40,8 +40,9 @@ CREATE TABLE IF NOT EXISTS `lt_event` (
   `country` varchar(150) NOT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
-  `eventTitle` varchar(200) DEFAULT NULL,
-  `eventLanguage` varchar(45) DEFAULT NULL
+  `eventTitle` varchar(200) NOT NULL,
+  `eventLanguage` varchar(45) NOT NULL,
+  `creatorUserId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -58,25 +59,28 @@ CREATE TABLE IF NOT EXISTS `lt_language` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `lt_organisation_creates_event`
+-- Tabellenstruktur für Tabelle `lt_organisation`
 --
 
-CREATE TABLE IF NOT EXISTS `lt_organisation_creates_event` (
+CREATE TABLE IF NOT EXISTS `lt_organisation` (
   `organisationId` int(11) NOT NULL,
-  `eventId` int(11) NOT NULL
+  `contactPersonName` varchar(150) NOT NULL,
+  `contactPersonEmail` varchar(300) NOT NULL,
+  `contactPersonPhone` varchar(20) DEFAULT NULL,
+  `organisationDescription` text,
+  `organisationWebsite` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `lt_organistation`
+-- Tabellenstruktur für Tabelle `lt_security_question`
 --
 
-CREATE TABLE IF NOT EXISTS `lt_organistation` (
-  `organistationId` int(11) NOT NULL,
-  `contactPersonName` varchar(150) NOT NULL,
-  `contactPersonEmail` varchar(150) NOT NULL,
-  `contactPersonPhone` varchar(20) DEFAULT NULL
+CREATE TABLE IF NOT EXISTS `lt_security_question` (
+  `securityQuestionId` int(11) NOT NULL,
+  `securityQuestion` varchar(200) DEFAULT NULL,
+  `langCode` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -113,7 +117,27 @@ CREATE TABLE IF NOT EXISTS `lt_user` (
   `contactName` varchar(200) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `password` varchar(200) NOT NULL,
-  `profilePicturePath` varchar(300) DEFAULT NULL
+  `profilePicturePath` varchar(300) DEFAULT NULL,
+  `userGroup` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf32;
+
+--
+-- Daten für Tabelle `lt_user`
+--
+
+INSERT INTO `lt_user` (`userId`, `email`, `contactName`, `phone`, `password`, `profilePicturePath`, `userGroup`) VALUES
+(1, 'guseindo@student.gu.se', 'Dominik', NULL, '$2y$10$7Ke/0X1B56I87uy./vIm1OYunHNqvwOvuDLMGPvCyFAenvKiZr54G', NULL, 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `lt_user_security_question`
+--
+
+CREATE TABLE IF NOT EXISTS `lt_user_security_question` (
+  `userId` int(11) NOT NULL,
+  `securityQuestionId` int(11) NOT NULL,
+  `securityQuestionAnswer` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -126,17 +150,6 @@ CREATE TABLE IF NOT EXISTS `lt_volunteer` (
   `volunteerId` int(11) NOT NULL,
   `region` varchar(150) NOT NULL,
   `nativeLanguage` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `lt_volunteer_creates_event`
---
-
-CREATE TABLE IF NOT EXISTS `lt_volunteer_creates_event` (
-  `volunteerCreateId` int(11) NOT NULL,
-  `eventCreateId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -169,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `lt_volunteer_participates_in_event` (
 -- Indizes für die Tabelle `lt_event`
 --
 ALTER TABLE `lt_event`
-  ADD PRIMARY KEY (`eventId`), ADD KEY `eventLanguage_idx` (`eventLanguage`);
+  ADD PRIMARY KEY (`eventId`), ADD KEY `eventLanguage_idx` (`eventLanguage`), ADD KEY `eventUserId_idx` (`creatorUserId`);
 
 --
 -- Indizes für die Tabelle `lt_language`
@@ -178,16 +191,16 @@ ALTER TABLE `lt_language`
   ADD PRIMARY KEY (`langCode`);
 
 --
--- Indizes für die Tabelle `lt_organisation_creates_event`
+-- Indizes für die Tabelle `lt_organisation`
 --
-ALTER TABLE `lt_organisation_creates_event`
-  ADD PRIMARY KEY (`organisationId`,`eventId`), ADD KEY `organisationEventId_idx` (`eventId`);
+ALTER TABLE `lt_organisation`
+  ADD PRIMARY KEY (`organisationId`);
 
 --
--- Indizes für die Tabelle `lt_organistation`
+-- Indizes für die Tabelle `lt_security_question`
 --
-ALTER TABLE `lt_organistation`
-  ADD PRIMARY KEY (`organistationId`);
+ALTER TABLE `lt_security_question`
+  ADD PRIMARY KEY (`securityQuestionId`,`langCode`), ADD KEY `securityQuestionLangCode_idx` (`langCode`);
 
 --
 -- Indizes für die Tabelle `lt_student`
@@ -208,16 +221,16 @@ ALTER TABLE `lt_user`
   ADD PRIMARY KEY (`userId`);
 
 --
+-- Indizes für die Tabelle `lt_user_security_question`
+--
+ALTER TABLE `lt_user_security_question`
+  ADD PRIMARY KEY (`userId`,`securityQuestionId`), ADD KEY `userSecurityQuestionId_idx` (`securityQuestionId`);
+
+--
 -- Indizes für die Tabelle `lt_volunteer`
 --
 ALTER TABLE `lt_volunteer`
   ADD PRIMARY KEY (`volunteerId`), ADD KEY `volunteerNativeLanguage_idx` (`nativeLanguage`);
-
---
--- Indizes für die Tabelle `lt_volunteer_creates_event`
---
-ALTER TABLE `lt_volunteer_creates_event`
-  ADD PRIMARY KEY (`volunteerCreateId`,`eventCreateId`), ADD KEY `eventIdVolunteer_idx` (`eventCreateId`);
 
 --
 -- Indizes für die Tabelle `lt_volunteer_knows_languages`
@@ -241,6 +254,16 @@ ALTER TABLE `lt_volunteer_participates_in_event`
 ALTER TABLE `lt_event`
   MODIFY `eventId` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT für Tabelle `lt_security_question`
+--
+ALTER TABLE `lt_security_question`
+  MODIFY `securityQuestionId` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `lt_user`
+--
+ALTER TABLE `lt_user`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- Constraints der exportierten Tabellen
 --
 
@@ -248,20 +271,20 @@ ALTER TABLE `lt_event`
 -- Constraints der Tabelle `lt_event`
 --
 ALTER TABLE `lt_event`
-ADD CONSTRAINT `eventLanguage` FOREIGN KEY (`eventLanguage`) REFERENCES `lt_language` (`langCode`) ON UPDATE CASCADE;
+ADD CONSTRAINT `eventLanguage` FOREIGN KEY (`eventLanguage`) REFERENCES `lt_language` (`langCode`) ON UPDATE CASCADE,
+ADD CONSTRAINT `eventUserId` FOREIGN KEY (`creatorUserId`) REFERENCES `lt_user` (`userId`) ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `lt_organisation_creates_event`
+-- Constraints der Tabelle `lt_organisation`
 --
-ALTER TABLE `lt_organisation_creates_event`
-ADD CONSTRAINT `eventOrganisationId` FOREIGN KEY (`organisationId`) REFERENCES `lt_organistation` (`organistationId`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `organisationEventId` FOREIGN KEY (`eventId`) REFERENCES `lt_event` (`eventId`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `lt_organisation`
+ADD CONSTRAINT `organisationUserId` FOREIGN KEY (`organisationId`) REFERENCES `lt_user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `lt_organistation`
+-- Constraints der Tabelle `lt_security_question`
 --
-ALTER TABLE `lt_organistation`
-ADD CONSTRAINT `organistationUserId` FOREIGN KEY (`organistationId`) REFERENCES `lt_user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `lt_security_question`
+ADD CONSTRAINT `securityQuestionLangCode` FOREIGN KEY (`langCode`) REFERENCES `lt_language` (`langCode`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `lt_student`
@@ -278,18 +301,17 @@ ADD CONSTRAINT `eventStudentId` FOREIGN KEY (`studentId`) REFERENCES `lt_student
 ADD CONSTRAINT `studentEventId` FOREIGN KEY (`eventId`) REFERENCES `lt_event` (`eventId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints der Tabelle `lt_user_security_question`
+--
+ALTER TABLE `lt_user_security_question`
+ADD CONSTRAINT `userSecurityQuestionId` FOREIGN KEY (`securityQuestionId`) REFERENCES `lt_security_question` (`securityQuestionId`) ON UPDATE CASCADE;
+
+--
 -- Constraints der Tabelle `lt_volunteer`
 --
 ALTER TABLE `lt_volunteer`
 ADD CONSTRAINT `volunteerNativeLanguage` FOREIGN KEY (`nativeLanguage`) REFERENCES `lt_language` (`langCode`) ON UPDATE CASCADE,
 ADD CONSTRAINT `volunteerUserId` FOREIGN KEY (`volunteerId`) REFERENCES `lt_user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints der Tabelle `lt_volunteer_creates_event`
---
-ALTER TABLE `lt_volunteer_creates_event`
-ADD CONSTRAINT `eventIdVolunteer` FOREIGN KEY (`eventCreateId`) REFERENCES `lt_event` (`eventId`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `volunteerIdEvent` FOREIGN KEY (`volunteerCreateId`) REFERENCES `lt_volunteer` (`volunteerId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `lt_volunteer_knows_languages`

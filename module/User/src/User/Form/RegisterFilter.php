@@ -1,22 +1,26 @@
 <?php
-
 namespace User\Form;
 
 /**
- * @uses Zend\InputFilter\Inputfilter
+ * @uses Zend\InputFilter\InputFilter
  */
+use Zend\Filter\StripTags;
+use Zend\InputFilter\Input;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\Callback;
+use Zend\Validator\EmailAddress;
+use Zend\Validator\StringLength;
 
 /**
  * Class RegisterFilter
  * @package User\Form
- * @author Dominik Einkemmer
+ * @author Dominik Einkmmer
  */
 class RegisterFilter extends InputFilter
 {
 
     /**
-     * Constructor which adds the Filters
+     * Constructor adding the Filters for the Form fields
      */
     public function __construct()
     {
@@ -27,32 +31,14 @@ class RegisterFilter extends InputFilter
                 array(
                     'name' => 'EmailAddress',
                     'options' => array(
-                        'domain' => true,
+                        'domain' => true
                     )
                 )
             )
         ));
 
         $this->add(array(
-            'name' => 'gender',
-            'required' => false,
-            'validators' => array(
-                array(
-                    'name' => 'InArray',
-                    'options' => array(
-                        'haystack' => array('m', 'w')
-                    )
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'birthDate',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'firstName',
+            'name' => 'contactName',
             'required' => true,
             'filters' => array(
                 array(
@@ -65,98 +51,15 @@ class RegisterFilter extends InputFilter
                     'options' => array(
                         'encoding' => 'UTF-8',
                         'min' => 2,
-                        'max' => 100
+                        'max' => 200
                     )
                 )
             )
         ));
 
         $this->add(array(
-            'name' => 'lastName',
-            'required' => true,
-            'filters' => array(
-                array(
-                    'name' => 'StripTags'
-                )
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'StringLength',
-                    'options' => array(
-                        'encoding' => 'UTF-8',
-                        'min' => 2,
-                        'max' => 100
-                    )
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'passwordRegister',
+            'name' => 'password',
             'required' => true
-        ));
-
-        $this->add(array(
-            'name' => 'areaUnitId',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'currencyId',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'minBudget',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'maxBudget',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'minRent',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'maxRent',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'userGroupId',
-            'required' => false
-        ));
-
-        $this->add(array(
-            'name' => 'passwordStrengthScore',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'GreaterThan',
-                    'options' => array(
-                        'min' => '38',
-                        'message' => 'Your password is too week, please follow the guidelines.'
-                    )
-                )
-            )
-        ));
-
-        $this->add(array(
-            'name' => 'passwordStrength',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Identical',
-                    'options' => array(
-                        'token' => 'strong',
-                        'message' => 'Your password is too week, please follow the guidelines.'
-                    ),
-                ),
-            ),
         ));
 
         $this->add(array(
@@ -166,14 +69,19 @@ class RegisterFilter extends InputFilter
                 array(
                     'name' => 'Identical',
                     'options' => array(
-                        'token' => 'passwordRegister',
+                        'token' => 'password',
                     ),
                 ),
-            ),
+            )
         ));
 
         $this->add(array(
-            'name' => 'profilePicture',
+            'name' => 'phone',
+            'required' => false
+        ));
+
+        $this->add(array(
+            'name' => 'profilePicturePath',
             'required' => false,
             'type' => 'Zend\InputFilter\FileInput',
             'filters' => array(
@@ -184,15 +92,15 @@ class RegisterFilter extends InputFilter
                         'use_upload_extension' => true,
                         'use_upload_name' => true,
                         'randomize' => true
-                    ),
-                ),
+                    )
+                )
             ),
             'validators' => array(
                 array(
                     'name' => 'Zend\Validator\File\Size',
                     'options' => array(
                         'max' => 3145728,
-                    ),
+                    )
                 ),
                 array(
                     'name' => 'Zend\Validator\File\Extension',
@@ -201,9 +109,9 @@ class RegisterFilter extends InputFilter
                         'jpg',
                         'png',
                         'bmp',
-                        'gif',
-                    ),
-                ),
+                        'gif'
+                    )
+                )
             )
         ));
 
@@ -216,6 +124,97 @@ class RegisterFilter extends InputFilter
             'name' => 'securityQuestionAnswer',
             'required' => true
         ));
+
+        //Organisation specific fields
+
+        $callBackOrganisationFields = new Callback(function ($value, $context) {
+            return ($context['userType'] !== "organisation" && trim($value) !== "");
+        });
+
+        $stripTags = new StripTags();
+        $stringLengthPersonName = new StringLength(array('encoding' => 'UTF-8', 'min' => 2, 'max' => 150));
+
+        $contactPersonNameFilter = new Input('contactPersonName');
+        $contactPersonNameFilter->setRequired(false);
+        $contactPersonNameFilter->getValidatorChain()
+            ->attach($stringLengthPersonName)
+            ->attach($callBackOrganisationFields);
+        $contactPersonNameFilter->getFilterChain()->attach($stripTags);
+
+        $this->add(array(
+            'name' => 'contactPersonEmail',
+            'required' => false,
+            'validators' => array(
+                array(
+                    'name' => 'EmailAddress',
+                    'options' => array(
+                        'domain' => true
+                    )
+                )
+            )
+        ));
+        $emailAddress = new EmailAddress(array('domain' => true));
+        $contactEmailFilter = new Input('contactPersonEmail');
+        $contactEmailFilter->getValidatorChain()
+            ->attach($emailAddress)
+            ->attach($callBackOrganisationFields);
+
+        $this->add(array(
+            'name' => 'contactPersonPhone',
+            'required' => false
+        ));
+
+        $this->add(array(
+            'name' => 'organisationDescription',
+            'required' => false,
+            'filters' => array(
+                array(
+                    'name' => 'StripTags'
+                )
+            ),
+            'validators' => array(
+                array(
+                    'name' => 'StringLength',
+                    'options' => array(
+                        'encoding' => 'UTF-8',
+                        'min' => 2,
+                        'max' => 200
+                    )
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'organisationWebsite',
+            'required' => false,
+            'validators' => array(
+                array(
+                    'name' => 'Uri'
+                )
+            )
+        ));
+
+        //Volunteer specific fields
+        $callBackVolunteerFields = new Callback(function ($value, $context) {
+            return ($context['userType'] !== "organisation" && trim($value) !== "");
+        });
+
+        $callBackStudentFields = new Callback(function ($value, $context) {
+            return ($context['userType'] !== "student" && trim($value) !== "");
+        });
+
+        $stringLengthRegion = new StringLength(array('encoding' => 'UTF-8', 'min' => 2, 'max' => 150));
+        $regionFilter = new Input('region');
+        $regionFilter->getValidatorChain()
+            ->attach($callBackVolunteerFields)
+            ->attach($stringLengthRegion);
+        $regionFilter->getFilterChain()->attach($stripTags);
+
+        //Volunteer & Student specific fields
+        $nativeLanguageFilter = new Input('nativeLanguage');
+        $nativeLanguageFilter->getValidatorChain()
+            ->attach($callBackVolunteerFields)
+            ->attach($callBackStudentFields);
     }
 
 }

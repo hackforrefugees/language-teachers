@@ -31,6 +31,13 @@ class LtLanguage
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtUser", mappedBy="nativelanguage")
+     */
+    private $studentid;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\ManyToMany(targetEntity="Application\Entity\LtVolunteer", mappedBy="langcode")
      */
     private $volunteerid;
@@ -40,6 +47,7 @@ class LtLanguage
      */
     public function __construct()
     {
+        $this->studentid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->volunteerid = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -76,6 +84,40 @@ class LtLanguage
     public function getLanguagename()
     {
         return $this->languagename;
+    }
+
+    /**
+     * Add studentid
+     *
+     * @param \Application\Entity\LtUser $studentid
+     *
+     * @return LtLanguage
+     */
+    public function addStudentid(\Application\Entity\LtUser $studentid)
+    {
+        $this->studentid[] = $studentid;
+
+        return $this;
+    }
+
+    /**
+     * Remove studentid
+     *
+     * @param \Application\Entity\LtUser $studentid
+     */
+    public function removeStudentid(\Application\Entity\LtUser $studentid)
+    {
+        $this->studentid->removeElement($studentid);
+    }
+
+    /**
+     * Get studentid
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStudentid()
+    {
+        return $this->studentid;
     }
 
     /**

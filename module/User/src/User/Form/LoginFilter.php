@@ -1,22 +1,21 @@
 <?php
-
 namespace User\Form;
 
 /**
- * @uses Zend\InputFilter\Inputfilter
+ * @uses Zend\InputFilter\InputFilter
  */
 use Zend\InputFilter\InputFilter;
 
 /**
- * Class RequestVerificationLinkFilter
+ * Class LoginFilter
  * @package User\Form
- * @author Dominik Einkemmer
+ * @author Dominik Einkmmer
  */
-class RequestVerificationLinkFilter extends InputFilter
+class LoginFilter extends InputFilter
 {
 
     /**
-     * Constructor which adds the Filters
+     * Constructor adding the Filters for the Form fields
      */
     public function __construct()
     {
@@ -32,6 +31,12 @@ class RequestVerificationLinkFilter extends InputFilter
                 )
             )
         ));
+
+        $this->add(array(
+            'name' => 'password',
+            'required' => true,
+        ));
+
     }
 
 }

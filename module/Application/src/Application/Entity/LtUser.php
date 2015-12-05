@@ -67,24 +67,24 @@ class LtUser
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtSecurityQuestion", inversedBy="userid")
-     * @ORM\JoinTable(name="lt_user_security_question",
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtLanguage", inversedBy="studentid")
+     * @ORM\JoinTable(name="lt_student",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="userId", referencedColumnName="userId")
+     *     @ORM\JoinColumn(name="studentId", referencedColumnName="userId")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="securityQuestionId", referencedColumnName="securityQuestionId")
+     *     @ORM\JoinColumn(name="nativeLanguage", referencedColumnName="langCode")
      *   }
      * )
      */
-    private $securityquestionid;
+    private $nativelanguage;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->securityquestionid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->nativelanguage = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -179,8 +179,9 @@ class LtUser
      */
     public function setPassword($password)
     {
-        $bcrypt = new Bcrypt();
-        $this->password = $bcrypt->create($password);
+        $bCrypt = new Bcrypt();
+        $this->password = $bCrypt->create($password);
+
         return $this;
     }
 
@@ -243,36 +244,36 @@ class LtUser
     }
 
     /**
-     * Add securityquestionid
+     * Add nativelanguage
      *
-     * @param \Application\Entity\LtSecurityQuestion $securityquestionid
+     * @param \Application\Entity\LtLanguage $nativelanguage
      *
      * @return LtUser
      */
-    public function addSecurityquestionid(\Application\Entity\LtSecurityQuestion $securityquestionid)
+    public function addNativelanguage(\Application\Entity\LtLanguage $nativelanguage)
     {
-        $this->securityquestionid[] = $securityquestionid;
+        $this->nativelanguage[] = $nativelanguage;
 
         return $this;
     }
 
     /**
-     * Remove securityquestionid
+     * Remove nativelanguage
      *
-     * @param \Application\Entity\LtSecurityQuestion $securityquestionid
+     * @param \Application\Entity\LtLanguage $nativelanguage
      */
-    public function removeSecurityquestionid(\Application\Entity\LtSecurityQuestion $securityquestionid)
+    public function removeNativelanguage(\Application\Entity\LtLanguage $nativelanguage)
     {
-        $this->securityquestionid->removeElement($securityquestionid);
+        $this->nativelanguage->removeElement($nativelanguage);
     }
 
     /**
-     * Get securityquestionid
+     * Get nativelanguage
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSecurityquestionid()
+    public function getNativelanguage()
     {
-        return $this->securityquestionid;
+        return $this->nativelanguage;
     }
 }

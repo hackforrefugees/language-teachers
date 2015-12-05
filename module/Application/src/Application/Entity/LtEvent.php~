@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LtEvent
  *
- * @ORM\Table(name="lt_event", indexes={@ORM\Index(name="eventLanguage_idx", columns={"eventLanguage"})})
+ * @ORM\Table(name="lt_event", indexes={@ORM\Index(name="eventLanguage_idx", columns={"eventLanguage"}), @ORM\Index(name="eventUserId_idx", columns={"creatorUserId"})})
  * @ORM\Entity
  */
 class LtEvent
@@ -94,7 +94,7 @@ class LtEvent
     /**
      * @var string
      *
-     * @ORM\Column(name="eventTitle", type="string", length=200, nullable=true)
+     * @ORM\Column(name="eventTitle", type="string", length=200, nullable=false)
      */
     private $eventtitle;
 
@@ -109,11 +109,14 @@ class LtEvent
     private $eventlanguage;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Application\Entity\LtUser
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtOrganistation", mappedBy="eventid")
+     * @ORM\ManyToOne(targetEntity="Application\Entity\LtUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="creatorUserId", referencedColumnName="userId")
+     * })
      */
-    private $organisationid;
+    private $creatoruserid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -129,13 +132,6 @@ class LtEvent
      * )
      */
     private $studentid;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtVolunteer", mappedBy="eventcreateid")
-     */
-    private $volunteercreateid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -157,9 +153,7 @@ class LtEvent
      */
     public function __construct()
     {
-        $this->organisationid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->studentid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->volunteercreateid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->volunteerid = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

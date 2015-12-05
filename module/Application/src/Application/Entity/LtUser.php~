@@ -66,24 +66,24 @@ class LtUser
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtSecurityQuestion", inversedBy="userid")
-     * @ORM\JoinTable(name="lt_user_security_question",
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtLanguage", inversedBy="studentid")
+     * @ORM\JoinTable(name="lt_student",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="userId", referencedColumnName="userId")
+     *     @ORM\JoinColumn(name="studentId", referencedColumnName="userId")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="securityQuestionId", referencedColumnName="securityQuestionId")
+     *     @ORM\JoinColumn(name="nativeLanguage", referencedColumnName="langCode")
      *   }
      * )
      */
-    private $securityquestionid;
+    private $nativelanguage;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->securityquestionid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->nativelanguage = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 }
