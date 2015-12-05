@@ -34,6 +34,20 @@ class LtOrganistation
     private $contactpersonphone;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="organisationDescription", type="text", length=65535, nullable=true)
+     */
+    private $organisationdescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="organisationWebsite", type="string", length=150, nullable=true)
+     */
+    private $organisationwebsite;
+
+    /**
      * @var \Application\Entity\LtUser
      *
      * @ORM\Id

@@ -1,0 +1,487 @@
+<?php
+$this->headLink()->appendStylesheet($this->basePath() . '/libraries/bootstrap-datepicker/css/datepicker.css');
+$this->headScript()->appendFile($this->basePath() . '/libraries/bootstrap-datepicker/js/bootstrap-datepicker.js', 'text/javascript')
+    ->appendFile($this->basePath() . '/libraries/bootstrap-datepicker/js/locales/bootstrap-datepicker.' . Locale::getPrimaryLanguage(Locale::getDefault()) . '.js', 'text/javascript');
+?>
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        var startdate = $('#birthDate')[0];
+        if (startdate.type !== 'date') {//if browser doesn't support "date" input
+            $(startdate).datepicker({
+                format: "yyyy-m-d",
+                calendarWeeks: true,
+                todayHighlight: true,
+                todayBtn: "linked",
+                language: "<?php echo Locale::getPrimaryLanguage(Locale::getDefault())?>"
+            });
+        }
+
+        $('#currencyId').on('change', function (e) {
+            var option = $(this).find(':selected');
+            var faClass = $(option).attr('data-currency-class');
+            $('.currencySign').each(function (e) {
+                if (faClass === undefined || faClass === '') {
+                    $(this).attr('class', "fa fa-euro currencySign");
+                } else {
+                    $(this).attr('class', "fa " + faClass + " currencySign");
+                }
+            });
+        });
+    });
+</script>
+<?php
+$form->setAttribute('action', $this->url('user/edit'));
+$form->prepare();
+$this->formInput()->setTranslatorTextDomain('allstrings');
+$this->formLabel()->setTranslatorTextDomain('allstrings');
+$this->formSelect()->setTranslatorTextDomain('allstrings');
+$this->formTextarea()->setTranslatorTextDomain('allstrings');
+$this->formRadio()->setTranslatorTextDomain('allstrings');
+$this->formfile()->setTranslatorTextDomain('allstrings');
+$this->formElementErrors()->setTranslatorTextDomain('formerrors');
+echo $this->form()->openTag($form);
+?>
+<?php if (isset($error) && $error === true): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">
+                    <i class="fa fa-times"></i>
+                </button>
+                <?php echo $this->translate('You had at least one error in the form. Please check the error messages and try it again.') ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<h2 class="page-header center"><?php echo $this->translate('Login-Information') ?>:</h2>
+<div class="box">
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $this->formLabel($form->get('email')); ?>
+        </div>
+    </div>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+        <?php echo $this->formInput($form->get('email')); ?>
+    </div><!-- /.form-group -->
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $this->formElementErrors($form->get('email')); ?>
+        </div>
+    </div>
+    <div id="pwd-container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('passwordRegister')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+            <?php
+            echo $this->formelement($form->get('passwordStrength'));
+            echo $this->formelement($form->get('passwordStrengthScore'));
+            echo $this->formInput($form->get('passwordRegister'));
+            ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                echo $this->formElementErrors($form->get('passwordRegister'));
+                echo $this->formElementErrors($form->get('passwordStrengthScore'));
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pw_verdict"></div>
+                <div class="pw_errors"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 my-help-text">
+                <span class="pwstrength_viewport_progress"></span> <span
+                    class="pwstrength_viewport_verdict"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('confirmPassword')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+            <?php
+            echo $this->formInput($form->get('confirmPassword'));
+            ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('confirmPassword')); ?>
+            </div>
+        </div>
+    </div>
+</div><!-- /.box -->
+<h2 class="page-header center"><?php echo $this->translate('Personal Information'); ?>:</h2>
+<div class="box">
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $this->formLabel($form->get('firstName')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formInput($form->get('firstName')); ?>
+        <?php echo $this->formElementErrors($form->get('firstName')); ?>
+    </div><!-- /.form-group -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $this->formLabel($form->get('lastName')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <?php echo $this->formInput($form->get('lastName')); ?>
+        <?php echo $this->formElementErrors($form->get('lastName')); ?>
+    </div><!-- /.form-group -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $this->formLabel($form->get('birthDate')); ?>
+        </div>
+    </div>
+    <div class="input-group row">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        <?php echo $this->formInput($form->get('birthDate')); ?>
+    </div><!-- /.form-group -->
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $this->formElementErrors($form->get('birthDate')); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $this->formLabel($form->get('gender')); ?>
+        </div>
+    </div>
+    <div class="radio-toolbar">
+        <?php $valueOptions = $form->get('gender')->getValueOptions();
+        $genderElement = $form->get('gender');
+        foreach ($valueOptions as $value => $label):
+            ?>
+            <input type="radio" value="<?php echo $value ?>" <?php if($value === $user->getGender()): echo 'checked'; endif;?> name="<?php echo $genderElement->getName(); ?>"
+                   class="<?php echo $genderElement->getAttribute('class'); ?>"
+                   id="<?php echo $genderElement->getAttribute('id') . $value; ?>">
+            <label
+                for="<?php echo $genderElement->getAttribute('id') . $value; ?>"><?php echo $this->translate($label) ?></label>
+        <?php endforeach; ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('gender')); ?>
+            </div>
+        </div>
+    </div>
+</div><!-- /.box -->
+
+<?php if($user instanceof \Application\Entity\Buyer):?>
+    <h2 class="page-header center"><?php echo $this->translate('Filter- &amp; Display-Data'); ?>:</h2>
+    <div class="box">
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('minBudget')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+            <?php echo $this->formInput($form->get('minBudget')); ?>
+        </div><!-- /.form-group -->
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('minBudget')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('maxBudget')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+            <?php echo $this->formInput($form->get('maxBudget')); ?>
+        </div><!-- /.form-group -->
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('maxBudget')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('minRent')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+            <?php echo $this->formInput($form->get('minRent')); ?>
+        </div><!-- /.form-group -->
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('minRent')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('maxRent')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+            <?php echo $this->formInput($form->get('maxRent')); ?>
+        </div><!-- /.form-group -->
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('maxRent')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('currencyId')); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <?php echo $this->formSelect($form->get('currencyId')) ?>
+            <?php echo $this->formElementErrors($form->get('currencyId')); ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('areaUnitId')); ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <?php echo $this->formSelect($form->get('areaUnitId')) ?>
+            <?php echo $this->formElementErrors($form->get('areaUnitId')); ?>
+        </div>
+    </div><!-- /.box -->
+<?php elseif($user instanceof \Application\Entity\Agent):?>
+    <h2 class="page-header"><?php echo $this->translate('Address data') ?></h2>
+
+    <div class="box">
+        <!-- /.form-group -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <?php echo $this->translate('Type in the full address and chose from the auto-completion to fill in the rest of the address data automatically.<br>Ignore this field if you prefer to fill in the data manually.') ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="fullAddress" class="control-label"><?php echo $this->translate('Address'); ?></label>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+            <input class="form-control" type="text" name="fullAddress" id="fullAddress" onFocus="geolocate()"
+                   placeholder="<?php echo $this->translate('Address'); ?>">
+        </div>
+        <!-- /.form-group -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <?php echo $this->translate('The following fields will be filled in automatically if you use the auto-completion mentioned above.<br>You can always decide to change them or fill them in manually or add data that is eventually missing.'); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('street')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+            <?php echo $this->formInput($form->get('street')) ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('street')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('streetNumber')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+            <?php echo $this->formInput($form->get('streetNumber')) ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('streetNumber')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('zipCode')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+            <?php echo $this->formInput($form->get('zipCode')) ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('zipCode')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('city')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+            <?php echo $this->formInput($form->get('city')) ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('city')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('state')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+            <?php echo $this->formInput($form->get('state')) ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('state')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('country')); ?>
+            </div>
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+            <?php echo $this->formInput($form->get('country')) ?>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formElementErrors($form->get('country')); ?>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+<div class="box">
+    <div class="center">
+        <div class="form-group">
+            <?php echo $this->formSubmit($form->get('register')); ?>
+        </div>
+    </div>
+</div><!-- /.box -->
+<?php echo $this->form()->closeTag() ?>
+<?php
+$this->inlineScript()->appendFile($this->basePath() . '/libraries/passwordValidation/validate.js', 'text/javascript');
+$this->inlineScript()->appendFile($this->basePath() . '/libraries/passwordValidation/pwstrength.js', 'text/javascript');
+$this->inlineScript()->appendFile($this->basePath() . '/libraries/cropper/js/cropper.min.js', 'text/javascript');
+$this->inlineScript()->appendFile($this->basePath() . '/libraries/cropper/js/cropperProfilePictureMain.js', 'text/javascript');
+?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        "use strict";
+        var options = {};
+        options.ui = {
+            container: "#pwd-container",
+            showErrors: true,
+            showStatus: true,
+            language: '<?php echo $this->layout()->lang?>',
+            viewports: {
+                progress: ".pwstrength_viewport_progress",
+                errors: ".pw_errors",
+                verdict: ".pw_verdict"
+            }
+        };
+        options.common = {
+            zxcvbn: false,
+            userInputs: ['#email'],
+            onKeyUp: function (evt, data) {
+                if (Math.round(data.score) >= 39) {
+                    $('#passwordStrength').val("strong");
+                } else {
+                    $('#passwordStrength').val('week');
+                }
+                $('#passwordStrengthScore').val(Math.round(data.score));
+            }
+        };
+        $('#passwordRegister').pwstrength(options);
+    });
+</script>
+<script type="text/javascript">
+    var placeSearch, autocomplete;
+    var componentForm = {
+        street_number: {maps: 'short_name', form: 'streetNumber'},
+        route: {maps: 'long_name', form: 'street'},
+        locality: {maps: 'long_name', form: 'city'},
+        administrative_area_level_1: {maps: 'short_name', form: 'state'},
+        country: {maps: 'long_name', form: 'country'},
+        postal_code: {maps: 'short_name', form: 'zipCode'}
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('fullAddress')),
+            {types: ['geocode']});
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+        for (var component in componentForm) {
+            document.getElementById(componentForm[component]['form']).value = '';
+            document.getElementById(componentForm[component]['form']).disabled = false;
+        }
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]['maps']];
+                document.getElementById(componentForm[addressType]['form']).value = val;
+            }
+        }
+    }
+
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+</script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?v=3&libraries=places&callback=initAutocomplete"
+    async defer></script>

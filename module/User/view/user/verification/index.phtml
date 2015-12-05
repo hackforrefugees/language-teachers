@@ -1,0 +1,56 @@
+<?php if ($error !== null && $error === true): ?>
+    <?php if ($outDatedError !== null && $outDatedError === true): ?>
+        <h3><?php echo $this->translate('You waited too long to verify your E-Mail-Address.') ?></h3>
+        <p><?php echo $this->translate('A new verification link has been sent to your E-Mail-Address.') ?></p>
+    <?php else: ?>
+        <h3><?php echo $this->translate('Invalid Link') ?></h3>
+        <p>
+            <?php echo $this->translate('The provided link was invalid.') ?><br>
+            <?php echo $this->translate('Please try it again or fill in the form below to request a new link.') ?><br>
+        </p>
+        <?php
+        $form->setAttribute('action', $this->url('user/verify'));
+        $form->prepare();
+        $this->formInput()->setTranslatorTextDomain('allstrings');
+        $this->formLabel()->setTranslatorTextDomain('allstrings');
+        $this->formSelect()->setTranslatorTextDomain('allstrings');
+        $this->formTextarea()->setTranslatorTextDomain('allstrings');
+        $this->formRadio()->setTranslatorTextDomain('allstrings');
+        $this->formfile()->setTranslatorTextDomain('allstrings');
+        echo $this->form()->openTag($form);
+        ?>
+        <div class="box">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php echo $this->formLabel($form->get('email')); ?>
+                </div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <?php echo $this->formInput($form->get('email')); ?>
+            </div>
+            <div class="center">
+                <div class="form-group">
+                    <?php echo $this->formSubmit($form->get('request')); ?>
+                </div>
+            </div>
+        </div><!-- /.box -->
+        <?php echo $this->form()->closeTag() ?>
+    <?php endif; ?>
+<?php else: ?>
+    <h3><?php echo $this->translate('E-Mail successfully verified.'); ?></h3>
+    <p>
+        <?php echo $this->translate('You are now able to login into your account.'); ?><br>
+        <?php echo $this->translate('You will be redirected shortly.'); ?><br>
+        <?php echo $this->translate('If you are not redirected please click on the link below.'); ?><br>
+        <a class="btn btn-primary"
+           href="<?php echo $this->url('home'); ?>"><?php echo $this->translate('Redirect now') ?></a>
+        <script>
+            $(document).ready(function (e) {
+                setTimeout(function () {
+                    window.location.href = "<?php echo $this->url('home')?>";
+                }, 2500);
+            });
+        </script>
+    </p>
+<?php endif; ?>

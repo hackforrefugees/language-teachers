@@ -1,0 +1,59 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtSecurityQuestion
+ *
+ * @ORM\Table(name="lt_security_question", indexes={@ORM\Index(name="securityQuestionLangCode_idx", columns={"langCode"})})
+ * @ORM\Entity
+ */
+class LtSecurityQuestion
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="securityQuestionId", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $securityquestionid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="securityQuestion", type="string", length=200, nullable=true)
+     */
+    private $securityquestion;
+
+    /**
+     * @var \Application\Entity\LtLanguage
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtLanguage")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="langCode", referencedColumnName="langCode")
+     * })
+     */
+    private $langcode;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtUser", mappedBy="securityquestionid")
+     */
+    private $userid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->userid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

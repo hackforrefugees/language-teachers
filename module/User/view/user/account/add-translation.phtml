@@ -1,0 +1,136 @@
+<div class="admin-content-main-inner">
+    <?php if ($error !== null): ?>
+        <?php if (($languageNotExistentError !== null && !$languageNotExistentError) && ($languagesIdenticalError !== null && !$languagesIdenticalError)): ?>
+            <?php
+            $form->setAttribute('action', $this->url('user/addTranslation', array('language' => $language->getLangCode())));
+            $form->prepare();
+            $this->formInput()->setTranslatorTextDomain('allstrings');
+            $this->formLabel()->setTranslatorTextDomain('allstrings');
+            $this->formSelect()->setTranslatorTextDomain('allstrings');
+            $this->formTextarea()->setTranslatorTextDomain('allstrings');
+            $this->formSubmit()->setTranslatorTextDomain('allstrings');
+            $this->formElementErrors()->setTranslatorTextDomain('formerrors');
+            echo $this->form()->openTag($form);
+            ?>
+        <?php endif; ?>
+    <?php endif; ?>
+    <div class="container-fluid">
+        <?php if ($error !== null && $error): ?>
+            <?php if ($languageNotExistentError !== null && $languageNotExistentError): ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <?php echo sprintf($this->translate('Our system doesn\'t provide the language (%s) yet.'), Locale::getDisplayName(Locale::getPrimaryLanguage($language), Locale::getDefault())) ?>
+                </div>
+                <?php elseif($languagesIdenticalError !== null && $languagesIdenticalError): ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <?php echo sprintf($this->translate('You already translated your descriptions into the selected language (%s).'), $descriptionLanguage->getLanguageName()) ?>
+                    <br>
+                    <?php echo $this->translate('See below'); ?>
+                </div>
+                <h2 class="page-header"><?php echo sprintf($this->translate('Your translation in %s'), $descriptionLanguage->getLanguageName()); ?></h2>
+
+                <div class="box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4><?php echo $this->translate('Short-Description') ?></h4>
+                            <?php echo $agentDescription->getShortDescription() ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4><?php echo $this->translate('Description') ?></h4>
+                            <?php echo $agentDescription->getDescription() ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php if ($error !== null): ?>
+            <?php if (($languageNotExistentError !== null && !$languageNotExistentError) && ($languagesIdenticalError !== null && !$languagesIdenticalError)): ?>
+                <h2 class="page-header"><?php echo sprintf($this->translate('Your translation in %s'), $descriptionLanguage->getLanguageName()); ?></h2>
+
+                <div class="box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4><?php echo $this->translate('Short-Description') ?></h4>
+                            <?php echo $agentDescription->getShortDescription() ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4><?php echo $this->translate('Description') ?></h4>
+                            <?php echo $agentDescription->getDescription() ?>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="page-header"><?php echo sprintf($this->translate('Enter your description in %s'), $language->getLanguageName()) ?></h2>
+                <div class="box">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-warning">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                <?php echo $this->translate('Fields marked with <i class="mandatoryAsterisk">*</i> are mandatory.') ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php if ($form->get('shortDescription')->hasAttribute('required')): ?>
+                                <?php echo $this->formLabel()->openTag($form->get('shortDescription')) ?>
+                                <?php echo $this->translate($form->get('shortDescription')->getLabel()) ?>
+                                <i class="mandatoryAsterisk">*</i>
+                                <?php $this->formLabel()->closeTag() ?>
+                            <?php else: ?>
+                                <?php echo $this->formLabel($form->get('shortDescription')); ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <?php echo $this->formTextarea($form->get('shortDescription')) ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $this->formElementErrors($form->get('shortDescription'))?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php if ($form->get('description')->hasAttribute('required')): ?>
+                                <?php echo $this->formLabel()->openTag($form->get('description')) ?>
+                                <?php echo $this->translate($form->get('description')->getLabel()) ?>
+                                <i class="mandatoryAsterisk">*</i>
+                                <?php $this->formLabel()->closeTag() ?>
+                            <?php else: ?>
+                                <?php echo $this->formLabel($form->get('description')); ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <?php echo $this->formTextarea($form->get('description')) ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php echo $this->formElementErrors($form->get('description'))?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="center">
+                            <?php echo $this->formSubmit($form->get('submit'))?>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box -->
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+    <!-- /.container-fluid -->
+    <?php echo $this->form()->closeTag() ?>
+</div>
+<!-- /.admin-content-main-inner -->

@@ -34,6 +34,20 @@ class LtOrganistation
     private $contactpersonphone;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="organisationDescription", type="text", length=65535, nullable=true)
+     */
+    private $organisationdescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="organisationWebsite", type="string", length=150, nullable=true)
+     */
+    private $organisationwebsite;
+
+    /**
      * @var \Application\Entity\LtUser
      *
      * @ORM\Id
@@ -139,6 +153,54 @@ class LtOrganistation
     public function getContactpersonphone()
     {
         return $this->contactpersonphone;
+    }
+
+    /**
+     * Set organisationdescription
+     *
+     * @param string $organisationdescription
+     *
+     * @return LtOrganistation
+     */
+    public function setOrganisationdescription($organisationdescription)
+    {
+        $this->organisationdescription = $organisationdescription;
+
+        return $this;
+    }
+
+    /**
+     * Get organisationdescription
+     *
+     * @return string
+     */
+    public function getOrganisationdescription()
+    {
+        return $this->organisationdescription;
+    }
+
+    /**
+     * Set organisationwebsite
+     *
+     * @param string $organisationwebsite
+     *
+     * @return LtOrganistation
+     */
+    public function setOrganisationwebsite($organisationwebsite)
+    {
+        $this->organisationwebsite = $organisationwebsite;
+
+        return $this;
+    }
+
+    /**
+     * Get organisationwebsite
+     *
+     * @return string
+     */
+    public function getOrganisationwebsite()
+    {
+        return $this->organisationwebsite;
     }
 
     /**
