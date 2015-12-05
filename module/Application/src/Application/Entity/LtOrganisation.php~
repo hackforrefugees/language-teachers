@@ -13,15 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class LtOrganisation
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="organisationId", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $organisationid;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="contactPersonName", type="string", length=150, nullable=false)
@@ -55,6 +46,18 @@ class LtOrganisation
      * @ORM\Column(name="organisationWebsite", type="string", length=250, nullable=true)
      */
     private $organisationwebsite;
+
+    /**
+     * @var \Application\Entity\LtUser
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organisationId", referencedColumnName="userId")
+     * })
+     */
+    private $organisationid;
 
 
 }

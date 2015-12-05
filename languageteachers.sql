@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 05. Dez 2015 um 15:53
+-- Erstellungszeit: 05. Dez 2015 um 16:22
 -- Server-Version: 5.6.24
 -- PHP-Version: 5.6.8
 
@@ -273,6 +273,12 @@ ALTER TABLE `lt_user`
 ALTER TABLE `lt_event`
 ADD CONSTRAINT `eventLanguage` FOREIGN KEY (`eventLanguage`) REFERENCES `lt_language` (`langCode`) ON UPDATE CASCADE,
 ADD CONSTRAINT `eventUserId` FOREIGN KEY (`creatorUserId`) REFERENCES `lt_user` (`userId`) ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `lt_organisation`
+--
+ALTER TABLE `lt_organisation`
+ADD CONSTRAINT `organisationUserId` FOREIGN KEY (`organisationId`) REFERENCES `lt_user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `lt_security_question`

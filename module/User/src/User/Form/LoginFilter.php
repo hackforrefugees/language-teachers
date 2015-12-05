@@ -8,7 +8,7 @@ use Zend\InputFilter\InputFilter;
 
 /**
  * Class LoginFilter
- * @package Application\Form
+ * @package User\Form
  * @author Dominik Einkmmer
  */
 class LoginFilter extends InputFilter

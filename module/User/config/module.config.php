@@ -34,6 +34,18 @@ return array(
                             )
                         )
                     ),
+                    'register' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/register',
+                            'constraints' => array(),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'Index',
+                                'action' => 'register',
+                            )
+                        )
+                    ),
                 )
             ),
         )

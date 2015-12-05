@@ -13,15 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class LtOrganisation
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="organisationId", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $organisationid;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="contactPersonName", type="string", length=150, nullable=false)
@@ -56,17 +47,19 @@ class LtOrganisation
      */
     private $organisationwebsite;
 
-
-
     /**
-     * Get organisationid
+     * @var \Application\Entity\LtUser
      *
-     * @return integer
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organisationId", referencedColumnName="userId")
+     * })
      */
-    public function getOrganisationid()
-    {
-        return $this->organisationid;
-    }
+    private $organisationid;
+
+
 
     /**
      * Set contactpersonname
@@ -186,5 +179,29 @@ class LtOrganisation
     public function getOrganisationwebsite()
     {
         return $this->organisationwebsite;
+    }
+
+    /**
+     * Set organisationid
+     *
+     * @param \Application\Entity\LtUser $organisationid
+     *
+     * @return LtOrganisation
+     */
+    public function setOrganisationid(\Application\Entity\LtUser $organisationid)
+    {
+        $this->organisationid = $organisationid;
+
+        return $this;
+    }
+
+    /**
+     * Get organisationid
+     *
+     * @return \Application\Entity\LtUser
+     */
+    public function getOrganisationid()
+    {
+        return $this->organisationid;
     }
 }

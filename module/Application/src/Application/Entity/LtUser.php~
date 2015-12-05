@@ -63,6 +63,28 @@ class LtUser
      */
     private $usergroup;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtLanguage", inversedBy="studentid")
+     * @ORM\JoinTable(name="lt_student",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="studentId", referencedColumnName="userId")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="nativeLanguage", referencedColumnName="langCode")
+     *   }
+     * )
+     */
+    private $nativelanguage;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->nativelanguage = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 }
 

@@ -2,10 +2,16 @@
 
 namespace User\Controller;
 
+use Application\Entity\LtOrganisation;
+use Application\Entity\LtStudent;
+use Application\Entity\LtUser;
+use Application\Entity\LtVolunteer;
 use BitDbBcryptAuthAdapter\AuthAdapter;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Form\LoginFilter;
 use User\Form\LoginForm;
-use Zend\Crypt\Password\Bcrypt;
+use User\Form\RegisterFilter;
+use User\Form\RegisterForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
@@ -16,6 +22,49 @@ use Zend\View\Model\JsonModel;
  */
 class IndexController extends AbstractActionController
 {
+
+    public function registerAction()
+    {
+        if ($this->request->isPost()) {
+            $registerForm = new RegisterForm();
+            $registerFilter = new RegisterFilter();
+            $registerForm->setInputFilter($registerFilter);
+            $post = $this->request->getPost()->toArray();
+            $registerForm->setData($post);
+            if (!$registerForm->isValid()) {
+                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.'));
+            }
+            $formData = $registerForm->getData();
+            $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+            $hydrator = new DoctrineObject($objectManager);
+            $user = new LtUser();
+            $user = $hydrator->hydrate($formData, $user);
+            $objectManager->persist($user);
+            $objectManager->flush();
+
+            $userType = $formData['userType'];
+
+            if($userType === 'student'){
+                $student = new LtStudent();
+                $language = $objectManager->find('Application\Entity\LtLanguage', $formData['nativeLanguage']);
+                $student->setStudentid($user);
+                $student->setNativelanguage($language);
+            } elseif($userType === 'volunteer'){
+                $volunteer = new LtVolunteer();
+                $language = $objectManager->find('Application\Entity\LtLanguage', $formData['nativeLanguage']);
+                $volunteer->setVolunteerid($user);
+                $volunteer->setNativelanguage($language);
+                $volunteer->setRegion($formData['region']);
+            } elseif($userType === 'organisation'){
+                $organisation = new LtOrganisation();
+                $organisation->setOrganisationid($user);
+            }
+
+        } else {
+            $this->response->setStatusCode(405);
+            return new JsonModel(array('error' => 1, 'message' => 'Request-Method not allowed'));
+        }
+    }
 
     /**
      * Action that logs a user out in the system
@@ -59,8 +108,7 @@ class IndexController extends AbstractActionController
                 return new JsonModel(array('error' => 1, 'message' => 'Error while logging in. Please try again'));
             } else {
                 $auth = $this->getServiceLocator()->get('AuthService');
-                $objectManager = $this->getServiceLocator()
-                    ->get('Doctrine\ORM\EntityManager');
+                $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
                 $user = $objectManager->getRepository('Application\Entity\LtUser')
                     ->findOneBy(array('email' => $formData['email']));;
 
@@ -73,7 +121,7 @@ class IndexController extends AbstractActionController
                 }
 
                 $storage->write(array('contactName' => $user->getContactname(), 'userGroup' => $user->getUsergroup(), 'email' => $user->getEmail(), 'userId' => $user->getUserId()));
-                die(var_dump($auth->getStorage()->read()));
+
                 return new JsonModel(array('error' => 0, 'message' => 'Login successful'));
             }
         } else {

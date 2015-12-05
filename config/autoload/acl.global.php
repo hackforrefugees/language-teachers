@@ -16,6 +16,7 @@ return array(
                 ),
                 'User\Controller\Index' => array(
                     'index' => 'anonymous',
+                    'register' => 'anonymous',
                     'login' => 'anonymous',
                     'logout' => 'student',
                 )

@@ -64,6 +64,29 @@ class LtUser
      */
     private $usergroup;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtLanguage", inversedBy="studentid")
+     * @ORM\JoinTable(name="lt_student",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="studentId", referencedColumnName="userId")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="nativeLanguage", referencedColumnName="langCode")
+     *   }
+     * )
+     */
+    private $nativelanguage;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->nativelanguage = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 
     /**
      * Get userid
@@ -218,5 +241,39 @@ class LtUser
     public function getUsergroup()
     {
         return $this->usergroup;
+    }
+
+    /**
+     * Add nativelanguage
+     *
+     * @param \Application\Entity\LtLanguage $nativelanguage
+     *
+     * @return LtUser
+     */
+    public function addNativelanguage(\Application\Entity\LtLanguage $nativelanguage)
+    {
+        $this->nativelanguage[] = $nativelanguage;
+
+        return $this;
+    }
+
+    /**
+     * Remove nativelanguage
+     *
+     * @param \Application\Entity\LtLanguage $nativelanguage
+     */
+    public function removeNativelanguage(\Application\Entity\LtLanguage $nativelanguage)
+    {
+        $this->nativelanguage->removeElement($nativelanguage);
+    }
+
+    /**
+     * Get nativelanguage
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNativelanguage()
+    {
+        return $this->nativelanguage;
     }
 }

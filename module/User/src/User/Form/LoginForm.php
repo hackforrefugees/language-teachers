@@ -8,7 +8,7 @@ use Zend\Form\Form;
 
 /**
  * Class LoginForm
- * @package Application\Form
+ * @package User\Form
  * @author Dominik Einkemmer
  */
 class LoginForm extends Form
