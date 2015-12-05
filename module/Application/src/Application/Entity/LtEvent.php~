@@ -1,0 +1,167 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtEvent
+ *
+ * @ORM\Table(name="lt_event", indexes={@ORM\Index(name="eventLanguage_idx", columns={"eventLanguage"})})
+ * @ORM\Entity
+ */
+class LtEvent
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="eventId", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $eventid;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="eventTime", type="datetime", nullable=false)
+     */
+    private $eventtime;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="maxTeachers", type="integer", nullable=false)
+     */
+    private $maxteachers;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="maxStudents", type="integer", nullable=false)
+     */
+    private $maxstudents;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="street", type="string", length=150, nullable=false)
+     */
+    private $street;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="streetNumber", type="string", length=5, nullable=false)
+     */
+    private $streetnumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zipCode", type="string", length=10, nullable=false)
+     */
+    private $zipcode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=150, nullable=false)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=150, nullable=false)
+     */
+    private $country;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="latitude", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitude", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="eventTitle", type="string", length=200, nullable=true)
+     */
+    private $eventtitle;
+
+    /**
+     * @var \Application\Entity\LtLanguage
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\LtLanguage")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="eventLanguage", referencedColumnName="langCode")
+     * })
+     */
+    private $eventlanguage;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtOrganistation", mappedBy="eventid")
+     */
+    private $organisationid;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtStudent", inversedBy="eventid")
+     * @ORM\JoinTable(name="lt_student_participates_in_event",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="eventId", referencedColumnName="eventId")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="studentId", referencedColumnName="studentId")
+     *   }
+     * )
+     */
+    private $studentid;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtVolunteer", mappedBy="eventcreateid")
+     */
+    private $volunteercreateid;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtVolunteer", inversedBy="eventid")
+     * @ORM\JoinTable(name="lt_volunteer_participates_in_event",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="eventId", referencedColumnName="eventId")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="volunteerId", referencedColumnName="volunteerId")
+     *   }
+     * )
+     */
+    private $volunteerid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->organisationid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->studentid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volunteercreateid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volunteerid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

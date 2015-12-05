@@ -1,0 +1,72 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtOrganistation
+ *
+ * @ORM\Table(name="lt_organistation")
+ * @ORM\Entity
+ */
+class LtOrganistation
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPersonName", type="string", length=150, nullable=false)
+     */
+    private $contactpersonname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPersonEmail", type="string", length=150, nullable=false)
+     */
+    private $contactpersonemail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPersonPhone", type="string", length=20, nullable=true)
+     */
+    private $contactpersonphone;
+
+    /**
+     * @var \Application\Entity\LtUser
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organistationId", referencedColumnName="userId")
+     * })
+     */
+    private $organistationid;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtEvent", inversedBy="organisationid")
+     * @ORM\JoinTable(name="lt_organisation_creates_event",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="organisationId", referencedColumnName="organistationId")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="eventId", referencedColumnName="eventId")
+     *   }
+     * )
+     */
+    private $eventid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->eventid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

@@ -1,0 +1,47 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtLanguage
+ *
+ * @ORM\Table(name="lt_language")
+ * @ORM\Entity
+ */
+class LtLanguage
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="langCode", type="string", length=5, nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $langcode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="languageName", type="string", length=150, nullable=true)
+     */
+    private $languagename;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtVolunteer", mappedBy="langcode")
+     */
+    private $volunteerid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->volunteerid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+
