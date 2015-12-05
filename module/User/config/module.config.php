@@ -4,6 +4,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'User\Controller\Index' => 'User\Controller\IndexController',
+            'User\Controller\Data' => 'User\Controller\DataController',
         ),
         'map' => array(
             'userAuthentication' => 'User\Controller\Plugin\UserAuthentication'
@@ -23,7 +24,7 @@ return array(
                 'may_terminate' => true,
                 'child_routes' => array(
                     'login' => array(
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => array(
                             'route' => '/login',
                             'constraints' => array(),
@@ -35,7 +36,7 @@ return array(
                         )
                     ),
                     'register' => array(
-                        'type' => 'Segment',
+                        'type' => 'Literal',
                         'options' => array(
                             'route' => '/register',
                             'constraints' => array(),
@@ -43,6 +44,18 @@ return array(
                                 '__NAMESPACE__' => 'User\Controller',
                                 'controller' => 'Index',
                                 'action' => 'register',
+                            )
+                        )
+                    ),
+                    'securityQuestions' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/securityQuestions',
+                            'constraints' => array(),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'Data',
+                                'action' => 'getSecurityQuestions',
                             )
                         )
                     ),

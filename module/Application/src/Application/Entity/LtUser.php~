@@ -59,31 +59,87 @@ class LtUser
     /**
      * @var string
      *
-     * @ORM\Column(name="userGroup", type="string", length=100, nullable=true)
+     * @ORM\Column(name="userGroup", type="string", length=100, nullable=false)
      */
     private $usergroup;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="emailVerfied", type="boolean", nullable=true)
+     */
+    private $emailverfied;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="registrationDate", type="date", nullable=true)
+     */
+    private $registrationdate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="emailChangedDate", type="date", nullable=true)
+     */
+    private $emailchangeddate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="registrationToken", type="string", length=300, nullable=true)
+     */
+    private $registrationtoken;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="resetExpirationDate", type="date", nullable=true)
+     */
+    private $resetexpirationdate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="restRequestHash", type="string", length=300, nullable=true)
+     */
+    private $restrequesthash;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="latitude", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitude", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $longitude;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtLanguage", inversedBy="studentid")
-     * @ORM\JoinTable(name="lt_student",
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtSecurityQuestion", inversedBy="userid")
+     * @ORM\JoinTable(name="lt_user_security_question",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="studentId", referencedColumnName="userId")
+     *     @ORM\JoinColumn(name="userId", referencedColumnName="userId")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="nativeLanguage", referencedColumnName="langCode")
+     *     @ORM\JoinColumn(name="securityQuestionId", referencedColumnName="securityQuestionId")
      *   }
      * )
      */
-    private $nativelanguage;
+    private $securityquestionid;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->nativelanguage = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->securityquestionid = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 }

@@ -25,6 +25,21 @@ return array(
                         'action' => 'index',
                     ),
                 ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'login' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => 'languages',
+                            'constraints' => array(),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Application\Controller',
+                                'controller' => 'Data',
+                                'action' => 'getLanguages',
+                            )
+                        )
+                    ),
+                )
             ),
         ),
     ),
@@ -49,7 +64,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Data' => 'Application\Controller\DataController'
         ),
     ),
     'view_manager' => array(

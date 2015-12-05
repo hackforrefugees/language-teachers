@@ -13,13 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class LtVolunteer
 {
     /**
-     * @var string
-     *
-     * @ORM\Column(name="region", type="string", length=150, nullable=false)
-     */
-    private $region;
-
-    /**
      * @var \Application\Entity\LtLanguage
      *
      * @ORM\ManyToOne(targetEntity="Application\Entity\LtLanguage")
@@ -72,30 +65,6 @@ class LtVolunteer
         $this->eventid = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
-    /**
-     * Set region
-     *
-     * @param string $region
-     *
-     * @return LtVolunteer
-     */
-    public function setRegion($region)
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    /**
-     * Get region
-     *
-     * @return string
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
 
     /**
      * Set nativelanguage
