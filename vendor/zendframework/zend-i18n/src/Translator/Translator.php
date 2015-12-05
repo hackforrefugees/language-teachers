@@ -26,12 +26,12 @@ use Zend\Stdlib\ArrayUtils;
 class Translator implements TranslatorInterface
 {
     /**
-     * Event fired when the translation for a message is missing.
+     * LanguageTeacherEvent fired when the translation for a message is missing.
      */
     const EVENT_MISSING_TRANSLATION = 'missingTranslation';
 
     /**
-     * Event fired when no messages were loaded for a locale/text-domain combination.
+     * LanguageTeacherEvent fired when no messages were loaded for a locale/text-domain combination.
      */
     const EVENT_NO_MESSAGES_LOADED = 'noMessagesLoaded';
 
@@ -92,7 +92,7 @@ class Translator implements TranslatorInterface
     protected $pluginManager;
 
     /**
-     * Event manager for triggering translator events.
+     * LanguageTeacherEvent manager for triggering translator events.
      *
      * @var EventManagerInterface
      */

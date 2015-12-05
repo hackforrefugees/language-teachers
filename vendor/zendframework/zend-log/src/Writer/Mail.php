@@ -136,7 +136,7 @@ class Mail extends AbstractWriter
     /**
      * Places event line into array of lines to be used as message body.
      *
-     * @param array $event Event data
+     * @param array $event LanguageTeacherEvent data
      */
     protected function doWrite(array $event)
     {

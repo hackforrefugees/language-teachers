@@ -24,7 +24,7 @@ use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\TableDiff;
 
 /**
- * Event Arguments used when SQL queries for removing table columns are generated inside Doctrine\DBAL\Platform\*Platform.
+ * LanguageTeacherEvent Arguments used when SQL queries for removing table columns are generated inside Doctrine\DBAL\Platform\*Platform.
  *
  * @link   www.doctrine-project.org
  * @since  2.2

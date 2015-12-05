@@ -16,6 +16,7 @@ return array(
                 ),
                 'Application\Controller\Data' => array(
                     'getLanguages' => 'anonymous',
+                    'getEventsByGeoLocation' => 'anonymous',
                 ),
                 'User\Controller\Index' => array(
                     'index' => 'anonymous',

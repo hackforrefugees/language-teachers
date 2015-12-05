@@ -34,7 +34,7 @@ abstract class AbstractAdapter implements StorageInterface, EventsCapableInterfa
     protected $events = null;
 
     /**
-     * Event handles of this adapter
+     * LanguageTeacherEvent handles of this adapter
      * @var array
      */
     protected $eventHandles = [];
@@ -178,7 +178,7 @@ abstract class AbstractAdapter implements StorageInterface, EventsCapableInterfa
         return ($options->getWritable() && $options->getReadable());
     }
 
-    /* Event/Plugin handling */
+    /* LanguageTeacherEvent/Plugin handling */
 
     /**
      * Get the event manager

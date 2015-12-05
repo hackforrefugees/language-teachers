@@ -18,7 +18,7 @@ use Zend\Mvc\MvcEvent as MvcEvent;
 /**
  * Class Authentication
  * Handles the authentication by an event
- * @package User\Event
+ * @package User\LanguageTeacherEvent
  * @author Dominik Einkemmer
  */
 class Authentication
@@ -48,7 +48,7 @@ class Authentication
     }
 
     /**
-     * preDispatch Event Handler
+     * preDispatch LanguageTeacherEvent Handler
      * @param MvcEvent $event
      * @throws \Exception
      */

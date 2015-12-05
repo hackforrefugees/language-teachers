@@ -6,8 +6,7 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'Application',
-        'Event',
-        'User'
+        'User',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

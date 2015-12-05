@@ -16,7 +16,7 @@ use Zend\Stdlib\CallbackHandler;
 use Zend\Stdlib\PriorityQueue;
 
 /**
- * Event manager: notification system
+ * LanguageTeacherEvent manager: notification system
  *
  * Use the EventManager when you want to create a per-instance notification
  * system for your objects.
@@ -408,7 +408,7 @@ class EventManager implements EventManagerInterface
      *
      * Actual functionality for triggering listeners, to which trigger() delegate.
      *
-     * @param  string           $event Event name
+     * @param  string           $event LanguageTeacherEvent name
      * @param  EventInterface $e
      * @param  null|callable    $callback
      * @return ResponseCollection

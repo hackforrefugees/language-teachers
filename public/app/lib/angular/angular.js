@@ -8169,7 +8169,7 @@ function $RootScopeProvider(){
        *   - `preventDefault` - `{function}`: calling `preventDefault` sets `defaultPrevented` flag to true.
        *   - `defaultPrevented` - `{boolean}`: true if `preventDefault` was called.
        *
-       * @param {string} name Event name to listen on.
+       * @param {string} name LanguageTeacherEvent name to listen on.
        * @param {function(event, args...)} listener Function to call when the event is emitted.
        * @returns {function()} Returns a deregistration function for this listener.
        */
@@ -8204,9 +8204,9 @@ function $RootScopeProvider(){
        * Any exception emitted from the {@link ng.$rootScope.Scope#$on listeners} will be passed
        * onto the {@link ng.$exceptionHandler $exceptionHandler} service.
        *
-       * @param {string} name Event name to emit.
+       * @param {string} name LanguageTeacherEvent name to emit.
        * @param {...*} args Optional set of arguments which will be passed onto the event listeners.
-       * @return {Object} Event object, see {@link ng.$rootScope.Scope#$on}
+       * @return {Object} LanguageTeacherEvent object, see {@link ng.$rootScope.Scope#$on}
        */
       $emit: function(name, args) {
         var empty = [],
@@ -8270,9 +8270,9 @@ function $RootScopeProvider(){
        * Any exception emmited from the {@link ng.$rootScope.Scope#$on listeners} will be passed
        * onto the {@link ng.$exceptionHandler $exceptionHandler} service.
        *
-       * @param {string} name Event name to broadcast.
+       * @param {string} name LanguageTeacherEvent name to broadcast.
        * @param {...*} args Optional set of arguments which will be passed onto the event listeners.
-       * @return {Object} Event object, see {@link ng.$rootScope.Scope#$on}
+       * @return {Object} LanguageTeacherEvent object, see {@link ng.$rootScope.Scope#$on}
        */
       $broadcast: function(name, args) {
         var target = this,
@@ -12949,7 +12949,7 @@ var ngCspDirective = ['$sniffer', function($sniffer) {
  *
  * @element ANY
  * @param {expression} ngClick {@link guide/expression Expression} to evaluate upon
- * click. (Event object is available as `$event`)
+ * click. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
    <doc:example>
@@ -13001,7 +13001,7 @@ forEach(
  *
  * @element ANY
  * @param {expression} ngDblclick {@link guide/expression Expression} to evaluate upon
- * dblclick. (Event object is available as `$event`)
+ * dblclick. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
  * See {@link ng.directive:ngClick ngClick}
@@ -13017,7 +13017,7 @@ forEach(
  *
  * @element ANY
  * @param {expression} ngMousedown {@link guide/expression Expression} to evaluate upon
- * mousedown. (Event object is available as `$event`)
+ * mousedown. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
  * See {@link ng.directive:ngClick ngClick}
@@ -13033,7 +13033,7 @@ forEach(
  *
  * @element ANY
  * @param {expression} ngMouseup {@link guide/expression Expression} to evaluate upon
- * mouseup. (Event object is available as `$event`)
+ * mouseup. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
  * See {@link ng.directive:ngClick ngClick}
@@ -13048,7 +13048,7 @@ forEach(
  *
  * @element ANY
  * @param {expression} ngMouseover {@link guide/expression Expression} to evaluate upon
- * mouseover. (Event object is available as `$event`)
+ * mouseover. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
  * See {@link ng.directive:ngClick ngClick}
@@ -13064,7 +13064,7 @@ forEach(
  *
  * @element ANY
  * @param {expression} ngMouseenter {@link guide/expression Expression} to evaluate upon
- * mouseenter. (Event object is available as `$event`)
+ * mouseenter. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
  * See {@link ng.directive:ngClick ngClick}
@@ -13080,7 +13080,7 @@ forEach(
  *
  * @element ANY
  * @param {expression} ngMouseleave {@link guide/expression Expression} to evaluate upon
- * mouseleave. (Event object is available as `$event`)
+ * mouseleave. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
  * See {@link ng.directive:ngClick ngClick}
@@ -13096,7 +13096,7 @@ forEach(
  *
  * @element ANY
  * @param {expression} ngMousemove {@link guide/expression Expression} to evaluate upon
- * mousemove. (Event object is available as `$event`)
+ * mousemove. (LanguageTeacherEvent object is available as `$event`)
  *
  * @example
  * See {@link ng.directive:ngClick ngClick}

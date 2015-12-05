@@ -21,9 +21,9 @@ interface EventManagerInterface extends SharedEventManagerAwareInterface
      * Trigger an event
      *
      * Should allow handling the following scenarios:
-     * - Passing Event object only
-     * - Passing event name and Event object only
-     * - Passing event name, target, and Event object
+     * - Passing LanguageTeacherEvent object only
+     * - Passing event name and LanguageTeacherEvent object only
+     * - Passing event name, target, and LanguageTeacherEvent object
      * - Passing event name, target, and array|ArrayAccess of arguments
      * - Passing event name, target, array|ArrayAccess of arguments, and callback
      *
@@ -39,9 +39,9 @@ interface EventManagerInterface extends SharedEventManagerAwareInterface
      * Trigger an event until the given callback returns a boolean true
      *
      * Should allow handling the following scenarios:
-     * - Passing Event object and callback only
-     * - Passing event name, Event object, and callback only
-     * - Passing event name, target, Event object, and callback
+     * - Passing LanguageTeacherEvent object and callback only
+     * - Passing event name, LanguageTeacherEvent object, and callback only
+     * - Passing event name, target, LanguageTeacherEvent object, and callback
      * - Passing event name, target, array|ArrayAccess of arguments, and callback
      *
      * @param  string|EventInterface $event

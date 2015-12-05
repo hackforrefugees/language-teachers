@@ -41,6 +41,19 @@ return array(
                     ),
                 )
             ),
+            'event' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route' => '/event',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Data',
+                        'action' => 'getEventsByGeoLocation',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                )
+            ),
         ),
     ),
     'service_manager' => array(
