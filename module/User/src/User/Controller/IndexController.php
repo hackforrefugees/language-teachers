@@ -29,10 +29,19 @@ class IndexController extends AbstractActionController
             $registerForm = new RegisterForm();
             $registerFilter = new RegisterFilter();
             $registerForm->setInputFilter($registerFilter);
-            $post = $this->request->getPost()->toArray();
+            $post = array_merge_recursive(
+                $this->request->getPost()->toArray(), $this->request->getFiles()->toArray()
+            );
             $registerForm->setData($post);
             if (!$registerForm->isValid()) {
-                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.'));
+                $errorMessages = array();
+                foreach($registerForm->getMessages() as $elementName => $messages){
+                    foreach($messages as $message){
+                        $errorMessages[$elementName] = $message;
+                    }
+                }
+
+                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.', 'formErrors' => $errorMessages));
             }
             $formData = $registerForm->getData();
             $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -130,7 +139,14 @@ class IndexController extends AbstractActionController
             $post = $this->request->getPost()->toArray();
             $loginForm->setData($post);
             if (!$loginForm->isValid()) {
-                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again'));
+                $errorMessages = array();
+                foreach($loginForm->getMessages() as $elementName => $messages){
+                    foreach($messages as $message){
+                        $errorMessages[$elementName] = $message;
+                    }
+                }
+
+                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.', 'formErrors' => $errorMessages));
             }
             $formData = $loginForm->getData();
 
