@@ -29,5 +29,10 @@ angular.module('myApp').controller('RegisterCtrl', function($scope, $http, langu
         console.log(vm.user);
     };
 
+    vm.isStudentOrVolunteer = function(){
+        var check = vm.user.type == "Volunteer" || vm.user.type = "Student";
+        return ;
+    };
+
 
 });
