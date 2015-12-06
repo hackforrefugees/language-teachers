@@ -13,6 +13,7 @@ use User\Form\LoginFilter;
 use User\Form\LoginForm;
 use User\Form\RegisterFilter;
 use User\Form\RegisterForm;
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
@@ -234,6 +235,31 @@ class IndexController extends AbstractActionController
             $this->response->setStatusCode(405);
             return new JsonModel(array('error' => 1, 'message' => 'Request Method not allowed'));
         }
+    }
+
+    public function indexAction()
+    {
+        $authService = new AuthenticationService();
+        $session = $authService->getStorage()->read();
+        $userId = (int)$session['userId'];
+
+        $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $user = $objectManager->find('Application\Entity\LtUser', $userId);
+
+        $userArray = array(
+            'email' => $user->getEmail(),
+            'contactName' => $user->getContactname(),
+            'profilePicturePath' => $user->getProfilepicturepath(),
+            'registrationDate' => $user->getRegistrationdate()->format('Y-m-d'),
+        );
+
+        if($user->getPhone() !== ''){
+            $userArray['phone'] = $user->getPhone();
+        } else {
+            $userArray['phone'] = null;
+        }
+
+        return new JsonModel($userArray);
     }
 }
 

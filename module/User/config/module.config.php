@@ -17,7 +17,8 @@ return array(
                 'options' => array(
                     'route' => '/user',
                     'defaults' => array(
-                        'controller' => 'User\Controller',
+                        '__NAMESPACE__' => 'User\Controller',
+                        'controller' => 'Index',
                         'action' => 'index',
                     )
                 ),

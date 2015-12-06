@@ -25,7 +25,7 @@ return array(
                     'removeParticipantFromEvent' => 'student',
                 ),
                 'User\Controller\Index' => array(
-                    'index' => 'anonymous',
+                    'index' => 'student',
                     'register' => 'anonymous',
                     'login' => 'anonymous',
                     'logout' => 'student',

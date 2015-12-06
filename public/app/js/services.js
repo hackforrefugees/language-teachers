@@ -114,6 +114,15 @@
                     });
             },
 
+            profile: function () {
+                return $http({
+                    method: 'GET',
+                    url: '/user'
+                }).then(function (ref) {
+                    return ref.data;
+                });
+            },
+
             addUser: function (form) {
                 console.log(form);
 
