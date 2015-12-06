@@ -26,9 +26,17 @@
                 .when('/new', {
                     templateUrl: 'partials/new.html',
                     controller: 'NewAlbumCtrl'})
-                .when('/edit/:id', {
-                    templateUrl: 'partials/edit.html',
-                    controller: 'EditAlbumCtrl'})
+                .when('/profile', {
+                    templateUrl: 'partials/profile.html',
+                    controller: 'ProfileCtrl',
+                    resolve: {
+                        user: function(dataservice){
+                            return dataservice.profile().then(function(ref){
+                                return ref;
+                            });
+                        }
+                    }
+                })
                 .when('/album/:id', {
                     templateUrl: 'partials/album.html',
                     controller: 'AlbumCtrl'})
