@@ -1,13 +1,13 @@
 # Swedish Lectures
 Swedish Lectures is a web service for refugees looking for lectures in Swedish. The web application is a platform where teaching voloneers and organizations can advertise for lectures, and students (refugees) can browse and join lectures in their vicinity.
 
-*Teaching volonteers
+* Teaching volonteers
 A teching volonteer is a person with skills in Swedish and one or more other languages who teaches lectures in Swedish. A teching volonteer can register on the web application and advertise for lectures that students can apply for.
 
-*Organization
+* Organization
 An organization is an entity that arranges lectures in Swedish. They can browse our database of teaching volonteers to find a suitable volonteer for their lecture, and advertise lectures that students can apply for.
 
-*Student
+* Student
 A student is a person who wants to attend lectures in Swedish. They can browse and join lectures in their vicinity held in thier native language.
 
 # Instructions
