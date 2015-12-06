@@ -16,14 +16,6 @@ class LanguageController extends AbstractRestfulController
 
     public function indexAction()
     {
-        $authService = new AuthenticationService();
-        if ($authService->hasIdentity()) {
-            $session = $authService->getStorage()->read();
-            $userId = $session['userGroup'];
-            die(var_dump($userId));
-        } else {
-            die(var_dump("Not authenticated"));
-        }
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $languages = $objectManager->getRepository('Application\Entity\LtLanguage')->findAll();
         $languageList = array();

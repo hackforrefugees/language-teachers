@@ -3,8 +3,11 @@
 namespace Application\Controller;
 
 
+use Application\Entity\LtEvent;
 use Application\Form\CreateEventForm;
 use Application\Form\CreateEventFilter;
+use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
@@ -202,7 +205,21 @@ class EventController extends AbstractRestfulController
             }
 
             $formData = $createEventForm->getData();
-            die(var_dump($formData));
+            $authService = new AuthenticationService();
+            $session = $authService->getStorage()->read();
+            $userId = $session['userId'];
+
+            $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+            $user = $objectManager->find('Application\Entity\LtUser', $userId);
+            $language = $objectManager->find('Application\Entity\LtLanguage', $formData['eventLanguage']);
+
+            unset($formData['eventLanguage']);
+
+            $hydrator = new DoctrineObject($objectManager);
+            $event = new LtEvent();
+            $event = $hydrator->hydrate($formData, $event);
+            die(var_dump($event));
         } else {
             $this->response->setStatusCode(405);
             return new JsonModel(array(
