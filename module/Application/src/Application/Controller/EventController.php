@@ -50,4 +50,17 @@ class EventController extends AbstractRestfulController{
         }
     }
 
+    public function getSingleEventAction(){
+        $eventId = $this->params()->fromRoute('eventId', 0);
+        if(!$eventId){
+            $this->response->setStatusCode(404);
+            return new JsonModel(array('error' => 1, 'message' => 'No Event-Id defined'));
+        }
+
+        $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $event = $objectManager->find('Application\Entity\LtEvent', $eventId);
+
+        return new JsonModel(array('event' => $event));
+    }
+
 }
