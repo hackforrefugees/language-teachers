@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <img src="{{user.profilePicturePath}}">
+        </div>
+        <div class="col-md-8">
+            <ul>
+                <li>{{user.email}}</li>
+                <li>{{user.contactName}}</li>
+                <li>{{user.registrationDate}}</li>
+                <li ng-show="user.phone !== null">{{user.phone}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
