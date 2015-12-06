@@ -1,0 +1,19 @@
+{
+  "name": "swell",
+  "version": "0.0.1",
+  "description": "A way of matching teachers within language with the need on different places, so not all teachers are in Kungsbacka and the people needing help are in Backa.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hackforrefugees/language-teachers.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hackforrefugees/language-teachers/issues"
+  },
+  "homepage": "http://language.teacher.se"
+}

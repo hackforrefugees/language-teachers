@@ -2,7 +2,6 @@
 
 return array(
     'modules' => array(
-        'ZendDeveloperTools',
         'BitDbBcryptAuthAdapter',
         'DoctrineModule',
         'DoctrineORMModule',

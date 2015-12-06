@@ -125,34 +125,55 @@
         load();  
     });
 
-    as.controller('LoginCtrl', function($routeParams, $location){
-        var vm = this;
+    as.controller('LoginCtrl', function($scope, $routeParams, $location){
+        var vm = $scope;
         vm.username = undefined;
         vm.password = undefined;
-        vm.login = login();
-
-
-        /////////////////////////////////////////////////////////////
-
-        function login(username, password){
-
+        vm.login = function(){
+            console.log("login");
         }
-
 
     });
 
-    as.controller('RegisterCtrl', function(){
-        var vm = this;
-        vm.username = undefined;
-        vm.password = undefined;
-        vm.type = undefined;
-        vm.selectType = selectType(type);
+    as.controller('RegisterCtrl', function($scope){
+        var vm = $scope;
+        vm.user = [];
+        vm.user.email = undefined;
+        vm.user.password = undefined;
+        vm.user.type = undefined;
+        vm.user.phone = undefined;
 
-        ///////////////////////////////////////////////////////////
+        vm.types = [
+            {name: "Organization"},
+            {name: "Teacher"},
+            {name: "Student"}
+        ];
 
-        function selectType(type){
-            vm.type = type;
-            vm.loadType(type);
+        vm.languages =  [
+            {name: "Arabic"},
+            {name: "English"},
+            {name: "Swedish"}
+        ];
+
+        vm.nativeLanguages = [
+            {name: "Arabic"},
+            {name: "English"},
+            {name: "Swedish"}
+        ];
+
+        vm.user.languages = [];
+
+        vm.toggleLang = function(lang){
+            var index = vm.user.languages.indexOf(lang);
+
+            if(index > -1) vm.user.languages.splice(index, 1);
+            else vm.user.languages.push(lang);
+
+            console.log(vm.user.languages);
+        };
+
+        vm.submitForm = function(){
+            console.log(vm.user);
         }
 
     });
