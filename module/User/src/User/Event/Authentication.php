@@ -68,11 +68,11 @@ class Authentication
         $action = $routeMatch->getParam('action');
 
         if (!$acl->hasResource($controller)) {
-            throw new \Exception('Ressource ' . $controller . ' nicht definiert');
+            throw new \Exception('Ressource ' . $controller . ' not defined');
         }
 
         if (!$acl->isAllowed($role, $controller, $action)) {
-            $url = $event->getRouter()->assemble(array(), array('name' => 'notAllowed'));
+            $url = $event->getRouter()->assemble(array(), array('name' => 'user/notAllowed'));
             $response = $event->getResponse();
             $response->getHeaders()->addHeaders(array(array('Location' => $url)));
             $response->setStatusCode(302);

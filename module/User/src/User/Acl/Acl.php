@@ -33,11 +33,11 @@ class Acl extends ZendAcl
     public function  __construct($config)
     {
         if ($config == null) {
-            throw new \Exception('Keine Konfiguration erhalten');
+            throw new \Exception('No configuration present');
         }
 
         if (!isset($config['acl']['roles']) || !isset($config['acl']['resources'])) {
-            throw new \Exception('Ungültige Acl Konfiguration gefunden');
+            throw new \Exception('Invalid ACL-Config found');
         }
 
         $roles = $config['acl']['roles'];
@@ -99,7 +99,7 @@ class Acl extends ZendAcl
                     } elseif ($permission == 'deny') {
                         $this->deny($role, $controller, $action);
                     } else {
-                        throw new \Exception ('Keine gültigen Rechte definiert: ' . $permission);
+                        throw new \Exception ('Invalid permissions defined: ' . $permission);
                     }
                 }
             }

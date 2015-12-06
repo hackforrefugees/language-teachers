@@ -13,6 +13,10 @@ use Zend\View\Model\JsonModel;
  */
 class DataController extends AbstractRestfulController{
 
+    /**
+     * Returns all the available security-questions for the application
+     * @return JsonModel
+     */
     public function getSecurityQuestionsAction(){
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $questions = $objectManager->getRepository('Application\Entity\LtSecurityQuestion')->findAll();

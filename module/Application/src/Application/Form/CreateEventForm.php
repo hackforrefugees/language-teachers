@@ -43,13 +43,29 @@ class CreateEventForm extends Form
 
         $this->add(array(
             'name' => 'eventTime',
-            'type' => 'Zend\Form\Element\DateTime',
+            'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => 'required',
                 'class' => 'form-control',
             ),
             'options' => array(
                 'label' => 'Event-Data & Time:',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
+            )
+        ));
+
+
+        $this->add(array(
+            'name' => 'address',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => 'required',
+                'class' => 'form-control',
+            ),
+            'options' => array(
+                'label' => 'Full Address:',
                 'label_attributes' => array(
                     'class' => 'control-label'
                 )

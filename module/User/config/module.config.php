@@ -35,6 +35,30 @@ return array(
                             )
                         )
                     ),
+                    'notAllowed' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/notAllowed',
+                            'constraints' => array(),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'Index',
+                                'action' => 'notAllowed',
+                            )
+                        )
+                    ),
+                    'logout' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/logout',
+                            'constraints' => array(),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'User\Controller',
+                                'controller' => 'Index',
+                                'action' => 'logout',
+                            )
+                        )
+                    ),
                     'register' => array(
                         'type' => 'Literal',
                         'options' => array(
