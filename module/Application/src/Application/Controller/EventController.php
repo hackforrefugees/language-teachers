@@ -59,7 +59,6 @@ class EventController extends AbstractRestfulController{
 
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $event = $objectManager->find('Application\Entity\LtEvent', $eventId);
-
         return new JsonModel(array('event' => $event));
     }
 
