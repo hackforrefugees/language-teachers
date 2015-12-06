@@ -3,19 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="06bc5476-8291-45aa-8a7c-f4468bcf7b0e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/zendframework/zend-developer-tools" afterPath="$PROJECT_DIR$/vendor/zendframework/zend-developer-tools" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/User/src/User/Acl/Acl.php" afterPath="$PROJECT_DIR$/module/User/src/User/Acl/Acl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/User/src/User/Event/Authentication.php" afterPath="$PROJECT_DIR$/module/User/src/User/Event/Authentication.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/src/Application/Form/CreateEventFilter.php" afterPath="$PROJECT_DIR$/module/Application/src/Application/Form/CreateEventFilter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/src/Application/Form/CreateEventForm.php" afterPath="$PROJECT_DIR$/module/Application/src/Application/Form/CreateEventForm.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/User/src/User/Controller/DataController.php" afterPath="$PROJECT_DIR$/module/User/src/User/Controller/DataController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/src/Application/Controller/EventController.php" afterPath="$PROJECT_DIR$/module/Application/src/Application/Controller/EventController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/User/src/User/Controller/IndexController.php" afterPath="$PROJECT_DIR$/module/User/src/User/Controller/IndexController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/src/Application/Controller/LanguageController.php" afterPath="$PROJECT_DIR$/module/Application/src/Application/Controller/LanguageController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/DoctrineORMModule/Proxy/__CG__ApplicationEntityLtUser.php" afterPath="$PROJECT_DIR$/data/DoctrineORMModule/Proxy/__CG__ApplicationEntityLtUser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/autoload/acl.global.php" afterPath="$PROJECT_DIR$/config/autoload/acl.global.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/config/module.config.php" afterPath="$PROJECT_DIR$/module/Application/config/module.config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/User/config/module.config.php" afterPath="$PROJECT_DIR$/module/User/config/module.config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="LanguageTeacher.iws" />
     <ignored path=".idea/workspace.xml" />
