@@ -53,7 +53,7 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'login' => array(
+                    'showSingle' => array(
                         'type' => 'Segment',
                         'options' => array(
                             'route' => '[/:eventId]',
@@ -64,6 +64,17 @@ return array(
                                 '__NAMESPACE__' => 'Application\Controller',
                                 'controller' => 'Event',
                                 'action' => 'getSingleEvent',
+                            )
+                        )
+                    ),
+                    'create' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/create',
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Application\Controller',
+                                'controller' => 'Event',
+                                'action' => 'createEvent',
                             )
                         )
                     ),
