@@ -266,12 +266,26 @@ class RegisterForm extends Form
             'type' => '\Zend\Form\Element\MultiCheckbox',
             'attributes' => array(
                 'class' => 'form-control',
-                'id' => 'region',
                 'placeholder' => 'Languages you know:',
             ),
             'options' => array(
                 'label' => 'Languages you know:',
                 'disable_inarray_validator' => true,
+                'label_attributes' => array(
+                    'class' => 'col-md-12 control-label'
+                )
+            )
+        ));
+
+        $this->add(array(
+            'name' => 'region',
+            'type' => '\Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'form-control',
+                'placeholder' => 'City:',
+            ),
+            'options' => array(
+                'label' => 'City:',
                 'label_attributes' => array(
                     'class' => 'col-md-12 control-label'
                 )
