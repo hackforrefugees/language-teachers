@@ -11,8 +11,8 @@
             <label for="inputPassword">Password</label>
             <input ng-model="user.password" type="password" class="form-control" id="inputPassword" placeholder="Password" required>
 
-            <label for="inputPasswordC">Password</label>
-            <input ng-model="user.password" type="password" class="form-control" id="inputPasswordC" placeholder="Confirm Password" required>
+            <label for="inputPasswordC">Confirm Password</label>
+            <input ng-model="user.confirmPassword" type="password" class="form-control" id="inputPasswordC" placeholder="Confirm Password" required>
         </div>
 
         <div class="form-group">
@@ -44,13 +44,18 @@
             </select>
         </div>
 
+        <div class="control-group">
+            <label for="regionInput">City</label>
+            <input ng-model="user.region" type="text" class="form-control" id="regionInput" placeholder="City" required>
+        </div>
+
         <div class="form-group">
             <label for="typeInput">User Type</label>
-            <select ng-model="user.type" ng-options="type.name for type in types" ng-init="user.type = types[0].name" id="typeInput">
+            <select ng-model="user.userType" ng-options="type.name for type in types" ng-init="user.type = types[0].name" id="typeInput">
             </select>
         </div>
 
-        <div ng-show="user.type.name == 'Organization'">
+        <div ng-show="user.userType.name == 'Organization'">
 
             <label for="contactNameInput">Contact Person Name</label>
             <input ng-model="contactPersonName" type="text" class="form-control" placholder="Name" id="contactNameInput" \>
@@ -70,9 +75,9 @@
 
         </div>
 
-        <div ng-show="user.type.name == 'Teacher'">
+        <div ng-show="user.userType.name == 'Volunteer'">
 
-            <label for="languagesInput">Volunteer</label>
+            <label for="languagesInput">Languages</label>
             <div class="form-group" ng-repeat="language in languages" id="languagesInput">
                 <input  type="checkbox"
                         value="{{language}}"
@@ -85,7 +90,7 @@
 
         {{test}}
 
-        <div ng-show="user.type.name == 'Student' ng-show=user.type.name == 'Teacher'">
+        <div ng-show="isStudentOrVolunteer(user.userType.name)">
             <label for="nativeInput">Native Language</label>
             <select ng-model="user.native" ng-options="native for native in nativeLanguages" id="nativeInput">
             </select>

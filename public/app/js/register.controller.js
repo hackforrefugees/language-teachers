@@ -1,4 +1,4 @@
-angular.module('myApp').controller('RegisterCtrl', function($scope, $http, languages){
+angular.module('myApp').controller('RegisterCtrl', function($scope, $http, languages, dataservice){
     var vm = $scope;
     vm.user = [];
     vm.user.email = undefined;
@@ -7,9 +7,18 @@ angular.module('myApp').controller('RegisterCtrl', function($scope, $http, langu
     vm.user.phone = undefined;
 
     vm.types = [
-        {name: "Organization"},
-        {name: "Teacher"},
-        {name: "Student"}
+        {
+            name: "Organisation",
+            key: "organisation"
+        },
+        {
+            name: "Volunteer",
+            key: "volunteer"
+        },
+        {
+            name: "Student",
+            key: "student"
+        }
     ];
 
     vm.languages =  languages;
@@ -26,12 +35,11 @@ angular.module('myApp').controller('RegisterCtrl', function($scope, $http, langu
     };
 
     vm.submitForm = function(){
-        console.log(vm.user);
+        dataservice.addUser(vm.user);
     };
 
-    vm.isStudentOrVolunteer = function(){
-        var check = vm.user.type == "Volunteer" || vm.user.type = "Student";
-        return ;
+    vm.isStudentOrVolunteer = function(type){
+        return type == "Volunteer" || type == "Student";
     };
 
 

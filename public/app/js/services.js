@@ -108,6 +108,38 @@
 						.then(function(data, status, headers){
 							$location.path("/register");
 						});
+			},
+
+			addUser: function(form){
+				console.log(form);
+
+				var data = {
+					email: form.email,
+					userType: form.userType.key,
+					region: form.region,
+					contactName: form.contactName,
+					phone: form.phone,
+					password: form.password,
+					confirmPassword: form.confirmPassword,
+					profilePicturePath: form.profilePicturePath,
+					securityQuestionId: "1",
+					securityQuestionAnswer: form.securityQuestionAnswer,
+					conactPersonName: form.contactPersonName,
+					contactPersonEmail: form.contactPersonEmail,
+					contactPersonPhone: form.contactPersonPhone,
+					organisationDescription: form.organisationDescription,
+					organisationWebsite: form.organisationWebsite,
+					languages: form.languages,
+					nativeLanguage: form.native
+				};
+
+				console.log(data);
+
+				$http.post('/user/register', data)
+						.then(function(ref){
+							console.log("data");
+							console.log(ref.data);
+						});
 			}
 		}
 
