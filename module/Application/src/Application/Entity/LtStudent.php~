@@ -1,0 +1,53 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtStudent
+ *
+ * @ORM\Table(name="lt_student", indexes={@ORM\Index(name="studentNativeLanguage_idx", columns={"nativeLanguage"})})
+ * @ORM\Entity
+ */
+class LtStudent
+{
+    /**
+     * @var \Application\Entity\LtLanguage
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\LtLanguage")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="nativeLanguage", referencedColumnName="langCode")
+     * })
+     */
+    private $nativelanguage;
+
+    /**
+     * @var \Application\Entity\LtUser
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="studentId", referencedColumnName="userId")
+     * })
+     */
+    private $studentid;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtEvent", mappedBy="studentid")
+     */
+    private $eventid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->eventid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

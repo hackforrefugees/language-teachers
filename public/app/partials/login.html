@@ -1,0 +1,19 @@
+<div ng-controller="LoginCtrl">
+
+    <div class="form-group">
+        <label for="inputEmail">Email address</label>
+        <input ng-model="email" type="text" class="form-control" id="inputEmail" placeholder="Email">
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input ng-model="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+
+    <div class="form-actions">
+        <button ng-click="login()" class="btn btn-success">Login</button>
+        <a class="btn" href="#/register">Register</a>
+    </div>
+
+</div>

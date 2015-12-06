@@ -1,0 +1,64 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtOrganisation
+ *
+ * @ORM\Table(name="lt_organisation")
+ * @ORM\Entity
+ */
+class LtOrganisation
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPersonName", type="string", length=150, nullable=false)
+     */
+    private $contactpersonname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPersonEmail", type="string", length=300, nullable=false)
+     */
+    private $contactpersonemail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactPersonPhone", type="string", length=20, nullable=true)
+     */
+    private $contactpersonphone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="organisationDescription", type="text", length=65535, nullable=true)
+     */
+    private $organisationdescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="organisationWebsite", type="string", length=250, nullable=true)
+     */
+    private $organisationwebsite;
+
+    /**
+     * @var \Application\Entity\LtUser
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organisationId", referencedColumnName="userId")
+     * })
+     */
+    private $organisationid;
+
+
+}
+

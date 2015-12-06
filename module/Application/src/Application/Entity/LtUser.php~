@@ -1,0 +1,146 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtUser
+ *
+ * @ORM\Table(name="lt_user")
+ * @ORM\Entity
+ */
+class LtUser
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="userId", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $userid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=150, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contactName", type="string", length=200, nullable=false)
+     */
+    private $contactname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=20, nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=200, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profilePicturePath", type="string", length=300, nullable=true)
+     */
+    private $profilepicturepath;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userGroup", type="string", length=100, nullable=false)
+     */
+    private $usergroup;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="emailVerfied", type="boolean", nullable=true)
+     */
+    private $emailverfied;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="registrationDate", type="date", nullable=true)
+     */
+    private $registrationdate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="emailChangedDate", type="date", nullable=true)
+     */
+    private $emailchangeddate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="registrationToken", type="string", length=300, nullable=true)
+     */
+    private $registrationtoken;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="resetExpirationDate", type="date", nullable=true)
+     */
+    private $resetexpirationdate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="restRequestHash", type="string", length=300, nullable=true)
+     */
+    private $restrequesthash;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="latitude", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="longitude", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtSecurityQuestion", inversedBy="userid")
+     * @ORM\JoinTable(name="lt_user_security_question",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="userId", referencedColumnName="userId")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="securityQuestionId", referencedColumnName="securityQuestionId")
+     *   }
+     * )
+     */
+    private $securityquestionid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->securityquestionid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

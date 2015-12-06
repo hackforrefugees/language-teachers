@@ -1,0 +1,499 @@
+<?php
+$this->headLink()->appendStylesheet($this->basePath() . '/libraries/bootstrap-editable/css/bootstrap-editable.css')
+    ->appendStylesheet($this->basePath() . '/libraries/bootstrap-datepicker/css/datepicker.css')
+    ->appendStylesheet($this->basePath() . '/libraries/qTip/jquery.qtip.css')
+    ->appendStylesheet($this->basePath() . '/libraries/cropper/css/cropper.min.css')
+    ->appendStylesheet($this->basePath() . '/libraries/cropper/css/cropperMain.css');
+$this->headScript()->appendFile($this->basePath() . '/libraries/bootstrap-editable/js/bootstrap-editable.min.js', 'text/javascript')
+    ->appendFile($this->basePath() . '/libraries/bootstrap-datepicker/js/bootstrap-datepicker.js', 'text/javascript')
+    ->appendFile($this->basePath() . '/libraries/bootstrap-datepicker/js/locales/bootstrap-datepicker.' . Locale::getPrimaryLanguage(Locale::getDefault()) . '.js', 'text/javascript')
+    ->appendFile($this->basePath() . '/libraries/qTip/jquery.qtip.js', 'text/javascript');
+?>
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('.infoToolTipIcon').each(function () {
+                var descriptionId = $(this).attr('data-descriptionId');
+                var description = $('#' + descriptionId).html();
+                $(this).qtip({
+                    content: {
+                        text: description
+                    },
+                    style: {
+                        name: 'light',
+                        tip: 'bottomLeft',
+                        classes: 'infoToolTip'
+                    },
+                    position: {
+                        my: 'topLeft',
+                        at: 'bottomRight',
+                        adjust: {screen: true}
+                    }
+                });
+            });
+
+            $('.editable').each(function (e) {
+                var staticData = $(this).attr('data-static');
+                if (typeof staticData !== typeof undefined && staticData !== false) {
+                    if (staticData === 'gender') {
+                        var source = [
+                            {value: 'm', text: '<?php echo $this->translate('Male');?>'},
+                            {value: 'w', text: '<?php echo $this->translate('Female');?>'}
+                        ];
+                    }
+                    $(this).editable({
+                        source: source,
+                        success: function (response) {
+                            if (response['error'] === 0) {
+                                if (response['formattedNewValue'] !== null) {
+                                    return {newValue: response['formattedNewValue']};
+                                }
+                            } else {
+                                bootbox.alert(response['message']);
+                            }
+                        }
+                    });
+                } else {
+                    var type = $(this).attr('data-type');
+                    if (type === "date") {
+                        <?php
+                            $dateFormatter = new IntlDateFormatter(Locale::getDefault(), IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE);
+                            $dateFormat = $dateFormatter->getPattern();
+                        ?>
+                        $(this).editable({
+                            success: function (response) {
+                                if (response['error'] === 0) {
+                                    if (response['formattedNewValue'] !== null) {
+                                        return {newValue: response['formattedNewValue']};
+                                    }
+                                } else {
+                                    bootbox.alert(response['message']);
+                                }
+                            }
+                        });
+                    } else {
+                        $(this).editable({
+                            success: function (response) {
+                                if (response['error'] === 0) {
+                                    if (response['formattedNewValue'] !== null) {
+                                        return {newValue: response['formattedNewValue']};
+                                    }
+                                } else {
+                                    bootbox.alert(response['message']);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        function deleteUser() {
+            bootbox.confirm('<?php echo $this->translate('Do you really want to delete your account');?>?', function (result) {
+                if (result) {
+                    $.get('<?php echo $this->url('user/delete')?>', function (data) {
+                        bootbox.alert(data['message'], function (e) {
+                            if (data['error'] !== 1) {
+                                location.href = '<?php echo $this->url('user/successFullyDeleted')?>';
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    </script>
+    <div class="crop-avatar">
+        <?php
+        $form->setAttribute('action', $this->url('user/profile'));
+        $form->prepare();
+        $this->formInput()->setTranslatorTextDomain('allstrings');
+        $this->formLabel()->setTranslatorTextDomain('allstrings');
+        $this->formSelect()->setTranslatorTextDomain('allstrings');
+        $this->formTextarea()->setTranslatorTextDomain('allstrings');
+        $this->formRadio()->setTranslatorTextDomain('allstrings');
+        $this->formfile()->setTranslatorTextDomain('allstrings');
+        $this->formElementErrors()->setTranslatorTextDomain('formerrors');
+        echo $this->form()->openTag($form);
+        ?>
+        <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog"
+             tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"
+                            id="avatar-modal-label"><?php echo $this->translate('Select Profile-Picture'); ?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="avatar-body">
+                            <!-- Upload image and data -->
+                            <div class="avatar-upload">
+                                <?php
+                                echo $this->formelement($form->get('profilePictureSrc'));
+                                echo $this->formelement($form->get('profilePictureData'));
+                                ?>
+                                <div class="form-group row">
+                                    <?php
+                                    echo $this->formLabel($form->get('profilePicture'));
+                                    ?>
+                                    <div class="col-md-2 col-xs-12">
+                                        <?php echo $this->formFile($form->get('profilePicture')); ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Crop and preview -->
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="avatar-wrapper" id="avatarWrapper"></div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="avatar-preview sm-round"></div>
+                                    <div class="avatar-preview md-round"></div>
+                                    <div class="avatar-preview lg-square"></div>
+                                </div>
+                            </div>
+
+                            <div class="row avatar-btns">
+                                <div class="col-md-12">
+                                    <div class="center">
+                                        <?php echo $this->formSubmit($form->get('submit')) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+        <?php echo $this->form()->closeTag() ?>
+    </div>
+<?php if (isset($languages) && count($languages) !== 0): ?>
+    <div class="modal fade" id="addLanguage" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"
+                        id="avatar-modal-label"><?php echo $this->translate('Select Language'); ?></h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="languageList">
+                        <?php foreach ($languages as $language): ?>
+                            <li>
+                                <a href="<?php echo $this->url('user/addTranslation', array('language' => $language['langCode'])) ?>">
+                                    <img src="<?php echo $this->basePath($language['flag']) ?>"
+                                         alt="<?php echo $language['langName'] ?>"> <?php echo $language['langName'] ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+<?php endif; ?>
+<?php if (isset($existingLanguages) && count($existingLanguages) !== 0): ?>
+    <div class="modal fade" id="editLanguage" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"
+                        id="avatar-modal-label"><?php echo $this->translate('Select Language'); ?></h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="languageListMultiLink">
+                        <?php foreach ($existingLanguages as $language): ?>
+                            <li>
+                                    <span><img src="<?php echo $this->basePath($language['flag']) ?>"
+                                               alt="<?php echo $language['langName'] ?>"> <?php echo $language['langName'] ?>
+                                        :</span>
+                                <a href="<?php echo $this->url('user/editTranslation', array('language' => $language['langCode'])) ?>">
+                                    <?php echo $this->translate('Edit') ?>
+                                </a>
+                                <?php if (count($existingLanguages) !== 1): ?>
+                                    <a href="<?php echo $this->url('user/deleteTranslation', array('language' => $language['langCode'])) ?>">
+                                        <?php echo $this->translate('Remove') ?>
+                                    </a>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+<?php endif; ?>
+    <div class="module">
+        <div class="module-content">
+            <div class="agent-card">
+                <div class="row">
+                    <?php if ($profilePicture !== null): ?>
+                        <div class="pdf-thumb-box mb30"><a href="#" class="agent-card-image" data-toggle="modal"
+                                                           data-target="#avatar-modal">
+                                <div class="pdf-thumb-box-overlay">
+                                <span class="fa-stack fa-lg">
+                                    <?php echo $this->translate('Edit') ?>
+                                </span>
+                                </div>
+                                <img class="img-responsive"
+                                     src="<?php echo $this->basePath($profilePicture->getImagePath() . '/' . $profilePicture->getImageName()) ?>"
+                                     alt="">
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div class="pdf-thumb-box mb30"><a href="#" class="agent-card-image" data-toggle="modal"
+                                                           data-target="#avatar-modal">
+                                <div class="pdf-thumb-box-overlay">
+                                <span class="fa-stack fa-lg">
+                                    <?php echo $this->translate('Upload') ?>
+                                </span>
+                                </div>
+                                <div class="placeholder-image">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-camera"></i>
+                                </span>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ($user instanceof \Application\Entity\Agent): ?>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="center">
+                            <h2 class="page-header"><?php echo $this->translate('Agent Information') ?></h2>
+                        </div>
+
+                        <div class="agent-card-info">
+                            <?php if ($agentDescription !== null): ?>
+                                <p><strong><?php echo $this->translate('Short-Description'); ?>:</strong><br>
+                                    <?php echo $agentDescription->getShortDescription() ?>
+                                </p>
+                                <p><strong><?php echo $this->translate('Description'); ?>:</strong><br>
+                                    <?php echo $agentDescription->getDescription() ?></p>
+                            <?php endif ?>
+                            <br>
+
+                            <div class="center">
+                                <h2 class="page-header"><?php echo $this->translate('Address data'); ?></h2>
+                            </div>
+                            <ul>
+                                <li><strong><?php echo $this->translate('Street') ?>
+                                        : </strong><?php echo $user->getStreet() . ' ' . $user->getStreetNumber() ?>
+                                </li>
+                                <li>
+                                    <strong><?php echo $this->translate('Zip-Code') . ' / ' . $this->translate('City'); ?>
+                                        : </strong><?php echo $user->getZipCode() . ' ' . $user->getCity() ?></li>
+                                <li>
+                                    <strong><?php echo $this->translate('State') . ' / ' . $this->translate('Country'); ?>
+                                        : </strong><?php echo $user->getState() . ', ' . $user->getCountry() ?></li>
+                            </ul>
+                        </div><!-- /.agent-card-info -->
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <?php else: ?>
+                        <div class="col-sm-12 col-md-8">
+                            <?php endif; ?>
+                            <div class="center">
+                                <h2 class="page-header"><?php echo $this->translate('Information') ?></h2>
+                            </div>
+
+                            <div class="agent-card-info">
+                                <ul>
+                                    <li>
+                                        <strong><?php echo $this->translate('Date of Registration') ?>:</strong>
+                                        <?php echo $this->dateFormat(
+                                            new DateTime($user->getRegistrationDate()),
+                                            IntlDateFormatter::MEDIUM,
+                                            IntlDateFormatter::NONE,
+                                            Locale::getDefault()
+                                        ); ?>
+                                    </li>
+                                    <li>
+                                        <strong><?php echo $this->translate('E-Mail') ?>:</strong>
+                                        <a href="#" class="editable"
+                                           data-type="text" data-pk="<?php echo $user->getUserId() ?>"
+                                           id="email"
+                                           data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                           data-title="<?php echo $this->translate('Enter new E-Mail') ?>">
+                                            <?php echo $user->getEmail() ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <strong><?php echo $this->translate('Gender') ?>:</strong>
+                                        <a href="#" class="editable"
+                                           data-type="select" data-pk="<?php echo $user->getUserId() ?>"
+                                           id="gender"
+                                           data-static="gender"
+                                           data-value="<?php echo $user->getGender() ?>"
+                                           data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                           data-title="<?php echo $this->translate('Select Gender') ?>">
+                                            <?php if ($user->getGender() === 'm'): echo $this->translate('Male');
+                                            else: echo $this->translate('Female'); endif; ?>
+                                        </a>
+                                    </li>
+                                    <li>
+
+                                        <strong><?php echo $this->translate('Birthday') ?>:</strong>
+                                        <a href="#" class="editable"
+                                           data-type="date" data-pk="<?php echo $user->getUserId() ?>"
+                                           id="birthday"
+                                           data-value="<?php echo $user->getBirthDate() ?>"
+                                           data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                           data-title="<?php echo $this->translate('Select date') ?>">
+                                            <?php echo $this->dateFormat(
+                                                new DateTime($user->getBirthDate()),
+                                                IntlDateFormatter::MEDIUM,
+                                                IntlDateFormatter::NONE,
+                                                Locale::getDefault()
+                                            ); ?>
+                                        </a>
+                                    </li>
+                                    <?php if ($user instanceof \Application\Entity\Agent): ?>
+                                        <li>
+                                            <strong><?php echo $this->translate('Original-Contract') ?></strong><br>
+                                            <a href="<?php echo $this->url('user/downloadContract') ?>"
+                                               class="btn btn-secondary"><?php echo $this->translate('Download') ?></a>
+                                        </li>
+                                        <?php if ($user->getContractId() !== null): ?>
+                                            <li>
+                                                <strong><?php echo $this->translate('Signed-Contract') ?></strong><br>
+                                                <a href="<?php echo $this->url('agentBackend/contract', array('contractId' => $user->getContractId())) ?>"
+                                                   class="btn btn-secondary"><?php echo $this->translate('Download') ?></a>
+                                            </li>
+                                            <li><strong><?php echo $this->translate('Edit Contract') ?> <i
+                                                        class="fa fa-info-circle infoToolTipIcon"
+                                                        data-descriptionId="updateContractInfo"></i></strong><br>
+                                                <a href="<?php echo $this->url('agentBackend/editSignedContract') ?>"
+                                                   class="btn btn-secondary"><?php echo $this->translate('Edit Contract') ?></a>
+                                            </li>
+                                            <li>
+                                                <strong><?php echo $this->translate('Contract-Upload-Date') ?></strong>
+                                                <?php echo $this->dateFormat(
+                                                    new DateTime($user->getContractUploadDate()),
+                                                    IntlDateFormatter::MEDIUM,
+                                                    IntlDateFormatter::NONE,
+                                                    Locale::getDefault()
+                                                ); ?>
+                                            </li>
+                                            <div id="updateContractInfo" style="display: none;">
+                                                <?php echo $this->translate('Uploading a new contract leads to your properties being excluded from any searches/lists until the new contract has been proofed by our team.') ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php elseif
+                                    ($user instanceof \Application\Entity\Buyer
+                                    ): ?>
+                                        <li>
+                                            <strong><?php echo $this->translate('Minimum-Rent'); ?>:</strong>
+                                            <a href="#" class="editable"
+                                               data-type="text" data-pk="<?php echo $user->getUserId() ?>"
+                                               id="minRent"
+                                               data-value="<?php echo $user->getMinRent() ?>"
+                                               data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                               data-title="<?php echo $this->translate('Minimum-Rent') ?>">
+                                                <?php echo $this->currencyFormat($user->getMinRent(), $currency->getCurrencyCode(), null, Locale::getDefault()); ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <strong><?php echo $this->translate('Maximum-Rent'); ?>:</strong>
+                                            <a href="#" class="editable"
+                                               data-type="text" data-pk="<?php echo $user->getUserId() ?>"
+                                               id="maxRent"
+                                               data-value="<?php echo $user->getMaxRent() ?>"
+                                               data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                               data-title="<?php echo $this->translate('Maximum-Rent') ?>">
+                                                <?php echo $this->currencyFormat($user->getMaxRent(), $currency->getCurrencyCode(), null, Locale::getDefault()); ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <strong><?php echo $this->translate('Minimum-Budget'); ?>:</strong>
+                                            <a href="#" class="editable"
+                                               data-type="text" data-pk="<?php echo $user->getUserId() ?>"
+                                               id="minBudget"
+                                               data-value="<?php echo $user->getMinBudget() ?>"
+                                               data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                               data-title="<?php echo $this->translate('Minimum-Budget') ?>">
+                                                <?php echo $this->currencyFormat($user->getMinBudget(), $currency->getCurrencyCode(), null, Locale::getDefault()); ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <strong><?php echo $this->translate('Maximum-Budget'); ?>:</strong>
+                                            <a href="#" class="editable"
+                                               data-type="text" data-pk="<?php echo $user->getUserId() ?>"
+                                               id="maxBudget"
+                                               data-value="<?php echo $user->getMaxBudget() ?>"
+                                               data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                               data-title="<?php echo $this->translate('Maximum-Budget') ?>">
+                                                <?php echo $this->currencyFormat($user->getMaxBudget(), $currency->getCurrencyCode(), null, Locale::getDefault()); ?>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <strong><?php echo $this->translate('Preferred Currency'); ?>:</strong>
+                                            <a href="#" class="editable"
+                                               data-type="select" data-pk="<?php echo $user->getUserId() ?>"
+                                               id="currencyId"
+                                               data-source="<?php echo $this->url('userRest/currencies') ?>"
+                                               data-value="<?php echo $user->getCurrencyId() ?>"
+                                               data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                               data-title="<?php echo $this->translate('Preferred Currency') ?>">
+                                                <?php echo $currency->getCurrencyName() . ' (' . $currency->getCurrencySign() . ')' ?>
+                                            </a>
+                                        <li>
+                                            <strong><?php echo $this->translate('Preferred Area-Unit'); ?>:</strong>
+                                            <a href="#" class="editable"
+                                               data-type="select" data-pk="<?php echo $user->getUserId() ?>"
+                                               id="areaUnitId"
+                                               data-source="<?php echo $this->url('userRest/areaUnits') ?>"
+                                               data-value="<?php echo $user->getAreaUnitId() ?>"
+                                               data-url="<?php echo $this->url('userRest/inlineEdit') ?>"
+                                               data-title="<?php echo $this->translate('Preferred Area-Unit') ?>">
+                                                <?php echo $areaUnit->getUnitName() . ' (' . $areaUnit->getUnitAbbreviation() . ')'; ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div><!-- /.agent-card-info -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 mb30">
+                            <div class="center">
+                                <h2 class="page-header"><?php echo $this->translate('Actions') ?></h2>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row buttonRow">
+                                        <div class="col-md-12">
+                                            <a href="<?php echo $this->url('user/edit') ?>"
+                                               class="btn btn-secondary btn-warning col-xs-5"><?php echo $this->translate('Edit') ?></a>
+                                            <button onclick="deleteUser()"
+                                                    class="btn btn-secondary btn-danger col-xs-5 col-xs-offset-1"><?php echo $this->translate('Delete') ?></button>
+                                        </div>
+                                    </div>
+                                    <?php if ($user instanceof \Application\Entity\Agent): ?>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button
+                                                    class="btn btn-secondary btn-danger col-xs-5 <?php if (count($languages) === 0): echo 'disabled'; endif; ?>"
+                                                    <?php if (count($languages) !== 0): echo 'data-toggle="modal" data-target="#addLanguage"'; endif; ?>>
+                                                    <?php echo $this->translate('Add Description') ?>
+                                                </button>
+                                                <button class="btn btn-secondary btn-danger col-xs-5 col-xs-offset-1"
+                                                    <?php if (count($existingLanguages) !== 0): echo 'data-toggle="modal" data-target="#editLanguage"'; endif; ?>>
+                                                    <?php echo $this->translate('Edit / Delete Description') ?>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.agent-card-->
+            </div><!-- /.module-content -->
+        </div><!-- /.module -->
+<?php
+$this->inlineScript()->appendFile($this->basePath() . '/libraries/cropper/js/cropper.min.js', 'text/javascript');
+$this->inlineScript()->appendFile($this->basePath() . '/libraries/cropper/js/cropperProfilePictureMain.js', 'text/javascript');
+?>

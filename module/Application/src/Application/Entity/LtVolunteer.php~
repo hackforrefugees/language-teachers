@@ -1,0 +1,69 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LtVolunteer
+ *
+ * @ORM\Table(name="lt_volunteer", indexes={@ORM\Index(name="volunteerNativeLanguage_idx", columns={"nativeLanguage"})})
+ * @ORM\Entity
+ */
+class LtVolunteer
+{
+    /**
+     * @var \Application\Entity\LtLanguage
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\LtLanguage")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="nativeLanguage", referencedColumnName="langCode")
+     * })
+     */
+    private $nativelanguage;
+
+    /**
+     * @var \Application\Entity\LtUser
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="volunteerId", referencedColumnName="userId")
+     * })
+     */
+    private $volunteerid;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtLanguage", inversedBy="volunteerid")
+     * @ORM\JoinTable(name="lt_volunteer_knows_languages",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="volunteerId", referencedColumnName="volunteerId")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="langCode", referencedColumnName="langCode")
+     *   }
+     * )
+     */
+    private $langcode;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtEvent", mappedBy="volunteerid")
+     */
+    private $eventid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->langcode = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

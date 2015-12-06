@@ -1,0 +1,52 @@
+<form name="registrationForm" ng-controller="RegisterCtrl" ng-submit="submitForm(registrationForm.$valid)">
+    <div class="form-group">
+        <label for="inputEmail">Email address</label>
+        <input ng-model="user.email" type="text" class="form-control" id="inputEmail" placeholder="Email" required>
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input ng-model="user.password" type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+    </div>
+
+    <div class="form-group">
+        <label for="inputPhone">Phone</label>
+        <input ng-model="user.phone" type="tel" class="form-control" id="inputPhone" placeholder="Phone Number">
+    </div>
+
+    <select ng-model="user.type" ng-options="type.name for type in types" ng-init="user.type = types[0].name" id="typeInput">
+    </select>
+
+    <div ng-show="user.type.name == 'Teacher'">
+        <label for="languagesInput">Languages</label>
+        <div class="form-group" ng-repeat="language in languages" id="languagesInput">
+            <input  type="checkbox"
+                    value="{{language.name}}"
+                    ng-checked="langSelection.indexOf(language.name) > -1"
+                    ng-click ="toggleLang(language.name)"
+            > {{language.name}}
+        </div>
+    </div>
+
+    <div ng-show="user.type.name == 'Student'">
+        <label for="nativeInput">Native Language</label>
+        <select ng-model="user.native" ng-options="native.name for native in nativeLanguages" id="nativeInput">
+        </select>
+    </div>
+
+    <div ng-show="user.type.name == 'Organization'">
+        <label for="descriptionInput">Description</label>
+        <textarea id="descriptionInput">
+        </textarea>
+    </div>
+
+    <img ng-show="img != undefined" width="96" height="96" src="{{img}}">
+
+    <div class="form-group">
+        <input type="file" fileread="user.img" accept=".jpg, .png">
+        <small class="text-muted">Upload your profile picture here...</small>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
