@@ -14,6 +14,10 @@ use Zend\View\Model\JsonModel;
 class LanguageController extends AbstractRestfulController
 {
 
+    /**
+     * Returns all the available languages of the application
+     * @return JsonModel
+     */
     public function indexAction()
     {
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');

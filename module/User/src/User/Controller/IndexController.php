@@ -23,6 +23,10 @@ use Zend\View\Model\JsonModel;
 class IndexController extends AbstractActionController
 {
 
+    /**
+     * Action for registering a user
+     * @return JsonModel
+     */
     public function registerAction()
     {
         if ($this->request->isPost()) {
@@ -137,7 +141,17 @@ class IndexController extends AbstractActionController
         $authService->clearIdentity();
         $storage = $authService->getStorage();
         $storage->forgetMe();
-        return new JsonModel(array('error' => 0));
+        return new JsonModel(array('error' => 0, 'message' => 'Logout successful'));
+    }
+
+    /**
+     * Returns an error message in case a user is not authorized
+     * @return \Zend\Http\Response
+     */
+    public function notAllowedAction()
+    {
+        $this->response->setStatusCode(401);
+        return new JsonModel(array('error' => 1, 'message' => 'You have to be logged in to access this resource'));
     }
 
     /**

@@ -4,8 +4,8 @@ namespace Application\Controller;
 
 
 use Application\Entity\LtEvent;
-use Application\Form\CreateEventForm;
 use Application\Form\CreateEventFilter;
+use Application\Form\CreateEventForm;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractRestfulController;
@@ -19,6 +19,10 @@ use Zend\View\Model\JsonModel;
 class EventController extends AbstractRestfulController
 {
 
+    /**
+     * Action that returns all the events in a given distance around a given address
+     * @return JsonModel
+     */
     public function indexAction()
     {
         if ($this->request->isPost()) {
@@ -55,6 +59,10 @@ class EventController extends AbstractRestfulController
         }
     }
 
+    /**
+     * Action that returns the data for a single event
+     * @return JsonModel
+     */
     public function getSingleEventAction()
     {
         $eventId = (int)$this->params()->fromRoute('eventId', 0);
@@ -137,25 +145,6 @@ class EventController extends AbstractRestfulController
 
         $eventArray['availableStudentSpaces'] = $event->getMaxstudents() - $students->count();
 
-        if ($students->count() > 0) {
-            foreach ($students as $student) {
-                $tempArray = array();
-                $user = $objectManager->find('Application\Entity\LtUser', $student->getStudentid());
-                $tempArray['name'] = $user->getContactName();
-                $tempArray['email'] = $user->getEmail();
-
-                if ($user->getPhone() !== '') {
-                    $tempArray['phone'] = $user->getPhone();
-                } else {
-                    $tempArray['phone'] = null;
-                }
-
-                $eventArray['students'][] = $tempArray;
-            }
-        } else {
-            $eventArray['students'] = null;
-        }
-
         $volunteers = $event->getVolunteerid();
         if ($event->getMaxteachers() !== 0) {
             $eventArray['availableVolunteerSpaces'] = $event->getMaxteachers() - $volunteers->count();
@@ -163,27 +152,56 @@ class EventController extends AbstractRestfulController
             $eventArray['availableVolunteerSpaces'] = null;
         }
 
-        if ($volunteers->count() > 0) {
-            foreach ($volunteers as $volunteer) {
-                $tempArray = array();
-                $user = $objectManager->find('Application\Entity\LtUser', $volunteer->getVolunteerid());
-                $tempArray['name'] = $user->getContactName();
-                $tempArray['email'] = $user->getEmail();
-                if ($user->getPhone() !== '') {
-                    $tempArray['phone'] = $user->getPhone();
-                } else {
-                    $tempArray['phone'] = null;
-                }
+        $authService = new AuthenticationService();
+        $session = $authService->getStorage()->read();
+        $userId = (int)$session['userId'];
+        $creatorId = (int)$creator->getUserId();
+        if ($userId == $creatorId) {
+            if ($students->count() > 0) {
+                foreach ($students as $student) {
+                    $tempArray = array();
+                    $user = $objectManager->find('Application\Entity\LtUser', $student->getStudentid());
+                    $tempArray['name'] = $user->getContactName();
+                    $tempArray['email'] = $user->getEmail();
 
-                $eventArray['volunteers'][] = $tempArray;
+                    if ($user->getPhone() !== '') {
+                        $tempArray['phone'] = $user->getPhone();
+                    } else {
+                        $tempArray['phone'] = null;
+                    }
+
+                    $eventArray['students'][] = $tempArray;
+                }
+            } else {
+                $eventArray['students'] = null;
             }
-        } else {
-            $eventArray['volunteers'] = null;
+
+            if ($volunteers->count() > 0) {
+                foreach ($volunteers as $volunteer) {
+                    $tempArray = array();
+                    $user = $objectManager->find('Application\Entity\LtUser', $volunteer->getVolunteerid());
+                    $tempArray['name'] = $user->getContactName();
+                    $tempArray['email'] = $user->getEmail();
+                    if ($user->getPhone() !== '') {
+                        $tempArray['phone'] = $user->getPhone();
+                    } else {
+                        $tempArray['phone'] = null;
+                    }
+
+                    $eventArray['volunteers'][] = $tempArray;
+                }
+            } else {
+                $eventArray['volunteers'] = null;
+            }
         }
 
         return new JsonModel($eventArray);
     }
 
+    /**
+     * Action for creating an Event
+     * @return JsonModel
+     */
     public function createEventAction()
     {
         if ($this->request->isPost()) {
@@ -205,6 +223,19 @@ class EventController extends AbstractRestfulController
             }
 
             $formData = $createEventForm->getData();
+
+            if (array_key_exists('address', $formData) && $formData['address'] !== '') {
+                $address = $formData['address'];
+            } else {
+                $address = $formData['street'] . ' ' . $formData['streetNumber'] . ', ' . $formData['zipCode'] . ' ' . $formData['city'] . ', ' . $formData['country'];
+            }
+
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . str_replace(' ', '+', $address) . '&sensor=true';
+            $googleData = file_get_contents($url);
+            $googleDataArray = json_decode($googleData, true);
+            $latitude = $googleDataArray['results'][0]['geometry']['location']['lat'];
+            $longitude = $googleDataArray['results'][0]['geometry']['location']['lng'];
+
             $authService = new AuthenticationService();
             $session = $authService->getStorage()->read();
             $userId = $session['userId'];
@@ -213,13 +244,24 @@ class EventController extends AbstractRestfulController
 
             $user = $objectManager->find('Application\Entity\LtUser', $userId);
             $language = $objectManager->find('Application\Entity\LtLanguage', $formData['eventLanguage']);
+            $eventTime = new \DateTime($formData['eventTime']);
 
-            unset($formData['eventLanguage']);
+            unset($formData['eventLanguage'], $formData['eventTime']);
 
             $hydrator = new DoctrineObject($objectManager);
             $event = new LtEvent();
             $event = $hydrator->hydrate($formData, $event);
-            die(var_dump($event));
+            $event->setCreatoruserid($user);
+            $event->setEventlanguage($language);
+            $event->setEventtime($eventTime);
+            $event->setLatitude($latitude);
+            $event->setLongitude($longitude);
+            $objectManager->persist($event);
+            $objectManager->flush();
+            return new JsonModel(array(
+                'error' => 0,
+                'message' => 'Event created successfully'
+            ));
         } else {
             $this->response->setStatusCode(405);
             return new JsonModel(array(
@@ -228,4 +270,123 @@ class EventController extends AbstractRestfulController
             ));
         }
     }
+
+    /**
+     * Action for assigning the logged in student or volunteer to an event and therefore registering him as a participant
+     * @return JsonModel
+     */
+    public function addParticipantToEventAction()
+    {
+        if ($this->request->isPut()) {
+            $eventId = $this->params()->fromRoute('eventId', 0);
+            if (!$eventId) {
+                $this->response->setStatusCode(404);
+                return new JsonModel(array('error' => 1, 'message' => 'No Event-Id defined'));
+            }
+            $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+            $event = $objectManager->find('Application\Entity\LtEvent', $eventId);
+            $authService = new AuthenticationService();
+            $session = $authService->getStorage()->read();
+            $userId = $session['userId'];
+
+            $user = $objectManager->find('Application\Entity\LtUser', $userId);
+
+            if ($user->getUsergroup() === 'student') {
+                $student = $objectManager->find('Application\Entity\LtStudent', $userId);
+
+                if ($event->getStudentid()->contains($student)) {
+                    return new JsonModel(array(
+                        'error' => 1,
+                        'message' => 'You have already been registered for this event!'
+                    ));
+                }
+
+                $event->addStudentid($student);
+                $objectManager->persist($event);
+                $objectManager->flush();
+            } else {
+                $volunteer = $objectManager->find('Application\Entity\LtVolunteer', $userId);
+                if ($event->getVolunteerid()->contains($volunteer)) {
+                    return new JsonModel(array(
+                        'error' => 1,
+                        'message' => 'You have already been registered for this event!'
+                    ));
+                }
+                $event->addVolunteerid($volunteer);
+                $objectManager->persist($event);
+                $objectManager->flush();
+            }
+
+            $this->response->setStatusCode(201);
+            return new JsonModel(array(
+                'error' => 0,
+                'message' => 'Successfully Registered for event'
+            ));
+        } else {
+            $this->response->setStatusCode(405);
+            return new JsonModel(array(
+                'error' => 1,
+                'message' => 'Request-Type not allowed'
+            ));
+        }
+    }
+
+    /**
+     * Action for assigning the logged in student or volunteer to an event and therefore registering him as a participant
+     * @return JsonModel
+     */
+    public function removeParticipantFromEventAction()
+    {
+        if ($this->request->isDelete()) {
+            $eventId = $this->params()->fromRoute('eventId', 0);
+            if (!$eventId) {
+                $this->response->setStatusCode(404);
+                return new JsonModel(array('error' => 1, 'message' => 'No Event-Id defined'));
+            }
+            $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+            $event = $objectManager->find('Application\Entity\LtEvent', $eventId);
+            $authService = new AuthenticationService();
+            $session = $authService->getStorage()->read();
+            $userId = $session['userId'];
+            $user = $objectManager->find('Application\Entity\LtUser', $userId);
+
+            if ($user->getUsergroup() === 'student') {
+                $student = $objectManager->find('Application\Entity\LtStudent', $userId);
+
+                if (!$event->getStudentid()->contains($student)) {
+                    return new JsonModel(array(
+                        'error' => 1,
+                        'message' => 'You are not registered for this event so you can\'t delete your participation!'
+                    ));
+                }
+
+                $event->removeStudentid($student);
+                $objectManager->persist($event);
+                $objectManager->flush();
+            } else {
+                $volunteer = $objectManager->find('Application\Entity\LtVolunteer', $userId);
+                if (!$event->getVolunteerid()->contains($volunteer)) {
+                    return new JsonModel(array(
+                        'error' => 1,
+                        'message' => 'You are not registered for this event so you can\'t delete your participation!'
+                    ));
+                }
+                $event->removeVolunteerid($volunteer);
+                $objectManager->persist($event);
+                $objectManager->flush();
+            }
+
+            return new JsonModel(array(
+                'error' => 0,
+                'message' => 'Successfully deleted participation for event'
+            ));
+        } else {
+            $this->response->setStatusCode(405);
+            return new JsonModel(array(
+                'error' => 1,
+                'message' => 'Request-Type not allowed'
+            ));
+        }
+    }
+
 }

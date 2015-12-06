@@ -67,6 +67,34 @@ return array(
                             )
                         )
                     ),
+                    'addStudent' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:eventId]/registerStudent',
+                            'constraints' => array(
+                                'eventId' => '[0-9]*'
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Application\Controller',
+                                'controller' => 'Event',
+                                'action' => 'addParticipantToEvent',
+                            )
+                        )
+                    ),
+                    'removeStudent' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:eventId]/deleteParticipation',
+                            'constraints' => array(
+                                'eventId' => '[0-9]*'
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Application\Controller',
+                                'controller' => 'Event',
+                                'action' => 'removeParticipantFromEvent',
+                            )
+                        )
+                    ),
                     'create' => array(
                         'type' => 'Literal',
                         'options' => array(

@@ -21,16 +21,25 @@ return array(
                     'index' => 'anonymous',
                     'getSingleEvent' => 'anonymous',
                     'createEvent' => 'volunteer',
+                    'addParticipantToEvent' => 'student',
+                    'removeParticipantFromEvent' => 'student',
                 ),
                 'User\Controller\Index' => array(
                     'index' => 'anonymous',
                     'register' => 'anonymous',
                     'login' => 'anonymous',
                     'logout' => 'student',
+                    'notAllowed' => 'anonymous',
                 ),
                 'User\Controller\Data' => array(
                     'getSecurityQuestions' => 'anonymous'
                 )
+            ),
+            'deny' => array(
+                'Application\Controller\Event' => array(
+                    'addParticipantToEvent' => 'organisation',
+                    'removeParticipantFromEvent' => 'organisation',
+                ),
             )
         )
     )
