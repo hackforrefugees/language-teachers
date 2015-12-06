@@ -4,7 +4,7 @@ namespace Application\Controller;
 
 
 use Application\Form\CreateEventForm;
-use User\Form\CreateEventFilter;
+use Application\Form\CreateEventFilter;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
@@ -19,7 +19,7 @@ class EventController extends AbstractRestfulController
     public function indexAction()
     {
         if ($this->request->isPost()) {
-            $post = $this->request->getPost();
+            $post = get_object_vars(json_decode($this->request->getContent()));
             $address = $post['address'];
 
             $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . str_replace(' ', '+', $address) . '&sensor=true';
@@ -188,7 +188,7 @@ class EventController extends AbstractRestfulController
             $createEventFilter = new CreateEventFilter();
             $createEventForm->setInputFilter($createEventFilter);
 
-            $post = $this->request->getPost()->toArray();
+            $post = get_object_vars(json_decode($this->request->getContent()));
             $createEventForm->setData($post);
             if (!$createEventForm->isValid()) {
                 $errorMessages = array();
@@ -201,7 +201,8 @@ class EventController extends AbstractRestfulController
                 return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.', 'formErrors' => $errorMessages));
             }
 
-
+            $formData = $createEventForm->getData();
+            die(var_dump($formData));
         } else {
             $this->response->setStatusCode(405);
             return new JsonModel(array(

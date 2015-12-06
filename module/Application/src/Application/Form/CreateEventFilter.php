@@ -1,5 +1,5 @@
 <?php
-namespace User\Form;
+namespace Application\Form;
 
 /**
  * @uses Zend\InputFilter\InputFilter
@@ -13,7 +13,7 @@ use Zend\Validator\StringLength;
 
 /**
  * Class CreateEventFilter
- * @package User\Form
+ * @package Application\Form
  * @author Dominik Einkmmer
  */
 class CreateEventFilter extends InputFilter
