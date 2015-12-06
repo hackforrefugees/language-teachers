@@ -99,14 +99,18 @@
 					method: 'GET',
 					url: '/languages'
 				}).then(function(ref){
-					return ref.data;
+					var languages = [];
+					angular.forEach(ref.data, function(value, key){
+						languages.push({value: key, name: value});
+					});
+					return languages;
 				});
 			},
 
 			login: function(email, password, rememberMe){
 				$http.post('/user/login', {email: email, password: password, rememberMe: rememberMe})
 						.then(function(data, status, headers){
-							$location.path("/register");
+							console.log(data);
 						});
 			},
 

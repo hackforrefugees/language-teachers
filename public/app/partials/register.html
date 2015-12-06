@@ -1,6 +1,6 @@
-<div>
+<div class="container">
 
-    <form class="form-horizontal" name="registrationForm" ng-submit="submitForm(registrationForm.$valid)">
+    <form class="form col-md-offset-2" name="registrationForm" ng-submit="submitForm(registrationForm.$valid)">
         <div class="form-group">
             <label for="inputEmail">Email address</label>
             <input ng-model="user.email" type="text" class="form-control" id="inputEmail" placeholder="Email" required>
@@ -80,10 +80,10 @@
             <label for="languagesInput">Languages</label>
             <div class="form-group" ng-repeat="language in languages" id="languagesInput">
                 <input  type="checkbox"
-                        value="{{language}}"
-                        ng-checked="langSelection.indexOf(language) > -1"
-                        ng-click ="toggleLang(language)"
-                > {{language}}
+                        value="{{language.value}}"
+                        ng-checked="langSelection.indexOf(language.value) > -1"
+                        ng-click ="toggleLang(language.value)"
+                > {{language.name}}
             </div>
 
         </div>
@@ -92,7 +92,8 @@
 
         <div ng-show="isStudentOrVolunteer(user.userType.name)">
             <label for="nativeInput">Native Language</label>
-            <select ng-model="user.native" ng-options="native for native in nativeLanguages" id="nativeInput">
+            <select ng-model="user.native" id="nativeInput">
+                <option ng-repeat="language in languages" value="{{language.value}}">{{language.name}}</option>
             </select>
         </div>
 

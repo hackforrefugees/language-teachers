@@ -35,15 +35,19 @@
 </div>
 
 <div class="container-fluid">
+
     <div ng-class="'alert alert-' + message().type" ng-show="message().show">
         <button type="button" class="close" ng-click="message().show = false">&times;</button>
         <msg key-expr="message().text"></msg>
     </div>
-    <ng-view class="container col-md-8"></ng-view>
+
+    <ng-view class="container"></ng-view>
+
     <div class="footer">
         <div class="row-fluid">
         </div>
     </div>
+
 </div>
 
 
