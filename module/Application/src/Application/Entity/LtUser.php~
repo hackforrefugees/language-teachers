@@ -119,28 +119,6 @@ class LtUser
      */
     private $longitude;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtSecurityQuestion", inversedBy="userid")
-     * @ORM\JoinTable(name="lt_user_security_question",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="userId", referencedColumnName="userId")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="securityQuestionId", referencedColumnName="securityQuestionId")
-     *   }
-     * )
-     */
-    private $securityquestionid;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->securityquestionid = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 }
 

@@ -15,11 +15,9 @@
                     controller: 'RegisterCtrl',
                     resolve: {
                         languages: function(dataservice){
-                            var promise = dataservice.getLanguages().then(function(ref){
+                            return dataservice.getLanguages().then(function (ref) {
                                 return ref;
                             });
-
-                            return promise;
                         },
                         test: function(){
                             return "test";

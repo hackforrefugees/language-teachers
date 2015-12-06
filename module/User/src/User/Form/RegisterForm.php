@@ -130,23 +130,6 @@ class RegisterForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'profilePicturePath',
-            'type' => '\Zend\Form\Element\File',
-            'attributes' => array(
-                'id' => 'profilePicturePath',
-                'class' => 'form-control',
-                'required' => 'required',
-                'accept' => 'image/*'
-            ),
-            'options' => array(
-                'label' => 'Profile-Picture',
-                'label_attributes' => array(
-                    'class' => 'col-md-12 control-label'
-                )
-            )
-        ));
-
-        $this->add(array(
             'name' => 'securityQuestionId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(

@@ -5,6 +5,7 @@ namespace User\Controller;
 use Application\Entity\LtOrganisation;
 use Application\Entity\LtStudent;
 use Application\Entity\LtUser;
+use Application\Entity\LtUserSecurityQuestion;
 use Application\Entity\LtVolunteer;
 use BitDbBcryptAuthAdapter\AuthAdapter;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
@@ -77,6 +78,21 @@ class IndexController extends AbstractActionController
             $user->setLatitude($latitude);
             $user->setLongitude($longitude);
 
+            list($type, $data) = explode(';', $post['profilePicturePath']);
+            list(, $data)      = explode(',', $data);
+            $data = base64_decode($data);
+
+            $randomImageName = md5($formData['email']. $tokenRandomize);
+            if(strpos($type, 'png')){
+                $imageName = $randomImageName.'.png';
+            } else {
+                $imageName = $randomImageName.'.jpg';
+            }
+
+            file_put_contents(__DIR__.'/../../../../../public/img/profilePictures/'.$imageName, $data);
+
+            $user->setProfilepicturepath('img/profilePicture/'.$imageName);
+
             if ($userType === 'student') {
                 $student = new LtStudent();
                 $language = $objectManager->find('Application\Entity\LtLanguage', $formData['nativeLanguage']);
@@ -122,6 +138,14 @@ class IndexController extends AbstractActionController
                 $objectManager->flush();
                 $objectManager->persist($organisation);
             }
+
+            $userSecurityQuestion = new LtUserSecurityQuestion();
+            $userSecurityQuestion->setSecurityquestionid($formData['securityQuestionId']);
+            $userSecurityQuestion->setLangcode('en');
+            $userSecurityQuestion->setUserid($user);
+            $userSecurityQuestion->setSecurityquestionanswer($formData['securityQuestionAnswer']);
+
+            $objectManager->persist($userSecurityQuestion);
             $objectManager->flush();
             $this->response->setStatusCode(201);
             return new JsonModel(array('error' => 0, 'message' => 'Account created successfully.'));

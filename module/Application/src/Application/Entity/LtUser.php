@@ -120,28 +120,6 @@ class LtUser
      */
     private $longitude;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtSecurityQuestion", inversedBy="userid")
-     * @ORM\JoinTable(name="lt_user_security_question",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="userId", referencedColumnName="userId")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="securityQuestionId", referencedColumnName="securityQuestionId")
-     *   }
-     * )
-     */
-    private $securityquestionid;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->securityquestionid = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 
     /**
@@ -489,39 +467,5 @@ class LtUser
     public function getLongitude()
     {
         return $this->longitude;
-    }
-
-    /**
-     * Add securityquestionid
-     *
-     * @param \Application\Entity\LtSecurityQuestion $securityquestionid
-     *
-     * @return LtUser
-     */
-    public function addSecurityquestionid(\Application\Entity\LtSecurityQuestion $securityquestionid)
-    {
-        $this->securityquestionid[] = $securityquestionid;
-
-        return $this;
-    }
-
-    /**
-     * Remove securityquestionid
-     *
-     * @param \Application\Entity\LtSecurityQuestion $securityquestionid
-     */
-    public function removeSecurityquestionid(\Application\Entity\LtSecurityQuestion $securityquestionid)
-    {
-        $this->securityquestionid->removeElement($securityquestionid);
-    }
-
-    /**
-     * Get securityquestionid
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSecurityquestionid()
-    {
-        return $this->securityquestionid;
     }
 }

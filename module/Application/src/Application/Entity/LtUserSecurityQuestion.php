@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LtUserSecurityQuestion
  *
- * @ORM\Table(name="lt_user_security_question", indexes={@ORM\Index(name="userSecurityQuestionId_idx", columns={"securityQuestionId"})})
+ * @ORM\Table(name="lt_user_security_question", indexes={@ORM\Index(name="IDX_C0F67E864B64DCC", columns={"userId"})})
  * @ORM\Entity
  */
 class LtUserSecurityQuestion
@@ -15,11 +15,11 @@ class LtUserSecurityQuestion
     /**
      * @var integer
      *
-     * @ORM\Column(name="userId", type="integer", nullable=false)
+     * @ORM\Column(name="securityQuestionId", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $userid;
+    private $securityquestionid;
 
     /**
      * @var string
@@ -29,41 +29,48 @@ class LtUserSecurityQuestion
     private $securityquestionanswer;
 
     /**
-     * @var \Application\Entity\LtSecurityQuestion
+     * @var string
+     *
+     * @ORM\Column(name="langCode", type="string", length=5, nullable=true)
+     */
+    private $langcode;
+
+    /**
+     * @var \Application\Entity\LtUser
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Application\Entity\LtSecurityQuestion")
+     * @ORM\OneToOne(targetEntity="Application\Entity\LtUser")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="securityQuestionId", referencedColumnName="securityQuestionId")
+     *   @ORM\JoinColumn(name="userId", referencedColumnName="userId")
      * })
      */
-    private $securityquestionid;
+    private $userid;
 
 
 
     /**
-     * Set userid
+     * Set securityquestionid
      *
-     * @param integer $userid
+     * @param integer $securityquestionid
      *
      * @return LtUserSecurityQuestion
      */
-    public function setUserid($userid)
+    public function setSecurityquestionid($securityquestionid)
     {
-        $this->userid = $userid;
+        $this->securityquestionid = $securityquestionid;
 
         return $this;
     }
 
     /**
-     * Get userid
+     * Get securityquestionid
      *
      * @return integer
      */
-    public function getUserid()
+    public function getSecurityquestionid()
     {
-        return $this->userid;
+        return $this->securityquestionid;
     }
 
     /**
@@ -91,26 +98,50 @@ class LtUserSecurityQuestion
     }
 
     /**
-     * Set securityquestionid
+     * Set langcode
      *
-     * @param \Application\Entity\LtSecurityQuestion $securityquestionid
+     * @param string $langcode
      *
      * @return LtUserSecurityQuestion
      */
-    public function setSecurityquestionid(\Application\Entity\LtSecurityQuestion $securityquestionid)
+    public function setLangcode($langcode)
     {
-        $this->securityquestionid = $securityquestionid;
+        $this->langcode = $langcode;
 
         return $this;
     }
 
     /**
-     * Get securityquestionid
+     * Get langcode
      *
-     * @return \Application\Entity\LtSecurityQuestion
+     * @return string
      */
-    public function getSecurityquestionid()
+    public function getLangcode()
     {
-        return $this->securityquestionid;
+        return $this->langcode;
+    }
+
+    /**
+     * Set userid
+     *
+     * @param \Application\Entity\LtUser $userid
+     *
+     * @return LtUserSecurityQuestion
+     */
+    public function setUserid(\Application\Entity\LtUser $userid)
+    {
+        $this->userid = $userid;
+
+        return $this;
+    }
+
+    /**
+     * Get userid
+     *
+     * @return \Application\Entity\LtUser
+     */
+    public function getUserid()
+    {
+        return $this->userid;
     }
 }
