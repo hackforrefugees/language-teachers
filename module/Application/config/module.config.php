@@ -34,8 +34,8 @@ return array(
                             'constraints' => array(),
                             'defaults' => array(
                                 '__NAMESPACE__' => 'Application\Controller',
-                                'controller' => 'Data',
-                                'action' => 'getLanguages',
+                                'controller' => 'Language',
+                                'action' => 'index',
                             )
                         )
                     ),
@@ -46,9 +46,10 @@ return array(
                 'options' => array(
                     'route' => '/event',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Data',
-                        'action' => 'getEventsByGeoLocation',
-                    ),
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller' => 'Event',
+                        'action' => 'index',
+                    )
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
@@ -78,7 +79,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Data' => 'Application\Controller\DataController'
+            'Application\Controller\Language' => 'Application\Controller\LanguageController',
+            'Application\Controller\Event' => 'Application\Controller\EventController',
         ),
     ),
     'view_manager' => array(

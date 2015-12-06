@@ -14,9 +14,11 @@ return array(
                 'Application\Controller\Index' => array(
                     'index' => 'anonymous',
                 ),
-                'Application\Controller\Data' => array(
-                    'getLanguages' => 'anonymous',
-                    'getEventsByGeoLocation' => 'anonymous',
+                'Application\Controller\Language' => array(
+                    'index' => 'anonymous',
+                ),
+                'Application\Controller\Event' => array(
+                    'index' => 'anonymous',
                 ),
                 'User\Controller\Index' => array(
                     'index' => 'anonymous',

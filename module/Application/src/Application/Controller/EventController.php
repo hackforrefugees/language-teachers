@@ -9,23 +9,13 @@ use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
 /**
- * Class DataController
+ * Class EventController
  * @package Application\Controller
  * @author Dominik Einkemmer
  */
-class DataController extends AbstractRestfulController{
+class EventController extends AbstractRestfulController{
 
-    public function getLanguagesAction(){
-        $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $languages = $objectManager->getRepository('Application\Entity\LtLanguage')->findAll();
-        $languageList = array();
-        foreach($languages as $language){
-            $languageList[$language->getLangcode()] = $language->getLanguagename();
-        }
-        return new JsonModel($languageList);
-    }
-
-    public function getEventsByGeoLocationAction(){
+    public function indexAction(){
         if($this->request->isPost()){
             $post = $this->request->getPost();
             $address = $post['address'];
