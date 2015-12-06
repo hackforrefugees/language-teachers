@@ -45,19 +45,6 @@ class CreateEventFilter extends InputFilter
         ));
 
         $this->add(array(
-            'name' => 'eventTime',
-            'required' => true,
-            'validators' => array(
-                array(
-                    'name' => 'Date',
-                    'options' => array(
-                        'format' => 'Y-m-d H:i',
-                    )
-                )
-            )
-        ));
-
-        $this->add(array(
             'name' => 'maxTeachers',
             'required' => true,
             'validators' => array(

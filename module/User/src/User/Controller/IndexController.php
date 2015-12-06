@@ -33,8 +33,8 @@ class IndexController extends AbstractActionController
             $registerForm->setData($post);
             if (!$registerForm->isValid()) {
                 $errorMessages = array();
-                foreach($registerForm->getMessages() as $elementName => $messages){
-                    foreach($messages as $message){
+                foreach ($registerForm->getMessages() as $elementName => $messages) {
+                    foreach ($messages as $message) {
                         $errorMessages[$elementName] = $message;
                     }
                 }
@@ -46,7 +46,7 @@ class IndexController extends AbstractActionController
             $user = $objectManager->getRepository('Application\Entity\LtUser')
                 ->findOneBy(array('email' => $formData['email']));;
 
-            if($user !== null){
+            if ($user !== null) {
                 return new JsonModel(array('error' => 1, 'message' => 'E-Mail already in use'));
             }
 
@@ -154,8 +154,8 @@ class IndexController extends AbstractActionController
             $loginForm->setData($post);
             if (!$loginForm->isValid()) {
                 $errorMessages = array();
-                foreach($loginForm->getMessages() as $elementName => $messages){
-                    foreach($messages as $message){
+                foreach ($loginForm->getMessages() as $elementName => $messages) {
+                    foreach ($messages as $message) {
                         $errorMessages[$elementName] = $message;
                     }
                 }
