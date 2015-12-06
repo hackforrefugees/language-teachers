@@ -19,6 +19,7 @@ return array(
                 ),
                 'Application\Controller\Event' => array(
                     'index' => 'anonymous',
+                    'getSingleEvent' => 'anonymous',
                 ),
                 'User\Controller\Index' => array(
                     'index' => 'anonymous',
