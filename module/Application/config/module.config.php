@@ -53,6 +53,20 @@ return array(
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
+                    'login' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:eventId]',
+                            'constraints' => array(
+                                'eventId' => '[0-9]*'
+                            ),
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'Application\Controller',
+                                'controller' => 'Event',
+                                'action' => 'getSingleEvent',
+                            )
+                        )
+                    ),
                 )
             ),
         ),

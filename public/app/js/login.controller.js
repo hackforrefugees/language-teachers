@@ -1,20 +1,8 @@
-(function() {
-    var as = angular.module('myApp.controllers');
-
-    as.controller('LoginCtrl', function(loginService){
-        var vm = this;
-        vm.username = undefined;
-        vm.password = undefined;
-        vm.login = login();
-
-
-        /////////////////////////////////////////////////////////////
-
-        function login(username, password){
-
-        }
-
+angular.module('myApp').controller('LoginCtrl', function($scope, $http, dataservice){
+        var vm = $scope;
+        vm.login = function(loginForm){
+            console.log("logging in");
+            dataservice.login(loginForm.email, loginForm.password, loginForm.rememberMe);
+        };
 
     });
-
-})

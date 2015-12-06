@@ -34,12 +34,14 @@
             link: function(scope, element, attrs) {
                 element.bind("change", function(changeEvent){
                     var reader = new FileReader();
-                    reader.readAsDataURL(changeEvent.target.files[0]);
+
                     reader.onload = function(loadEvent){
                         scope.$apply(function(){
                             scope.fileread = loadEvent.target.result;
+                            console.log(scope.fileread);
                         });
                     };
+                    reader.readAsDataURL(changeEvent.target.files[0]);
 
                 })
             }

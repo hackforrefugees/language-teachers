@@ -1,4 +1,4 @@
-<form name="registrationForm" ng-controller="RegisterCtrl" ng-submit="submitForm(registrationForm.$valid)">
+<form name="registrationForm" ng-submit="submitForm(registrationForm.$valid)">
     <div class="form-group">
         <label for="inputEmail">Email address</label>
         <input ng-model="user.email" type="text" class="form-control" id="inputEmail" placeholder="Email" required>
@@ -8,30 +8,64 @@
     <div class="form-group">
         <label for="inputPassword">Password</label>
         <input ng-model="user.password" type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+
+        <label for="inputPasswordC">Password</label>
+        <input ng-model="user.password" type="password" class="form-control" id="inputPasswordC" placeholder="Confirm Password" required>
     </div>
 
     <div class="form-group">
-        <label for="inputPhone">Phone</label>
-        <input ng-model="user.phone" type="tel" class="form-control" id="inputPhone" placeholder="Phone Number">
+        <label for="contactName">Contact Name</label>
+        <input ng-model="user.contactName" type="text" class="form-control" id="contactName" required>
     </div>
 
-    <select ng-model="user.type" ng-options="type.name for type in types" ng-init="user.type = types[0].name" id="typeInput">
-    </select>
+     <div class="form-group">
+        <label for="inputPhone">Phone</label>
+        <input ng-model="user.phone" type="text" class="form-control" id="inputPhone" placeholder="Phone Number">
+    </div>
+
+    <div class="form-group">
+        <label for="profileImage">Profile Picture</label>
+        <img ng-show="user.profilePicturePath != undefined" width="96" height="96" src="{{user.profilePicturePath}}"><br>
+        <input id="profileImage" type="file" fileread="user.profilePicturePath" accept=".jpg, .png" \>
+        <label id="labelProfileImage" for="profileImage" label="Select a file:"></label>
+    </div>
+
+    <div class="form-group">
+        <label for="profileImage">Security Question</label>
+        <select ng-model="user.securityQuestionId" class="form-control" ng-options="sercurityQuestion for question in Questions" ng-init="user.type = types[0].name"\>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="profileImage">Security Question Answer</label>
+            <input ng-model="user.securityQuestionAnswer" type="text" class="form-control" id="securitQuestionAnswer" required>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select ng-model="user.type" ng-options="type.name for type in types" ng-init="user.type = types[0].name" id="typeInput">
+        </select>
+    </div>
 
     <div ng-show="user.type.name == 'Teacher'">
+
         <label for="languagesInput">Languages</label>
         <div class="form-group" ng-repeat="language in languages" id="languagesInput">
             <input  type="checkbox"
-                    value="{{language.name}}"
-                    ng-checked="langSelection.indexOf(language.name) > -1"
-                    ng-click ="toggleLang(language.name)"
-            > {{language.name}}
+                    value="{{language}}"
+                    ng-checked="langSelection.indexOf(language) > -1"
+                    ng-click ="toggleLang(language)"
+            > {{language}}
         </div>
+
+
     </div>
+
+    {{test}}
 
     <div ng-show="user.type.name == 'Student'">
         <label for="nativeInput">Native Language</label>
-        <select ng-model="user.native" ng-options="native.name for native in nativeLanguages" id="nativeInput">
+        <select ng-model="user.native" ng-options="native for native in nativeLanguages" id="nativeInput">
         </select>
     </div>
 
@@ -39,13 +73,6 @@
         <label for="descriptionInput">Description</label>
         <textarea id="descriptionInput">
         </textarea>
-    </div>
-
-    <img ng-show="img != undefined" width="96" height="96" src="{{img}}">
-
-    <div class="form-group">
-        <input type="file" fileread="user.img" accept=".jpg, .png">
-        <small class="text-muted">Upload your profile picture here...</small>
     </div>
 
     <button type="submit" class="btn btn-success">Submit</button>

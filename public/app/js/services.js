@@ -91,4 +91,26 @@
 		};
 	});
 
+	as.factory('dataservice', function($http){
+
+		return {
+			getLanguages:  function(){
+				return $http({
+					method: 'GET',
+					url: '/languages'
+				}).then(function(ref){
+					return ref.data;
+				});
+			},
+
+			login: function(email, password, rememberMe){
+				$http.post('/user/login', {email: email, password: password, rememberMe: rememberMe})
+						.then(function(response){
+							console.log(response);
+						});
+			}
+		}
+
+	});
+
 }());

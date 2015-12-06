@@ -1,5 +1,6 @@
 (function() {
     var as = angular.module('myApp.controllers', []);
+
     as.controller('AppCtrl', function($scope, $rootScope, $http, i18n, $location) {
         $scope.language = function() {
             return i18n.language;
@@ -123,59 +124,6 @@
         };
 
         load();  
-    });
-
-    as.controller('LoginCtrl', function($scope, $routeParams, $location){
-        var vm = $scope;
-        vm.username = undefined;
-        vm.password = undefined;
-        vm.login = function(){
-            console.log("login");
-        }
-
-    });
-
-    as.controller('RegisterCtrl', function($scope){
-        var vm = $scope;
-        vm.user = [];
-        vm.user.email = undefined;
-        vm.user.password = undefined;
-        vm.user.type = undefined;
-        vm.user.phone = undefined;
-
-        vm.types = [
-            {name: "Organization"},
-            {name: "Teacher"},
-            {name: "Student"}
-        ];
-
-        vm.languages =  [
-            {name: "Arabic"},
-            {name: "English"},
-            {name: "Swedish"}
-        ];
-
-        vm.nativeLanguages = [
-            {name: "Arabic"},
-            {name: "English"},
-            {name: "Swedish"}
-        ];
-
-        vm.user.languages = [];
-
-        vm.toggleLang = function(lang){
-            var index = vm.user.languages.indexOf(lang);
-
-            if(index > -1) vm.user.languages.splice(index, 1);
-            else vm.user.languages.push(lang);
-
-            console.log(vm.user.languages);
-        };
-
-        vm.submitForm = function(){
-            console.log(vm.user);
-        }
-
     });
 
 }());
