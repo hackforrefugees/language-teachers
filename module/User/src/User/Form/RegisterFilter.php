@@ -128,7 +128,7 @@ class RegisterFilter extends InputFilter
         //Organisation specific fields
 
         $callBackOrganisationFields = new Callback(function ($value, $context) {
-            return ($context['userType'] !== "organisation" && trim($value) !== "");
+            return ($context['userType'] === "organisation" && trim($value) !== "");
         });
 
         $stripTags = new StripTags();
@@ -195,26 +195,16 @@ class RegisterFilter extends InputFilter
         ));
 
         //Volunteer specific fields
-        $callBackVolunteerFields = new Callback(function ($value, $context) {
-            return ($context['userType'] !== "organisation" && trim($value) !== "");
-        });
-
-        $callBackStudentFields = new Callback(function ($value, $context) {
-            return ($context['userType'] !== "student" && trim($value) !== "");
-        });
-
-        $stringLengthRegion = new StringLength(array('encoding' => 'UTF-8', 'min' => 2, 'max' => 150));
-        $regionFilter = new Input('region');
-        $regionFilter->getValidatorChain()
-            ->attach($callBackVolunteerFields)
-            ->attach($stringLengthRegion);
-        $regionFilter->getFilterChain()->attach($stripTags);
+        $this->add(array(
+            'name' => 'languages',
+            'required' => false
+        ));
 
         //Volunteer & Student specific fields
-        $nativeLanguageFilter = new Input('nativeLanguage');
-        $nativeLanguageFilter->getValidatorChain()
-            ->attach($callBackVolunteerFields)
-            ->attach($callBackStudentFields);
+        $this->add(array(
+            'name' => 'nativeLanguage',
+            'required' => false
+        ));
     }
 
 }

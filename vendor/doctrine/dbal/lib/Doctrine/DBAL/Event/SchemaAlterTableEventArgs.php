@@ -23,7 +23,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\TableDiff;
 
 /**
- * Event Arguments used when SQL queries for creating tables are generated inside Doctrine\DBAL\Platform\*Platform.
+ * LanguageTeacherEvent Arguments used when SQL queries for creating tables are generated inside Doctrine\DBAL\Platform\*Platform.
  *
  * @link   www.doctrine-project.org
  * @since  2.2

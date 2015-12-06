@@ -29,37 +29,84 @@ class IndexController extends AbstractActionController
             $registerForm = new RegisterForm();
             $registerFilter = new RegisterFilter();
             $registerForm->setInputFilter($registerFilter);
-            $post = $this->request->getPost()->toArray();
+            $post = array_merge_recursive(
+                $this->request->getPost()->toArray(), $this->request->getFiles()->toArray()
+            );
             $registerForm->setData($post);
             if (!$registerForm->isValid()) {
-                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.'));
+                $errorMessages = array();
+                foreach($registerForm->getMessages() as $elementName => $messages){
+                    foreach($messages as $message){
+                        $errorMessages[$elementName] = $message;
+                    }
+                }
+
+                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.', 'formErrors' => $errorMessages));
             }
             $formData = $registerForm->getData();
             $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
             $hydrator = new DoctrineObject($objectManager);
             $user = new LtUser();
             $user = $hydrator->hydrate($formData, $user);
-            $objectManager->persist($user);
-            $objectManager->flush();
+
+            $date = new \DateTime();
+            $user->setRegistrationdate($date->format('Y-m-d'));
+            $user->setEmailchangeddate($date->format('Y-m-d'));
+
+            $tokenRandomize = uniqid(mt_rand(1, 100), true);
+            $registerToken = md5($formData['email'] . $date->format('Y-m-d') . $tokenRandomize);
+            $user->setRegistrationtoken($registerToken);
 
             $userType = $formData['userType'];
 
-            if($userType === 'student'){
+            if ($userType === 'student') {
                 $student = new LtStudent();
                 $language = $objectManager->find('Application\Entity\LtLanguage', $formData['nativeLanguage']);
                 $student->setStudentid($user);
                 $student->setNativelanguage($language);
-            } elseif($userType === 'volunteer'){
+                $user->setUsergroup('student');
+                $objectManager->persist($user);
+                $objectManager->flush();
+                $objectManager->persist($student);
+            } elseif ($userType === 'volunteer') {
                 $volunteer = new LtVolunteer();
                 $language = $objectManager->find('Application\Entity\LtLanguage', $formData['nativeLanguage']);
                 $volunteer->setVolunteerid($user);
                 $volunteer->setNativelanguage($language);
                 $volunteer->setRegion($formData['region']);
-            } elseif($userType === 'organisation'){
+                if (array_key_exists('languages', $formData)) {
+                    $languageSkills = $formData['languages'];
+                    foreach ($languageSkills as $languageSkill) {
+                        $tempLanguage = $objectManager->find('Application\Entity\LtLanguage', $languageSkill);
+                        $volunteer->addLangcode($tempLanguage);
+                    }
+                }
+                $user->setUsergroup('volunteer');
+                $objectManager->persist($user);
+                $objectManager->flush();
+                $objectManager->persist($volunteer);
+            } elseif ($userType === 'organisation') {
                 $organisation = new LtOrganisation();
                 $organisation->setOrganisationid($user);
+                $organisation->setContactpersonname($formData['contactPersonName']);
+                $organisation->setContactpersonemail($formData['contactPersonEmail']);
+                if (array_key_exists('contactPersonPhone', $formData) && trim($formData['contactPersonPhone']) !== '') {
+                    $organisation->setContactpersonemail($formData['contactPersonPhone']);
+                }
+                if (array_key_exists('organisationDescription', $formData) && trim($formData['organisationDescription']) !== '') {
+                    $organisation->setOrganisationdescription($formData['organisationDescription']);
+                }
+                if (array_key_exists('organisationWebsite', $formData) && trim($formData['organisationWebsite']) !== '') {
+                    $organisation->setOrganisationwebsite($formData['organisationWebsite']);
+                }
+                $user->setUsergroup('organisation');
+                $objectManager->persist($user);
+                $objectManager->flush();
+                $objectManager->persist($organisation);
             }
-
+            $objectManager->flush();
+            $this->response->setStatusCode(201);
+            return new JsonModel(array('error' => 0, 'message' => 'Account created successfully.'));
         } else {
             $this->response->setStatusCode(405);
             return new JsonModel(array('error' => 1, 'message' => 'Request-Method not allowed'));
@@ -92,7 +139,14 @@ class IndexController extends AbstractActionController
             $post = $this->request->getPost()->toArray();
             $loginForm->setData($post);
             if (!$loginForm->isValid()) {
-                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again'));
+                $errorMessages = array();
+                foreach($loginForm->getMessages() as $elementName => $messages){
+                    foreach($messages as $message){
+                        $errorMessages[$elementName] = $message;
+                    }
+                }
+
+                return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.', 'formErrors' => $errorMessages));
             }
             $formData = $loginForm->getData();
 

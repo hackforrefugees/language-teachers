@@ -23,7 +23,7 @@ use Doctrine\Common\EventArgs;
 use Doctrine\DBAL\Connection;
 
 /**
- * Event Arguments used when a Driver connection is established inside Doctrine\DBAL\Connection.
+ * LanguageTeacherEvent Arguments used when a Driver connection is established inside Doctrine\DBAL\Connection.
  *
  * @link   www.doctrine-project.org
  * @since  1.0

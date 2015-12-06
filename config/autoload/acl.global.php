@@ -14,11 +14,18 @@ return array(
                 'Application\Controller\Index' => array(
                     'index' => 'anonymous',
                 ),
+                'Application\Controller\Data' => array(
+                    'getLanguages' => 'anonymous',
+                    'getEventsByGeoLocation' => 'anonymous',
+                ),
                 'User\Controller\Index' => array(
                     'index' => 'anonymous',
                     'register' => 'anonymous',
                     'login' => 'anonymous',
                     'logout' => 'student',
+                ),
+                'User\Controller\Data' => array(
+                    'getSecurityQuestions' => 'anonymous'
                 )
             )
         )

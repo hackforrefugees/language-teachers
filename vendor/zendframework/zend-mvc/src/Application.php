@@ -145,7 +145,7 @@ class Application implements
             $events->attach($serviceManager->get($listener));
         }
 
-        // Setup MVC Event
+        // Setup MVC LanguageTeacherEvent
         $this->event = $event  = new MvcEvent();
         $event->setTarget($this);
         $event->setApplication($this)

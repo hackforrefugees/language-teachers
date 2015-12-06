@@ -24,7 +24,7 @@ use Doctrine\DBAL\Events;
 use Doctrine\Common\EventSubscriber;
 
 /**
- * MySQL Session Init Event Subscriber which allows to set the Client Encoding of the Connection.
+ * MySQL Session Init LanguageTeacherEvent Subscriber which allows to set the Client Encoding of the Connection.
  *
  * @link       www.doctrine-project.org
  * @since      1.0

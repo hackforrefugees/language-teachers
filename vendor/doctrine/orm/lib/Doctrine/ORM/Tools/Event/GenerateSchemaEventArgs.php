@@ -24,7 +24,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * Event Args used for the Events::postGenerateSchema event.
+ * LanguageTeacherEvent Args used for the Events::postGenerateSchema event.
  *
  * @license     http://www.opensource.org/licenses/mit-license.php MIT
  * @link        www.doctrine-project.com

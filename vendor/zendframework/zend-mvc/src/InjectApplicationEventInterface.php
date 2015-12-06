@@ -14,7 +14,7 @@ use Zend\EventManager\EventInterface as Event;
 interface InjectApplicationEventInterface
 {
     /**
-     * Compose an Event
+     * Compose an LanguageTeacherEvent
      *
      * @param  Event $event
      * @return void

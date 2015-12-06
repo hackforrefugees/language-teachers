@@ -139,7 +139,7 @@ class TriggerObject
     }
 
     /**
-     * Get Event Manipulation.
+     * Get LanguageTeacherEvent Manipulation.
      *
      * @return string
      */
@@ -149,7 +149,7 @@ class TriggerObject
     }
 
     /**
-     * Set Event Manipulation.
+     * Set LanguageTeacherEvent Manipulation.
      *
      * @param string $eventManipulation
      * @return TriggerObject
@@ -161,7 +161,7 @@ class TriggerObject
     }
 
     /**
-     * Get Event Object Catalog.
+     * Get LanguageTeacherEvent Object Catalog.
      *
      * @return string
      */
@@ -171,7 +171,7 @@ class TriggerObject
     }
 
     /**
-     * Set Event Object Catalog.
+     * Set LanguageTeacherEvent Object Catalog.
      *
      * @param string $eventObjectCatalog
      * @return TriggerObject
@@ -183,7 +183,7 @@ class TriggerObject
     }
 
     /**
-     * Get Event Object Schema.
+     * Get LanguageTeacherEvent Object Schema.
      *
      * @return string
      */
@@ -193,7 +193,7 @@ class TriggerObject
     }
 
     /**
-     * Set Event Object Schema.
+     * Set LanguageTeacherEvent Object Schema.
      *
      * @param string $eventObjectSchema
      * @return TriggerObject
@@ -205,7 +205,7 @@ class TriggerObject
     }
 
     /**
-     * Get Event Object Table.
+     * Get LanguageTeacherEvent Object Table.
      *
      * @return string
      */
@@ -215,7 +215,7 @@ class TriggerObject
     }
 
     /**
-     * Set Event Object Table.
+     * Set LanguageTeacherEvent Object Table.
      *
      * @param string $eventObjectTable
      * @return TriggerObject

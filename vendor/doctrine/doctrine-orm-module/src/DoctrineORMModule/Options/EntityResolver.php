@@ -8,7 +8,7 @@ use Zend\Stdlib\AbstractOptions;
 class EntityResolver extends AbstractOptions
 {
     /**
-     * Set the configuration key for the EventManager. Event manager key
+     * Set the configuration key for the EventManager. LanguageTeacherEvent manager key
      * is assembled as "doctrine.eventmanager.{key}" and pulled from
      * service locator.
      *

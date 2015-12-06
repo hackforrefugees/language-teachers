@@ -13,13 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class LtVolunteer
 {
     /**
-     * @var string
-     *
-     * @ORM\Column(name="region", type="string", length=150, nullable=false)
-     */
-    private $region;
-
-    /**
      * @var \Application\Entity\LtLanguage
      *
      * @ORM\ManyToOne(targetEntity="Application\Entity\LtLanguage")

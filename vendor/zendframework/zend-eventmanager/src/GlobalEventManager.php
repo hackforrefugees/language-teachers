@@ -13,7 +13,7 @@ use Zend\Stdlib\CallbackHandler;
 use Zend\Stdlib\PriorityQueue;
 
 /**
- * Event manager: notification system
+ * LanguageTeacherEvent manager: notification system
  *
  * Use the EventManager when you want to create a per-instance notification
  * system for your objects.

@@ -23,7 +23,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Index;
 
 /**
- * Event Arguments used when the portable index definition is generated inside Doctrine\DBAL\Schema\AbstractSchemaManager.
+ * LanguageTeacherEvent Arguments used when the portable index definition is generated inside Doctrine\DBAL\Schema\AbstractSchemaManager.
  *
  * @link   www.doctrine-project.org
  * @since  2.2

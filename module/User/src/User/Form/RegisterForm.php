@@ -262,15 +262,16 @@ class RegisterForm extends Form
 
         //Volunteer specific fields
         $this->add(array(
-            'name' => 'region',
-            'type' => '\Zend\Form\Element\Text',
+            'name' => 'languages',
+            'type' => '\Zend\Form\Element\MultiCheckbox',
             'attributes' => array(
                 'class' => 'form-control',
                 'id' => 'region',
-                'placeholder' => 'Region you help in',
+                'placeholder' => 'Languages you know:',
             ),
             'options' => array(
-                'label' => 'Region you help in',
+                'label' => 'Languages you know:',
+                'disable_inarray_validator' => true,
                 'label_attributes' => array(
                     'class' => 'col-md-12 control-label'
                 )

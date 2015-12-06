@@ -20,7 +20,7 @@ use ArrayAccess;
 class Event implements EventInterface
 {
     /**
-     * @var string Event name
+     * @var string LanguageTeacherEvent name
      */
     protected $name;
 
@@ -44,7 +44,7 @@ class Event implements EventInterface
      *
      * Accept a target and its parameters.
      *
-     * @param  string $name Event name
+     * @param  string $name LanguageTeacherEvent name
      * @param  string|object $target
      * @param  array|ArrayAccess $params
      */
@@ -98,7 +98,7 @@ class Event implements EventInterface
     {
         if (!is_array($params) && !is_object($params)) {
             throw new Exception\InvalidArgumentException(
-                sprintf('Event parameters must be an array or object; received "%s"', gettype($params))
+                sprintf('LanguageTeacherEvent parameters must be an array or object; received "%s"', gettype($params))
             );
         }
 

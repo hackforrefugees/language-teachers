@@ -40,6 +40,20 @@ class LtSecurityQuestion
      */
     private $langcode;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\LtUser", mappedBy="securityquestionid")
+     */
+    private $userid;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->userid = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -112,5 +126,39 @@ class LtSecurityQuestion
     public function getLangcode()
     {
         return $this->langcode;
+    }
+
+    /**
+     * Add userid
+     *
+     * @param \Application\Entity\LtUser $userid
+     *
+     * @return LtSecurityQuestion
+     */
+    public function addUserid(\Application\Entity\LtUser $userid)
+    {
+        $this->userid[] = $userid;
+
+        return $this;
+    }
+
+    /**
+     * Remove userid
+     *
+     * @param \Application\Entity\LtUser $userid
+     */
+    public function removeUserid(\Application\Entity\LtUser $userid)
+    {
+        $this->userid->removeElement($userid);
+    }
+
+    /**
+     * Get userid
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserid()
+    {
+        return $this->userid;
     }
 }

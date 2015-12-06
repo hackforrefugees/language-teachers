@@ -31,13 +31,6 @@ class LtLanguage
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\LtUser", mappedBy="nativelanguage")
-     */
-    private $studentid;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="Application\Entity\LtVolunteer", mappedBy="langcode")
      */
     private $volunteerid;
@@ -47,7 +40,6 @@ class LtLanguage
      */
     public function __construct()
     {
-        $this->studentid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->volunteerid = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

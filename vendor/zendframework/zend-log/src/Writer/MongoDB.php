@@ -94,7 +94,7 @@ class MongoDB extends AbstractWriter
     /**
      * Write a message to the log.
      *
-     * @param array $event Event data
+     * @param array $event LanguageTeacherEvent data
      * @return void
      * @throws Exception\RuntimeException
      */

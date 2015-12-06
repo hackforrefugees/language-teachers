@@ -19,7 +19,7 @@ class Event extends BaseEvent
      *
      * Accept a storage adapter and its parameters.
      *
-     * @param  string           $name Event name
+     * @param  string           $name LanguageTeacherEvent name
      * @param  StorageInterface $storage
      * @param  ArrayObject      $params
      */

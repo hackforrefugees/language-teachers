@@ -105,7 +105,7 @@ class Module implements AutoloaderProviderInterface
     }
 
     /**
-     * MVC preDispatch Event
+     * MVC preDispatch LanguageTeacherEvent
      * @param $event
      * @return mixed
      */

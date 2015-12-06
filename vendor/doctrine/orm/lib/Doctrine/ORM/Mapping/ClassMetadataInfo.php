@@ -2577,7 +2577,7 @@ class ClassMetadataInfo implements ClassMetadata
      * Dispatches the lifecycle event of the given entity to the registered
      * lifecycle callbacks and lifecycle listeners.
      *
-     * @deprecated Deprecated since version 2.4 in favor of \Doctrine\ORM\Event\ListenersInvoker
+     * @deprecated Deprecated since version 2.4 in favor of \Doctrine\ORM\LanguageTeacherEvent\ListenersInvoker
      *
      * @param string $lifecycleEvent The lifecycle event.
      * @param object $entity         The Entity on which the event occurred.

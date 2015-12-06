@@ -21,7 +21,7 @@ class SendResponseEvent extends Event
     /**#@-*/
 
     /**
-     * @var string Event name
+     * @var string LanguageTeacherEvent name
      */
     protected $name = 'sendResponse';
 

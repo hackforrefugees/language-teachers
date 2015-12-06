@@ -24,7 +24,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Table;
 
 /**
- * Event Args used for the Events::postGenerateSchemaTable event.
+ * LanguageTeacherEvent Args used for the Events::postGenerateSchemaTable event.
  *
  * @license     http://www.opensource.org/licenses/mit-license.php MIT
  * @link        www.doctrine-project.com

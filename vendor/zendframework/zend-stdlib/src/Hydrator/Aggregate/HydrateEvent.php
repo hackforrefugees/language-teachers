@@ -12,7 +12,7 @@ namespace Zend\Stdlib\Hydrator\Aggregate;
 use Zend\EventManager\Event;
 
 /**
- * Event triggered when the {@see \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator} hydrates
+ * LanguageTeacherEvent triggered when the {@see \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator} hydrates
  * data into an object
  */
 class HydrateEvent extends Event
