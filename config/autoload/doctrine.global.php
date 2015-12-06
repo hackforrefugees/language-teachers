@@ -11,6 +11,10 @@ return array(
                     'user' => 'languageteacher',
                     'password' => 'hackforrefugees',
                     'dbname' => 'languageteachers',
+                    'charset' => 'utf8',
+                    'driverOptions' => array(
+                        1002 => 'SET NAMES utf8'
+                    )
                 )
             )
         )

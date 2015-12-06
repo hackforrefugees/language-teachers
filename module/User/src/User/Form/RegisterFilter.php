@@ -200,6 +200,11 @@ class RegisterFilter extends InputFilter
             'required' => false
         ));
 
+        $this->add(array(
+            'name' => 'region',
+            'required' => false
+        ));
+
         //Volunteer & Student specific fields
         $this->add(array(
             'name' => 'nativeLanguage',

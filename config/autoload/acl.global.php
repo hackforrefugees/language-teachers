@@ -20,6 +20,7 @@ return array(
                 'Application\Controller\Event' => array(
                     'index' => 'anonymous',
                     'getSingleEvent' => 'anonymous',
+                    'createEvent' => 'volunteer',
                 ),
                 'User\Controller\Index' => array(
                     'index' => 'anonymous',

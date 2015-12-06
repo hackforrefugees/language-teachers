@@ -45,19 +45,36 @@ class IndexController extends AbstractActionController
             }
             $formData = $registerForm->getData();
             $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+            $user = $objectManager->getRepository('Application\Entity\LtUser')
+                ->findOneBy(array('email' => $formData['email']));;
+
+            if($user !== null){
+                return new JsonModel(array('error' => 1, 'message' => 'E-Mail already in use'));
+            }
+
             $hydrator = new DoctrineObject($objectManager);
             $user = new LtUser();
             $user = $hydrator->hydrate($formData, $user);
 
             $date = new \DateTime();
-            $user->setRegistrationdate($date->format('Y-m-d'));
-            $user->setEmailchangeddate($date->format('Y-m-d'));
+            $user->setRegistrationdate($date);
+            $user->setEmailchangeddate($date);
 
             $tokenRandomize = uniqid(mt_rand(1, 100), true);
             $registerToken = md5($formData['email'] . $date->format('Y-m-d') . $tokenRandomize);
             $user->setRegistrationtoken($registerToken);
 
             $userType = $formData['userType'];
+
+            $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . str_replace(' ', '+', $formData['region']) . '&sensor=true';
+            $googleData = file_get_contents($url);
+            $googleDataArray = json_decode($googleData, true);
+            $latitude = $googleDataArray['results'][0]['geometry']['location']['lat'];
+            $longitude = $googleDataArray['results'][0]['geometry']['location']['lng'];
+
+            $user->setLatitude($latitude);
+            $user->setLongitude($longitude);
 
             if ($userType === 'student') {
                 $student = new LtStudent();
@@ -73,7 +90,7 @@ class IndexController extends AbstractActionController
                 $language = $objectManager->find('Application\Entity\LtLanguage', $formData['nativeLanguage']);
                 $volunteer->setVolunteerid($user);
                 $volunteer->setNativelanguage($language);
-                $volunteer->setRegion($formData['region']);
+
                 if (array_key_exists('languages', $formData)) {
                     $languageSkills = $formData['languages'];
                     foreach ($languageSkills as $languageSkill) {
