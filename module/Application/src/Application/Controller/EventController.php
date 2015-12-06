@@ -201,7 +201,6 @@ class EventController extends AbstractRestfulController
                 return new JsonModel(array('error' => 1, 'message' => 'You have an error in your form. Please try again.', 'formErrors' => $errorMessages));
             }
 
-            
 
         } else {
             $this->response->setStatusCode(405);
