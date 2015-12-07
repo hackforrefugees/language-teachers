@@ -90,9 +90,9 @@ class IndexController extends AbstractActionController
                 $imageName = $randomImageName.'.jpg';
             }
 
-            file_put_contents(__DIR__.'/../../../../../public/img/profilePictures/'.$imageName, $data);
+            file_put_contents(__DIR__.'/../../../../../public/app/img/profilePictures/'.$imageName, $data);
 
-            $user->setProfilepicturepath('img/profilePicture/'.$imageName);
+            $user->setProfilepicturepath('img/profilePictures/'.$imageName);
 
             if ($userType === 'student') {
                 $student = new LtStudent();
