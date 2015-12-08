@@ -1,0 +1,21 @@
+.loading-logo{
+    width: 500px;
+}
+
+.header-logo{
+    width: 200px;
+}
+
+.logo-slider{
+    width: 400px;
+}
+
+#content{
+    background-color: #f6f6f6;
+}
+
+@media (max-width: 796px) {
+    .logo-slider{
+        width: 200px;
+    }
+}

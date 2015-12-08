@@ -2,24 +2,26 @@
 
     <div class="form-group">
         <label for="inputEmail">Email address</label>
-        <input name="email" ng-model="user.email" type="email" class="form-control" id="inputEmail" placeholder="Email" \required>
+        <input name="email" ng-model="user.email" type="email" class="form-control" id="inputEmail" placeholder="Email"
+               \required>
     </div>
 
 
     <div class="form-group">
         <label for="inputPassword">Password</label>
-        <input name="email" ng-model="user.password" type="password" class="form-control" id="inputPassword" placeholder="Password" \required>
+        <input name="email" ng-model="user.password" type="password" class="form-control" id="inputPassword"
+               placeholder="Password" \required>
     </div>
 
     <div class="form-group">
-        <label for="inputRemember">Remember Me</label>
-        <input ng-model="user.rememberMe" type="checkbox" class="form-control" id="inputRemember">
+        <label for="inputRemember">
+            <input ng-model="user.rememberMe" type="checkbox" id="inputRemember">
+            Remember Me?
+        </label>
     </div>
 
     <div class="form-actions">
         <button ng-disabled="!form.$valid" type="submit" class="btn btn-success">Login</button>
         <a class="btn btn-default " href="#/register">Register</a>
     </div>
-
-
 </form>

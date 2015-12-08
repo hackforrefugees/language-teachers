@@ -91,7 +91,7 @@
         };
     });
 
-    as.factory('dataservice', function ($http, $location) {
+    as.factory('dataservice', function ($rootScope, $http, $location) {
 
         return {
             getLanguages: function () {
@@ -110,7 +110,7 @@
             login: function (email, password, rememberMe) {
                 $http.post('/user/login', {email: email, password: password, rememberMe: rememberMe})
                     .then(function (data, status, headers) {
-                        $location.path("/register");
+                        $location.path('/');
                     });
             },
 

@@ -29,7 +29,6 @@
 //        };
 
         $rootScope.appUrl = "http://language.teacher.se";
-
     });
 
 }());
