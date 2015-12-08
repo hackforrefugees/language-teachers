@@ -1,0 +1,23 @@
+{
+  "name": "swell",
+  "description": "A way of matching teachers within language with the need on different places, so not all teachers are in Kungsbacka and the people needing help are in Backa.",
+  "main": "index.html",
+  "authors": [
+    "Mathias Bylund <materbyl@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/hackforrefugees/language-teachers",
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.4.8"
+  }
+}
