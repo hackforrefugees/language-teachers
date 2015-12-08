@@ -9,3 +9,6 @@ An organization is an entity that arranges lectures in Swedish. They can browse 
 
 * Student -
 A student is a person who wants to attend lectures in Swedish. They can browse and join lectures in their vicinity held in their native language.
+
+#Contributing
+In order to contribute to the project please check the CONTRIBUTING.md file for further information on what we are looking for at the moment as well as how to set up the project
