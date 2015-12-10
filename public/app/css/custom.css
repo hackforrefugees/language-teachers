@@ -1,21 +1,56 @@
-.loading-logo{
-    width: 500px;
-}
+/**
+super-dark: #002635
+dark: #013440
+lighter: #025F75
 
+complementary:
+red: #AB1A25
+orange: #D97925
+sandy-yellow: #EFE7BE
+**/
 .header-logo{
-    width: 200px;
+    max-width: 300px;
 }
 
-.logo-slider{
-    width: 400px;
+.form-row{
+    margin-top: 30px;
+    color: #fff !important;
 }
 
-#content{
-    background-color: #f6f6f6;
+.login-row{
+    margin-bottom: 10px !important;
 }
 
-@media (max-width: 796px) {
-    .logo-slider{
-        width: 200px;
-    }
+.header-form-headline{
+    color: #fff;
+}
+
+.dark-grey{
+    color: #333 !important;
+}
+
+.red{
+    color: #AB1A25 !important;
+}
+
+.orange{
+    color: #D97925 !important;
+}
+
+.super-dark-blue{
+    color: #002635 !important;
+}
+
+.dark{
+    color: #013440 !important;
+}
+
+.lighter-blue{
+    color: #025F75 !important;
+}
+
+.menubar{
+    -webkit-box-shadow: 0 3px 0 0 #000000;
+    -moz-box-shadow: 0 3px 0 0 #000000;
+    box-shadow: 0 1px 3px 0 #000000;
 }

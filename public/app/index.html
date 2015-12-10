@@ -21,48 +21,34 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <link href="img/favicon/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/slick.css">
-    <link rel="stylesheet" href="lib/eco/rs-plugin/css/settings.css">
-    <script type="text/javascript" src="lib/eco/modernizr.custom.32033.js"></script>
-    <link rel="stylesheet" href="css/eco.css">
-    <link rel="stylesheet" href="css/custom.css">
-    <!--[if lt IE 9]>
-    <script src="lib/html5shiv.js"></script>
-    <script src="lib/respond.min.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,700,200,100,300,500,600,800,900' rel='stylesheet'
+          type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,700italic,900,400italic,300italic'
+          rel='stylesheet' type='text/css'>
+    <script src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/sedulous/jquery.sticky.js"></script>
+    <script>
+        $(window).load(function () {
+            $("#menu").sticky({topSpacing: 0});
+        });
+    </script>
 </head>
-<body ng-controller="AppCtrl">
-<div class="pre-loader">
-    <div class="load-con">
-        <img src="img/logo.svg" class="animated fadeInDown loading-logo" alt="">
-
-        <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
+<div class="navbar menubar" id="menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle menu-button" data-toggle="collapse" data-target="#myNavbar">
+                <span class="glyphicon glyphicon-align-justify"></span>
+            </button>
+            <a class="navbar-brand logo" href="#">Swetea</a>
         </div>
-    </div>
-</div>
-<header>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
-                    <span class="fa fa-bars fa-lg"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">
-                    <img src="img/logo_light.png" alt="" class="header-logo">
-                </a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
+        <div>
+            <nav class="collapse navbar-collapse" id="myNavbar" role="navigation">
+                <ul class="nav navbar-nav navbar-right navstyle">
                     <li>
                         <a href="#about">About us</a>
                     </li>
@@ -73,125 +59,99 @@
                         <a href="#/profile">Profile</a>
                     </li>
                 </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-->
-    </nav>
-    <!--RevSlider-->
-    <div class="tp-banner-container">
-        <div class="tp-banner">
-            <ul>
-                <!-- SLIDE  -->
-                <li data-transition="fade" data-slotamount="7" data-masterspeed="1500">
-                    <!-- MAIN IMAGE -->
-                    <img src="img/transparent.png" alt="slidebg1" data-bgfit="cover" data-bgposition="left top"
-                         data-bgrepeat="no-repeat">
-                    <!-- LAYERS -->
-                    <!-- LAYER NR. 1 -->
-                    <div class="tp-caption large_white_bold sft" data-x="400" data-y="center" data-hoffset="0"
-                         data-voffset="-80" data-speed="500" data-start="1200" data-easing="Power4.easeOut">
-                        SweaTea
-                    </div>
-                    <div class="tp-caption large_white_light sfb" data-x="300" data-y="center" data-hoffset="0"
-                         data-voffset="0" data-speed="1000" data-start="1500" data-easing="Power4.easeOut">
-                        The platform for finding
-                    </div>
-                    <div class="tp-caption large_white_light sfb" data-x="300" data-y="center" data-hoffset="0"
-                         data-voffset="85" data-speed="1000" data-start="1700" data-easing="Power4.easeOut">
-                        language teaching events
-                    </div>
-                    <div class="tp-caption sfb hidden-xs" data-x="400" data-y="center" data-hoffset="0"
-                         data-voffset="165" data-speed="1000" data-start="1900" data-easing="Power4.easeOut">
-                        <a href="#about" class="btn btn-primary inverse btn-lg">LEARN MORE</a>
-                    </div>
-                    <div class="tp-caption lfb visible-xs" data-x="center" data-y="center" data-hoffset="0"
-                         data-voffset="250" data-speed="1000" data-start="1200" data-easing="Power4.easeOut">
-                        <a href="#about" class="btn btn-primary inverse btn-lg">LEARN MORE</a>
-                    </div>
-                </li>
-                <!-- SLIDE 3 -->
-                <li data-transition="zoomout" data-slotamount="7" data-masterspeed="1000">
-                    <!-- MAIN IMAGE -->
-                    <img src="img/transparent.png" alt="slidebg1" data-bgfit="cover" data-bgposition="left top"
-                         data-bgrepeat="no-repeat">
-                    <!-- LAYERS -->
-                    <!-- LAYER NR. 1 -->
-                    <div class="tp-caption large_white_bold sft hidden-xs" data-x="150" data-y="center" data-hoffset="0"
-                         data-voffset="-80" data-speed="500" data-start="1200" data-easing="Power4.easeOut">
-                        You need help learning swedish?
-                    </div>
-                    <div class="tp-caption large_white_light sfb hidden-xs" data-x="150" data-y="center"
-                         data-hoffset="0"
-                         data-voffset="0" data-speed="1000" data-start="1500" data-easing="Power4.easeOut">
-                        You want to help others learn swedish?
-                    </div>
-                    <div class="tp-caption large_white_light sfb hidden-xs" data-x="150" data-y="center"
-                         data-hoffset="0"
-                         data-voffset="85" data-speed="1000" data-start="1700" data-easing="Power4.easeOut">
-                        Then this is the right platform for you!
-                    </div>
-                    <div class="tp-caption sfb hidden-xs" data-x="150" data-y="center" data-hoffset="0"
-                         data-voffset="165" data-speed="1000" data-start="1900" data-easing="Power4.easeOut">
-                        <a href="#about" class="btn btn-primary inverse btn-lg">LEARN MORE</a>
-                    </div>
-                    <!-- LAYER NR. 2 -->
-                    <div class="tp-caption medium_light_white sft visible-xs" data-x="center" data-y="center"
-                         data-hoffset="0"
-                         data-voffset="-80" data-speed="500" data-start="1200" data-easing="Power4.easeOut">
-                        You need help learning swedish?
-                    </div>
-                    <div class="tp-caption medium_light_white sfb visible-xs" data-x="center" data-y="center"
-                         data-hoffset="0"
-                         data-voffset="0" data-speed="1000" data-start="1500" data-easing="Power4.easeOut">
-                        You want to help others learn swedish?
-                    </div>
-                    <div class="tp-caption medium_light_white sfb visible-xs" data-x="center" data-y="center"
-                         data-hoffset="0"
-                         data-voffset="85" data-speed="1000" data-start="1700" data-easing="Power4.easeOut">
-                        Then this is the right platform for you!
-                    </div>
-                    <div class="tp-caption sfb hidden-xs" data-x="150" data-y="center" data-hoffset="0"
-                         data-voffset="165" data-speed="1000" data-start="1900" data-easing="Power4.easeOut">
-                        <a href="#about" class="btn btn-primary inverse btn-lg">LEARN MORE</a>
-                    </div>
-
-                    <div class="tp-caption lfb visible-xs" data-x="center" data-y="center" data-hoffset="0"
-                         data-voffset="250" data-speed="1000" data-start="1200" data-easing="Power4.easeOut">
-                        <a href="#about" class="btn btn-primary inverse btn-lg">LEARN MORE</a>
-                    </div>
-                </li>
-            </ul>
+            </nav>
         </div>
     </div>
-</header>
-<div class="wrapper">
-    <section id="about">
+</div>
+<div class="container-fluid banner text-center" id="banner">
+    <div class="row">
+        <div class="col-md-12 line">
+            <div class="tablebox">
+                <div class="banner-text" id="bannertext">
+                    <h1 class="hostyle" id="heads"><img src="img/logo_light.png" class="header-logo"></h1>
+                    <div class="row form-row">
+                            <h3 class="header-form-headline">Login</h3>
+                        <div class="col-md-4 col-md-offset-4">
+                            <form>
+                                <div class="row login-row">
+                                    <div class="form-group login-row">
+                                        <label class="control-label col-md-2">Email</label>
+                                        <div class="col-md-10">
+                                            <input type="email" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row login-row">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Password</label>
+                                        <div class="col-md-10">
+                                            <input type="password" class="form-control" placeholder="Password">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row login-row">
+                                    <div class="form-group login-row">
+                                        <input type="submit" class="btn btn-success col-md-5" value="Login">
+                                        <a href="#" class="btn btn-primary col-md-5 col-md-offset-2">Register</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="navbar menubar" id="menu">-->
+    <!--<div class="container">-->
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle menu-button" data-toggle="collapse" data-target="#myNavbar">-->
+                <!--<span class="glyphicon glyphicon-align-justify"></span>-->
+            <!--</button>-->
+            <!--<a class="navbar-brand logo" href="#">Swetea</a>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<nav class="collapse navbar-collapse" id="myNavbar" role="navigation">-->
+                <!--<ul class="nav navbar-nav navbar-right navstyle">-->
+                    <!--<li>-->
+                        <!--<a href="#about">About us</a>-->
+                    <!--</li>-->
+                    <!--<li ng-class="activeWhen(path() == '/login')">-->
+                        <!--<a href="#/login">Login</a>-->
+                    <!--</li>-->
+                    <!--<li ng-class="activeWhen(path() == '/profile')">-->
+                        <!--<a href="#/profile">Profile</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</nav>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="container-fluid">
+    <div class="features" id="about">
         <div class="container">
-            <div class="section-heading scrollpoint sp-effect3">
-                <h1>About Us</h1>
+            <div class="row">
+                <h1 class="hostyle super-dark-blue">About Us</h1>
 
                 <div class="divider"></div>
                 <p>We want to bring language learning people together</p>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xs-6">
-                    <div class="about-item scrollpoint sp-effect2">
-                        <i class="fa fa-map-marker fa-2x"></i>
 
+                <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
+                    <div class="feature-icons super-dark-blue"><i class="fa fa-map-marker fa-5x"></i></div>
+                    <div class="fh-desc">
                         <h3>The Origin of the Idea</h3>
 
                         <p>
-                            The idea for this platform came up during the <a target="_blank"
-                                                                             href="https://www.facebook.com/events/165309683822188/">Hack
-                            for Refugees-Event</a> in Gothenburg-Sweden
+                            The idea for this platform came up during the
+                            <a target="_blank" href="https://www.facebook.com/events/165309683822188/">Hack
+                                for Refugees-Event</a> in Gothenburg-Sweden
                         </p>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-6">
-                    <div class="about-item scrollpoint sp-effect5">
-                        <i class="fa fa-lightbulb-o fa-2x"></i>
-
+                <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
+                    <div class="feature-icons super-dark-blue"><i class="fa fa-lightbulb-o fa-5x"></i></div>
+                    <div class="fh-desc">
                         <h3>The Idea</h3>
 
                         <p>
@@ -205,10 +165,9 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-6">
-                    <div class="about-item scrollpoint sp-effect5">
-                        <i class="fa fa-question fa-2x"></i>
-
+                <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
+                    <div class="feature-icons super-dark-blue"><i class="fa fa-question fa-5x"></i></div>
+                    <div class="fh-desc">
                         <h3>How can I help?</h3>
 
                         <p>
@@ -227,34 +186,13 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="content">
-        <ng-view class="container"></ng-view>
-    </section>
-
-    <footer>
-        <div class="container">
-            <a href="#" class="scrollpoint sp-effect3">
-                <img src="img/logo_light.png" alt="" class="logo">
-            </a>
-            <!--<div class="social">-->
-            <!--<a href="#" class="scrollpoint sp-effect3"><i class="fa fa-facebook fa-lg"></i></a>-->
-            <!--</div>-->
-            <div class="rights">
-                <p>Copyright &copy; 2015</p>
-            </div>
-        </div>
-    </footer>
-
-</div>
-<div class="container-fluid">
-
+    </div>
     <div ng-class="'alert alert-' + message().type" ng-show="message().show">
         <button type="button" class="close" ng-click="message().show = false">&times;</button>
         <msg key-expr="message().text"></msg>
     </div>
 
+    <ng-view class="container"></ng-view>
 
     <div class="footer">
         <div class="row-fluid">
@@ -267,19 +205,8 @@
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 -->
-<script src="lib/eco/jquery-1.11.1.min.js"></script>
+
 <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="lib/eco/slick.min.js"></script>
-<script src="lib/eco/placeholdem.min.js"></script>
-<script src="lib/eco/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
-<script src="lib/eco/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-<script src="lib/eco/waypoints.min.js"></script>
-<script src="lib/eco/scripts.js"></script>
-<script>
-    $(document).ready(function () {
-        appMaster.preLoader();
-    });
-</script>
 <script type="text/javascript" src="lib/jquery.i18n.properties-min-1.0.9.js"></script>
 <script type="text/javascript" src="lib/holder.js"></script>
 <script type="text/javascript" src="../bower_components/angular/angular.js"></script>
