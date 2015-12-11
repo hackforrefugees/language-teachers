@@ -28,7 +28,7 @@
 //            $location.url('/');
 //        };
 
-        $rootScope.appUrl = "http://language.teacher.se";
+        $rootScope.appUrl = "http://language.teacher.backend.se";
     });
 
 }());
