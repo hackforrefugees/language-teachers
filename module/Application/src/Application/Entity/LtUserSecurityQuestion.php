@@ -59,7 +59,7 @@ class LtUserSecurityQuestion
     public function setSecurityquestionid($securityquestionid)
     {
         $this->securityquestionid = $securityquestionid;
-
+    
         return $this;
     }
 
@@ -83,7 +83,7 @@ class LtUserSecurityQuestion
     public function setSecurityquestionanswer($securityquestionanswer)
     {
         $this->securityquestionanswer = $securityquestionanswer;
-
+    
         return $this;
     }
 
@@ -107,7 +107,7 @@ class LtUserSecurityQuestion
     public function setLangcode($langcode)
     {
         $this->langcode = $langcode;
-
+    
         return $this;
     }
 
@@ -131,7 +131,7 @@ class LtUserSecurityQuestion
     public function setUserid(\Application\Entity\LtUser $userid)
     {
         $this->userid = $userid;
-
+    
         return $this;
     }
 

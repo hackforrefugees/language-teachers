@@ -92,12 +92,12 @@
     });
 
     as.factory('dataservice', function ($rootScope, $http, $location) {
-
+        $rootScope.appUrl = "http://language.teacher.backend.se";
         return {
             getLanguages: function () {
                 return $http({
                     method: 'GET',
-                    url: '/languages'
+                    url: $rootScope.appUrl+'/languages'
                 }).then(function (ref) {
                     var languages = [];
                     angular.forEach(ref.data, function (value, key) {
@@ -106,18 +106,16 @@
                     return languages;
                 });
             },
-
             login: function (email, password, rememberMe) {
-                $http.post('/user/login', {email: email, password: password, rememberMe: rememberMe})
+                $http($rootScope.appUrl+'/user/login', {email: email, password: password, rememberMe: rememberMe})
                     .then(function (data, status, headers) {
                         $location.path('/');
                     });
             },
-
             profile: function () {
                 return $http({
                     method: 'GET',
-                    url: '/user'
+                    url: $rootScope.appUrl+'/user'
                 }).then(function (ref) {
                     return ref.data;
                 });
@@ -148,7 +146,7 @@
 
                 console.log(data);
 
-                $http.post('/user/register', data)
+                $http.post($rootScope.appUrl+'/user/register', data)
                     .then(function (ref) {
                         console.log("data");
                         console.log(ref.data);

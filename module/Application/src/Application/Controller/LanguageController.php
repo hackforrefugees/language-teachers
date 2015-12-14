@@ -2,7 +2,7 @@
 
 namespace Application\Controller;
 
-use Zend\Authentication\AuthenticationService;
+use Application\HelperClasses\AuthenticationHelper;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 
@@ -20,6 +20,20 @@ class LanguageController extends AbstractRestfulController
      */
     public function indexAction()
     {
+        if($this->request->isOptions()){
+            return new JsonModel();
+        }
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource .'));
+        }
+
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $languages = $objectManager->getRepository('Application\Entity\LtLanguage')->findAll();
         $languageList = array();

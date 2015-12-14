@@ -13,7 +13,6 @@ namespace User\Event;
  */
 use User\Acl\Acl as AclClass;
 use User\Controller\Plugin\UserAuthentication as AuthPlugin;
-use Zend\Mvc\MvcEvent as MvcEvent;
 
 /**
  * Class Authentication
@@ -49,61 +48,26 @@ class Authentication
 
     /**
      * preDispatch LanguageTeacherEvent Handler
-     * @param MvcEvent $event
+     * @param string $controller
+     * @param string $action
+     * @param string $userGroup
+     * @return boolean
      * @throws \Exception
      */
-    public function preDispatch(MvcEvent $event)
+    public function checkPermission($controller, $action, $userGroup)
     {
-        $userAuth = $this->getUserAuthenticationPlugin();
         $acl = $this->getAclClass();
-        $role = AclClass::DEFAULT_ROLE;
 
-        if ($userAuth->hasIdentity()) {
-            $user = $userAuth->getIdentity();
-            $role = $user['userGroup'];
-        }
-
-        $routeMatch = $event->getRouteMatch();
-        $controller = $routeMatch->getParam('controller');
-        $action = $routeMatch->getParam('action');
+        $role = $userGroup;
 
         if (!$acl->hasResource($controller)) {
             throw new \Exception('Ressource ' . $controller . ' not defined');
         }
 
         if (!$acl->isAllowed($role, $controller, $action)) {
-            $url = $event->getRouter()->assemble(array(), array('name' => 'user/notAllowed'));
-            $response = $event->getResponse();
-            $response->getHeaders()->addHeaders(array(array('Location' => $url)));
-            $response->setStatusCode(302);
-            $response->sendHeaders();
-            exit;
+            return false;
         }
-    }
-
-    /**
-     * Sets authentication plugin
-     * @param AuthPlugin $userAuthenticationPlugin
-     * @return $this
-     */
-    public function setUserAuthenticationPlugin(AuthPlugin $userAuthenticationPlugin)
-    {
-        $this->_userAuth = $userAuthenticationPlugin;
-
-        return $this;
-    }
-
-    /**
-     * Gets the authentication plugin
-     * @return null|AuthPlugin
-     */
-    public function getUserAuthenticationPlugin()
-    {
-        if ($this->_userAuth === null) {
-            $this->_userAuth = new AuthPlugin();
-        }
-
-        return $this->_userAuth;
+        return true;
     }
 
     /**

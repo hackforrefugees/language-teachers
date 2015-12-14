@@ -52,7 +52,7 @@ class LtSecurityQuestion
     public function setSecurityquestionid($securityquestionid)
     {
         $this->securityquestionid = $securityquestionid;
-
+    
         return $this;
     }
 
@@ -76,7 +76,7 @@ class LtSecurityQuestion
     public function setSecurityquestion($securityquestion)
     {
         $this->securityquestion = $securityquestion;
-
+    
         return $this;
     }
 
@@ -100,7 +100,7 @@ class LtSecurityQuestion
     public function setLangcode(\Application\Entity\LtLanguage $langcode)
     {
         $this->langcode = $langcode;
-
+    
         return $this;
     }
 

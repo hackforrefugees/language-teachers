@@ -178,7 +178,7 @@ class LtEvent
     public function setEventtime($eventtime)
     {
         $this->eventtime = $eventtime;
-
+    
         return $this;
     }
 
@@ -202,7 +202,7 @@ class LtEvent
     public function setMaxteachers($maxteachers)
     {
         $this->maxteachers = $maxteachers;
-
+    
         return $this;
     }
 
@@ -226,7 +226,7 @@ class LtEvent
     public function setMaxstudents($maxstudents)
     {
         $this->maxstudents = $maxstudents;
-
+    
         return $this;
     }
 
@@ -250,7 +250,7 @@ class LtEvent
     public function setStreet($street)
     {
         $this->street = $street;
-
+    
         return $this;
     }
 
@@ -274,7 +274,7 @@ class LtEvent
     public function setStreetnumber($streetnumber)
     {
         $this->streetnumber = $streetnumber;
-
+    
         return $this;
     }
 
@@ -298,7 +298,7 @@ class LtEvent
     public function setZipcode($zipcode)
     {
         $this->zipcode = $zipcode;
-
+    
         return $this;
     }
 
@@ -322,7 +322,7 @@ class LtEvent
     public function setCity($city)
     {
         $this->city = $city;
-
+    
         return $this;
     }
 
@@ -346,7 +346,7 @@ class LtEvent
     public function setCountry($country)
     {
         $this->country = $country;
-
+    
         return $this;
     }
 
@@ -370,7 +370,7 @@ class LtEvent
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-
+    
         return $this;
     }
 
@@ -394,7 +394,7 @@ class LtEvent
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-
+    
         return $this;
     }
 
@@ -418,7 +418,7 @@ class LtEvent
     public function setEventtitle($eventtitle)
     {
         $this->eventtitle = $eventtitle;
-
+    
         return $this;
     }
 
@@ -442,7 +442,7 @@ class LtEvent
     public function setEventlanguage(\Application\Entity\LtLanguage $eventlanguage = null)
     {
         $this->eventlanguage = $eventlanguage;
-
+    
         return $this;
     }
 
@@ -466,7 +466,7 @@ class LtEvent
     public function setCreatoruserid(\Application\Entity\LtUser $creatoruserid = null)
     {
         $this->creatoruserid = $creatoruserid;
-
+    
         return $this;
     }
 
@@ -490,7 +490,7 @@ class LtEvent
     public function addStudentid(\Application\Entity\LtStudent $studentid)
     {
         $this->studentid[] = $studentid;
-
+    
         return $this;
     }
 
@@ -524,7 +524,7 @@ class LtEvent
     public function addVolunteerid(\Application\Entity\LtVolunteer $volunteerid)
     {
         $this->volunteerid[] = $volunteerid;
-
+    
         return $this;
     }
 

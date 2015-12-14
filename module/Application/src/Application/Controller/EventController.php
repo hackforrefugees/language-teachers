@@ -6,6 +6,7 @@ namespace Application\Controller;
 use Application\Entity\LtEvent;
 use Application\Form\CreateEventFilter;
 use Application\Form\CreateEventForm;
+use Application\HelperClasses\AuthenticationHelper;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractRestfulController;
@@ -25,6 +26,21 @@ class EventController extends AbstractRestfulController
      */
     public function indexAction()
     {
+        if($this->request->isOptions()){
+            return new JsonModel();
+        }
+
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
+
         if ($this->request->isPost()) {
             $post = get_object_vars(json_decode($this->request->getContent()));
             $address = $post['address'];
@@ -65,6 +81,20 @@ class EventController extends AbstractRestfulController
      */
     public function getSingleEventAction()
     {
+        if($this->request->isOptions()){
+            return new JsonModel();
+        }
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
+
         $eventId = (int)$this->params()->fromRoute('eventId', 0);
         if (!$eventId) {
             $this->response->setStatusCode(404);
@@ -204,6 +234,21 @@ class EventController extends AbstractRestfulController
      */
     public function createEventAction()
     {
+        if($this->request->isOptions()){
+            return new JsonModel();
+        }
+
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
+
         if ($this->request->isPost()) {
             $createEventForm = new CreateEventForm();
             $createEventFilter = new CreateEventFilter();
@@ -277,6 +322,20 @@ class EventController extends AbstractRestfulController
      */
     public function addParticipantToEventAction()
     {
+        if($this->request->isOptions()){
+            return new JsonModel();
+        }
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
+
         if ($this->request->isPut()) {
             $eventId = $this->params()->fromRoute('eventId', 0);
             if (!$eventId) {
@@ -337,6 +396,20 @@ class EventController extends AbstractRestfulController
      */
     public function removeParticipantFromEventAction()
     {
+        if($this->request->isOptions()){
+            return new JsonModel();
+        }
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
+
         if ($this->request->isDelete()) {
             $eventId = $this->params()->fromRoute('eventId', 0);
             if (!$eventId) {

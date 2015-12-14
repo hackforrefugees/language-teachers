@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="sweTea">
 <head>
     <meta charset="utf-8">
     <title>Swell!</title>
@@ -52,11 +52,14 @@
                     <li>
                         <a href="#about">About us</a>
                     </li>
-                    <li ng-class="activeWhen(path() == '/login')">
+                    <li ng-show="!isLoggedIn()" ng-class="activeWhen(path() == '/login')">
                         <a href="#/login">Login</a>
                     </li>
-                    <li ng-class="activeWhen(path() == '/profile')">
+                    <li ng-show="can('profile')" ng-class="activeWhen(path() == '/profile')">
                         <a href="#/profile">Profile</a>
+                    </li>
+                    <li ng-show="isLoggedIn()" ng-class="activeWhen(path() == '/logout')">
+                        <a ng-click="logout()">Logout</a>
                     </li>
                 </ul>
             </nav>
@@ -70,7 +73,7 @@
                 <div class="banner-text" id="bannertext">
                     <h1 class="hostyle" id="heads"><img src="img/logo_light.png" class="header-logo"></h1>
                     <div class="row form-row">
-                            <h3 class="header-form-headline">Login</h3>
+                        <h3 class="header-form-headline">Login</h3>
                         <div class="col-md-4 col-md-offset-4">
                             <form>
                                 <div class="row login-row">
@@ -165,7 +168,9 @@
         <msg key-expr="message().text"></msg>
     </div>
 
-    <ng-view class="container"></ng-view>
+    <div class="col-md-12" ng-view>
+
+    </div>
 
     <div class="footer">
         <div class="row-fluid">
@@ -183,15 +188,40 @@
 <script type="text/javascript" src="lib/jquery.i18n.properties-min-1.0.9.js"></script>
 <script type="text/javascript" src="lib/holder.js"></script>
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
+<script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="bower_components/tv4/tv4.js"></script>
+<script type="text/javascript" src="bower_components/objectpath/lib/ObjectPath.js"></script>
+<script type="text/javascript" src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+<script type="text/javascript" src="bower_components/ngstorage/ngStorage.js"></script>
+<script type="text/javascript" src="bower_components/ngtoast/dist/ngToast.js"></script>
+<script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+<script type="text/javascript" src="bower_components/angular-acl/angular-acl.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/services.js"></script>
-<script type="text/javascript" src="js/controllers.js"></script>
-<script type="text/javascript" src="js/register.controller.js"></script>
-<script type="text/javascript" src="js/login.controller.js"></script>
-<script type="text/javascript" src="js/profile.controller.js"></script>
-<script type="text/javascript" src="js/filters.js"></script>
-<script type="text/javascript" src="js/directives.js"></script>
+<script type="text/javascript" src="module/authentication/authentication.js"></script>
+<script type="text/javascript" src="module/authentication/authentication-service.js"></script>
+<script type="text/javascript" src="module/authorization/authorization.js"></script>
+<script type="text/javascript" src="module/authorization/authorization-service.js"></script>
+<script type="text/javascript" src="module/login/login.js"></script>
+<script type="text/javascript" src="module/login/login-service.js"></script>
+<script type="text/javascript" src="module/ng-resource/resource-service.js"></script>
+<script type="text/javascript" src="module/form/form.js"></script>
+<script type="text/javascript" src="module/form/form-functions.js"></script>
+<script type="text/javascript" src="module/form/form-service.js"></script>
+<script type="text/javascript" src="module/form/form-validation-service.js"></script>
+<script type="text/javascript" src="module/user/user.js"></script>
+<script type="text/javascript" src="module/profile/profile.js"></script>
+<script type="text/javascript" src="module/profile/profile-service.js"></script>
+<script type="text/javascript" src="module/logout/logout.js"></script>
+<script type="text/javascript" src="module/logout/logout-service.js"></script>
+<script type="text/javascript" src="module/http/http.js"></script>
+<script type="text/javascript" src="module/http/interceptor-service.js"></script>
+<!--<script type="text/javascript" src="js/controllers.js"></script>-->
+<!--<script type="text/javascript" src="js/register.controller.js"></script>-->
+<!--<script type="text/javascript" src="js/profile.controller.js"></script>-->
+<!--<script type="text/javascript" src="js/filters.js"></script>-->
+<!--<script type="text/javascript" src="js/directives.js"></script>-->
 
 </body>
 </html>

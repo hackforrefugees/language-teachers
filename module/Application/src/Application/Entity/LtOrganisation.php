@@ -71,7 +71,7 @@ class LtOrganisation
     public function setContactpersonname($contactpersonname)
     {
         $this->contactpersonname = $contactpersonname;
-
+    
         return $this;
     }
 
@@ -95,7 +95,7 @@ class LtOrganisation
     public function setContactpersonemail($contactpersonemail)
     {
         $this->contactpersonemail = $contactpersonemail;
-
+    
         return $this;
     }
 
@@ -119,7 +119,7 @@ class LtOrganisation
     public function setContactpersonphone($contactpersonphone)
     {
         $this->contactpersonphone = $contactpersonphone;
-
+    
         return $this;
     }
 
@@ -143,7 +143,7 @@ class LtOrganisation
     public function setOrganisationdescription($organisationdescription)
     {
         $this->organisationdescription = $organisationdescription;
-
+    
         return $this;
     }
 
@@ -167,7 +167,7 @@ class LtOrganisation
     public function setOrganisationwebsite($organisationwebsite)
     {
         $this->organisationwebsite = $organisationwebsite;
-
+    
         return $this;
     }
 
@@ -191,7 +191,7 @@ class LtOrganisation
     public function setOrganisationid(\Application\Entity\LtUser $organisationid)
     {
         $this->organisationid = $organisationid;
-
+    
         return $this;
     }
 

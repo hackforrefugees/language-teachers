@@ -7,13 +7,13 @@ use Application\Entity\LtStudent;
 use Application\Entity\LtUser;
 use Application\Entity\LtUserSecurityQuestion;
 use Application\Entity\LtVolunteer;
+use Application\HelperClasses\AuthenticationHelper;
 use BitDbBcryptAuthAdapter\AuthAdapter;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use User\Form\LoginFilter;
 use User\Form\LoginForm;
 use User\Form\RegisterFilter;
 use User\Form\RegisterForm;
-use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
@@ -31,6 +31,21 @@ class IndexController extends AbstractActionController
      */
     public function registerAction()
     {
+        if ($this->request->isOptions()) {
+            return new JsonModel();
+        }
+
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
+
         if ($this->request->isPost()) {
             $registerForm = new RegisterForm();
             $registerFilter = new RegisterFilter();
@@ -80,19 +95,19 @@ class IndexController extends AbstractActionController
             $user->setLongitude($longitude);
 
             list($type, $data) = explode(';', $post['profilePicturePath']);
-            list(, $data)      = explode(',', $data);
+            list(, $data) = explode(',', $data);
             $data = base64_decode($data);
 
-            $randomImageName = md5($formData['email']. $tokenRandomize);
-            if(strpos($type, 'png')){
-                $imageName = $randomImageName.'.png';
+            $randomImageName = md5($formData['email'] . $tokenRandomize);
+            if (strpos($type, 'png')) {
+                $imageName = $randomImageName . '.png';
             } else {
-                $imageName = $randomImageName.'.jpg';
+                $imageName = $randomImageName . '.jpg';
             }
 
-            file_put_contents(__DIR__.'/../../../../../public/app/img/profilePictures/'.$imageName, $data);
+            file_put_contents(__DIR__ . '/../../../../../public/app/img/profilePictures/' . $imageName, $data);
 
-            $user->setProfilepicturepath('img/profilePictures/'.$imageName);
+            $user->setProfilepicturepath('img/profilePictures/' . $imageName);
 
             if ($userType === 'student') {
                 $student = new LtStudent();
@@ -162,10 +177,28 @@ class IndexController extends AbstractActionController
      */
     public function logoutAction()
     {
-        $authService = $this->getServiceLocator()->get('AuthService');
-        $authService->clearIdentity();
-        $storage = $authService->getStorage();
-        $storage->forgetMe();
+        if($this->request->isOptions()){
+            return new JsonModel();
+        }
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
+
+        $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $user = $objectManager->getRepository('Application\Entity\LtUser')
+            ->findOneBy(array('authtoken' => $authTokenObject->getFieldValue()));
+
+        $user->setAuthToken(null);
+        $objectManager->persist($user);
+        $objectManager->flush();
+
         return new JsonModel(array('error' => 0, 'message' => 'Logout successful'));
     }
 
@@ -176,7 +209,7 @@ class IndexController extends AbstractActionController
     public function notAllowedAction()
     {
         $this->response->setStatusCode(401);
-        return new JsonModel(array('error' => 1, 'message' => 'You have to be logged in to access this resource'));
+        return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
     }
 
     /**
@@ -185,11 +218,16 @@ class IndexController extends AbstractActionController
      */
     public function loginAction()
     {
+        if ($this->request->isOptions()) {
+            return new JsonModel();
+        }
+
         if ($this->request->isPost()) {
             $loginForm = new LoginForm();
             $loginFilter = new LoginFilter();
             $loginForm->setInputFilter($loginFilter);
             $post = get_object_vars(json_decode($this->request->getContent()));
+
             $loginForm->setData($post);
             if (!$loginForm->isValid()) {
                 $errorMessages = array();
@@ -217,19 +255,18 @@ class IndexController extends AbstractActionController
                 $auth = $this->getServiceLocator()->get('AuthService');
                 $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
                 $user = $objectManager->getRepository('Application\Entity\LtUser')
-                    ->findOneBy(array('email' => $formData['email']));;
+                    ->findOneBy(array('email' => $formData['email']));
+
+                $date = new \DateTime();
+                $hashRandomize = uniqid('swetea', true);
+                $authToken = md5($formData['email'] . $date->format('Y-m-d') . $hashRandomize);
+                $user->setAuthtoken($authToken);
 
                 $storage = $auth->getStorage();
-                $rememberMe = $formData['rememberMe'];
-                if ((int)$rememberMe === 1) {
-                    $storage->setRememberMe(1);
-                } else {
-                    $storage->setRememberMe(0);
-                }
-
                 $storage->write(array('contactName' => $user->getContactname(), 'userGroup' => $user->getUsergroup(), 'email' => $user->getEmail(), 'userId' => $user->getUserId()));
-
-                return new JsonModel(array('error' => 0, 'message' => 'Login successful'));
+                $objectManager->persist($user);
+                $objectManager->flush();
+                return new JsonModel(array('error' => 0, 'message' => 'Login successful', 'authToken' => $authToken, 'userGroup' => $user->getUsergroup()));
             }
         } else {
             $this->response->setStatusCode(405);
@@ -239,12 +276,22 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
-        $authService = new AuthenticationService();
-        $session = $authService->getStorage()->read();
-        $userId = (int)$session['userId'];
-
+        if ($this->request->isOptions()) {
+            return new JsonModel();
+        }
+        $controllerName = $this->params('controller');
+        $actionName = $this->params('action');
+        $authenticationHelper = new AuthenticationHelper($this->getServiceLocator());
+        $headers = $this->request->getHeaders();
+        $authTokenObject = $headers->get('authToken');
+        $hasPermission = $authenticationHelper->checkPermissions($controllerName, $actionName, $authTokenObject);
+        if (!$hasPermission) {
+            $this->response->setStatusCode(401);
+            return new JsonModel(array('error' => 1, 'message' => 'You don\'t have the necessary permissions to view this resource.'));
+        }
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $user = $objectManager->find('Application\Entity\LtUser', $userId);
+        $user = $objectManager->getRepository('Application\Entity\LtUser')
+            ->findOneBy(array('authtoken' => $authTokenObject->getFieldValue()));
 
         $userArray = array(
             'email' => $user->getEmail(),
@@ -253,7 +300,7 @@ class IndexController extends AbstractActionController
             'registrationDate' => $user->getRegistrationdate()->format('Y-m-d'),
         );
 
-        if($user->getPhone() !== ''){
+        if ($user->getPhone() !== '') {
             $userArray['phone'] = $user->getPhone();
         } else {
             $userArray['phone'] = null;

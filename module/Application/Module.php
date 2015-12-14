@@ -2,15 +2,17 @@
 namespace Application;
 
 use Application\Authentication\Storage\RememberMeStorage;
+use Application\HelperClasses\AuthenticationNeedHelper;
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\Authentication\AuthenticationService;
 
 class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager = $e->getApplication()->getEventManager();
+        $serviceManager = $e->getApplication()->getServiceManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }

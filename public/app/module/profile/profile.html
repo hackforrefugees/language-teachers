@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4">
+            <img src="../{{profileCtrl.user.profilePicturePath}}" class="img-responsive">
+        </div>
+        <div class="col-md-8">
+            <ul>
+                <li>{{profileCtrl.user.email}}</li>
+                <li>{{profileCtrl.user.contactName}}</li>
+                <li>{{profileCtrl.user.registrationDate}}</li>
+                <li ng-show="profileCtrl.user.phone !== null">{{profileCtrl.user.phone}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

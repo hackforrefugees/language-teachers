@@ -8,6 +8,7 @@
         $scope.setLanguage = function(lang) {
             i18n.setLanguage(lang);
         };
+
         $scope.activeWhen = function(value) {
             return value ? 'active' : '';
         };
@@ -27,8 +28,6 @@
 //            $scope.$emit('event:logoutRequest');
 //            $location.url('/');
 //        };
-
-        $rootScope.appUrl = "http://language.teacher.backend.se";
     });
 
 }());

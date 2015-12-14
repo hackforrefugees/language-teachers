@@ -60,7 +60,7 @@ class LtStudent
     public function setNativelanguage(\Application\Entity\LtLanguage $nativelanguage = null)
     {
         $this->nativelanguage = $nativelanguage;
-
+    
         return $this;
     }
 
@@ -84,7 +84,7 @@ class LtStudent
     public function setStudentid(\Application\Entity\LtUser $studentid)
     {
         $this->studentid = $studentid;
-
+    
         return $this;
     }
 
@@ -108,7 +108,7 @@ class LtStudent
     public function addEventid(\Application\Entity\LtEvent $eventid)
     {
         $this->eventid[] = $eventid;
-
+    
         return $this;
     }
 

@@ -57,21 +57,6 @@ class LoginForm extends Form
                 )
             )
         ));
-
-        $this->add(array(
-            'name' => 'rememberMe',
-            'type' => '\Zend\Form\Element\Checkbox',
-            'attributes' => array(
-                'id' => 'rememberMe',
-                'placeholder' => 'Remember me?',
-            ),
-            'options' => array(
-                'label' => 'Remember me?',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            )
-        ));
     }
 
 }

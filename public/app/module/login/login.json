@@ -1,0 +1,40 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "email": {
+        "title": "Email",
+        "type": "string"
+      },
+      "password": {
+        "title": "Password",
+        "type": "string"
+      }
+    },
+    "required": [
+      "email",
+      "password"
+    ]
+  },
+  "form": [
+    {
+      "key": "email",
+      "type": "email",
+      "feedback": false
+    },
+    {
+      "key": "password",
+      "type": "password",
+      "feedback": false
+    },
+    {
+      "type": "template",
+      "template": "<p>Click <a href=\"#/login/password-reset\">here</a> if you have forgotten your password.</p>"
+    },
+    {
+      "type": "submit",
+      "title": "Login"
+    }
+  ],
+  "model": {}
+}

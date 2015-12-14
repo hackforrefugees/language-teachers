@@ -1,6 +1,10 @@
-angular.module('myApp').controller('ProfileCtrl', function($scope, user){
-        var vm = $scope;
+angular.module('sweTea.profile', ['ngRoute', 'sweTea.profile-service'])
+    .config(function ($routeProvider) {
+        $routeProvider.when('/profile', {
+            templateUrl: 'module/profile/profile.html',
+            controller: 'LoginController as loginCtrl'
+        });
+    })
+    .controller('ProfileController', function ($location, ProfileService) {
 
-        vm.user = user;
-    console.log(vm.user);
     });

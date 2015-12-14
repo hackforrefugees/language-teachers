@@ -27,20 +27,13 @@ namespace User;
 use User\Event\Authentication;
 use User\Form\EditFilter;
 use User\Form\EditForm;
-use User\Form\RegisterFilter;
-use User\Form\RegisterForm;
 use User\Form\SetSecurityQuestionFilter;
 use User\Form\SetSecurityQuestionForm;
 use User\Model\User;
 use User\Model\UserTable;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\ModuleManager;
-use Zend\Mvc\I18n\Translator;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Zend\Validator\AbstractValidator;
 
 /**
  * Class Module
@@ -94,29 +87,6 @@ class Module implements AutoloaderProviderInterface
     }
 
     /**
-     * Initialization method for this module
-     * called on every page request --> only lightweight operations should be done here
-     * @param ModuleManager $moduleManager
-     */
-    public function init(ModuleManager $moduleManager)
-    {
-        $sharedManager = $moduleManager->getEventManager()->getSharedManager();
-        $sharedManager->attach('Zend\Mvc\Application', 'dispatch', array($this, 'mvcPreDispatch'), 100);
-    }
-
-    /**
-     * MVC preDispatch LanguageTeacherEvent
-     * @param $event
-     * @return mixed
-     */
-    public function mvcPreDispatch($event)
-    {
-        $di = $event->getTarget()->getServiceManager();
-        $auth = $di->get('Authentication');
-        return $auth->preDispatch($event);
-    }
-
-    /**
      * Method that returns the service config and injects new classes into the service locator
      * @return array
      */
@@ -126,7 +96,7 @@ class Module implements AutoloaderProviderInterface
             'abstract_factories' => array(),
             'aliases' => array(),
             'factories' => array(
-                'Authentication' => function ($sm) {
+                'AclAuth' => function ($sm) {
                     $config = $sm->get('Config');
                     return new Authentication($config);
                 }

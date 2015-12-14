@@ -120,6 +120,13 @@ class LtUser
      */
     private $longitude;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="authToken", type="string", length=300, nullable=true)
+     */
+    private $authtoken;
+
 
 
     /**
@@ -142,7 +149,7 @@ class LtUser
     public function setEmail($email)
     {
         $this->email = $email;
-
+    
         return $this;
     }
 
@@ -166,7 +173,7 @@ class LtUser
     public function setContactname($contactname)
     {
         $this->contactname = $contactname;
-
+    
         return $this;
     }
 
@@ -190,7 +197,7 @@ class LtUser
     public function setPhone($phone)
     {
         $this->phone = $phone;
-
+    
         return $this;
     }
 
@@ -215,7 +222,7 @@ class LtUser
     {
         $bCrypt = new Bcrypt();
         $this->password = $bCrypt->create($password);
-
+    
         return $this;
     }
 
@@ -239,7 +246,7 @@ class LtUser
     public function setProfilepicturepath($profilepicturepath)
     {
         $this->profilepicturepath = $profilepicturepath;
-
+    
         return $this;
     }
 
@@ -263,7 +270,7 @@ class LtUser
     public function setUsergroup($usergroup)
     {
         $this->usergroup = $usergroup;
-
+    
         return $this;
     }
 
@@ -287,7 +294,7 @@ class LtUser
     public function setEmailverfied($emailverfied)
     {
         $this->emailverfied = $emailverfied;
-
+    
         return $this;
     }
 
@@ -311,7 +318,7 @@ class LtUser
     public function setRegistrationdate($registrationdate)
     {
         $this->registrationdate = $registrationdate;
-
+    
         return $this;
     }
 
@@ -335,7 +342,7 @@ class LtUser
     public function setEmailchangeddate($emailchangeddate)
     {
         $this->emailchangeddate = $emailchangeddate;
-
+    
         return $this;
     }
 
@@ -359,7 +366,7 @@ class LtUser
     public function setRegistrationtoken($registrationtoken)
     {
         $this->registrationtoken = $registrationtoken;
-
+    
         return $this;
     }
 
@@ -383,7 +390,7 @@ class LtUser
     public function setResetexpirationdate($resetexpirationdate)
     {
         $this->resetexpirationdate = $resetexpirationdate;
-
+    
         return $this;
     }
 
@@ -407,7 +414,7 @@ class LtUser
     public function setRestrequesthash($restrequesthash)
     {
         $this->restrequesthash = $restrequesthash;
-
+    
         return $this;
     }
 
@@ -431,7 +438,7 @@ class LtUser
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-
+    
         return $this;
     }
 
@@ -455,7 +462,7 @@ class LtUser
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-
+    
         return $this;
     }
 
@@ -467,5 +474,29 @@ class LtUser
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set authtoken
+     *
+     * @param string $authtoken
+     *
+     * @return LtUser
+     */
+    public function setAuthtoken($authtoken)
+    {
+        $this->authtoken = $authtoken;
+    
+        return $this;
+    }
+
+    /**
+     * Get authtoken
+     *
+     * @return string
+     */
+    public function getAuthtoken()
+    {
+        return $this->authtoken;
     }
 }

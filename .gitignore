@@ -1,5 +1,6 @@
-public/bower_components
-public/node_modules
+public/app/bower_components
+public/app/node_modules
+public/app/.idea
 .idea
 .git
 vendor

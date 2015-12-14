@@ -1,5 +1,4 @@
 <?php
-
 return array(
     'acl' => array(
         'roles' => array(

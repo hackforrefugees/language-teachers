@@ -119,6 +119,13 @@ class LtUser
      */
     private $longitude;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="authToken", type="string", length=300, nullable=true)
+     */
+    private $authtoken;
+
 
 }
 

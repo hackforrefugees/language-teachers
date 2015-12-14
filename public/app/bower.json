@@ -3,7 +3,8 @@
   "description": "A way of matching teachers within language with the need on different places, so not all teachers are in Kungsbacka and the people needing help are in Backa.",
   "main": "index.html",
   "authors": [
-    "Mathias Bylund <materbyl@gmail.com>"
+    "Mathias Bylund <materbyl@gmail.com>",
+    "Dominik Einkemmer <dominik_einkemmer@gmx.at>"
   ],
   "license": "MIT",
   "homepage": "https://github.com/hackforrefugees/language-teachers",
@@ -18,6 +19,16 @@
     "tests"
   ],
   "dependencies": {
-    "angular-route": "~1.4.8"
+    "angular-route": "~1.4.8",
+    "angular-bootstrap": "0.14.*",
+    "angular-i18n": "1.4.*",
+    "ngstorage": "0.3.*",
+    "components-font-awesome": "4.*",
+    "angular-img-cropper": "1.*",
+    "angular-dynamic-locale": "0.1.*",
+    "bootstrap": "3.3.*",
+    "angular-schema-form": "0.8.*",
+    "ngtoast": "1.5.*",
+    "angular-resource": "1.4.*"
   }
 }

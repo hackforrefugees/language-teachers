@@ -76,7 +76,7 @@ class LtVolunteer
     public function setNativelanguage(\Application\Entity\LtLanguage $nativelanguage = null)
     {
         $this->nativelanguage = $nativelanguage;
-
+    
         return $this;
     }
 
@@ -100,7 +100,7 @@ class LtVolunteer
     public function setVolunteerid(\Application\Entity\LtUser $volunteerid)
     {
         $this->volunteerid = $volunteerid;
-
+    
         return $this;
     }
 
@@ -124,7 +124,7 @@ class LtVolunteer
     public function addLangcode(\Application\Entity\LtLanguage $langcode)
     {
         $this->langcode[] = $langcode;
-
+    
         return $this;
     }
 
@@ -158,7 +158,7 @@ class LtVolunteer
     public function addEventid(\Application\Entity\LtEvent $eventid)
     {
         $this->eventid[] = $eventid;
-
+    
         return $this;
     }
 
