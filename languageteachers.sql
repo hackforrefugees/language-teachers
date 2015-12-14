@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 07. Dez 2015 um 22:28
+-- Erstellungszeit: 14. Dez 2015 um 16:31
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -196,20 +196,21 @@ CREATE TABLE IF NOT EXISTS `lt_user` (
   `resetExpirationDate` date DEFAULT NULL,
   `restRequestHash` varchar(300) DEFAULT NULL,
   `latitude` float DEFAULT NULL,
-  `longitude` float DEFAULT NULL
+  `longitude` float DEFAULT NULL,
+  `authToken` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf32;
 
 --
 -- Daten für Tabelle `lt_user`
 --
 
-INSERT INTO `lt_user` (`userId`, `email`, `contactName`, `phone`, `password`, `profilePicturePath`, `userGroup`, `emailVerfied`, `registrationDate`, `emailChangedDate`, `registrationToken`, `resetExpirationDate`, `restRequestHash`, `latitude`, `longitude`) VALUES
-(1, 'guseindo@student.gu.se', 'Dominik', NULL, '$2y$10$7Ke/0X1B56I87uy./vIm1OYunHNqvwOvuDLMGPvCyFAenvKiZr54G', NULL, 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'dominik_einkemmer@gmx.at', 'Dominik', NULL, '$2y$10$JUibddPO4KnjJmAsOOsSsuZJ.oDB84iz18ECTrnnoDm96VtNDN.ES', NULL, 'student', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'domein@student.chalmers.se', 'Dominik', NULL, '$2y$10$JUibddPO4KnjJmAsOOsSsuZJ.oDB84iz18ECTrnnoDm96VtNDN.ES', NULL, 'volunteer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'drogba32@msn.com', 'Dominik', NULL, '$2y$10$eCRBbYk28MwyeYagTqyzke.ryJJLUslZbg1mXToAAhBnldxGMm4FC', NULL, 'volunteer', NULL, '2015-12-06', '2015-12-06', '9990d6fbd2ba7d8d54d74eb3db025b0c', NULL, NULL, 41.2926, -73.6794),
-(8, 'asdf@asdf.com', 'Dominik', NULL, '$2y$10$vlM7EO00SujtKp/AwU1FR.2JDfL8vzZYqKkb1VqnT6B7HEHvm8Eaq', 'img/profilePictures/ceadd08d8b8a2c9654f56e46e6a07690.jpg', 'volunteer', NULL, '2015-12-06', '2015-12-06', '1d7d40e3eff670ee39c0326da0cc7b70', NULL, NULL, 57.7089, 11.9746),
-(9, 'lobheswagh@gmail.com', 'Test', NULL, '$2y$10$3JF8IcrZCF79O0u6VWbvcenfqze5WP4a30DKbDthYE7bbM9hMsPEq', 'img/profilePictures/1b40f693391ee8ea75e6eacb9f72a2e1.jpg', 'volunteer', NULL, '2015-12-06', '2015-12-06', '6176582f9801d67b7147562f393dd877', NULL, NULL, 57.7089, 11.9746);
+INSERT INTO `lt_user` (`userId`, `email`, `contactName`, `phone`, `password`, `profilePicturePath`, `userGroup`, `emailVerfied`, `registrationDate`, `emailChangedDate`, `registrationToken`, `resetExpirationDate`, `restRequestHash`, `latitude`, `longitude`, `authToken`) VALUES
+(1, 'guseindo@student.gu.se', 'Dominik', NULL, '$2y$10$7Ke/0X1B56I87uy./vIm1OYunHNqvwOvuDLMGPvCyFAenvKiZr54G', NULL, 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'dominik_einkemmer@gmx.at', 'Dominik', NULL, '$2y$10$JUibddPO4KnjJmAsOOsSsuZJ.oDB84iz18ECTrnnoDm96VtNDN.ES', NULL, 'student', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'domein@student.chalmers.se', 'Dominik', NULL, '$2y$10$JUibddPO4KnjJmAsOOsSsuZJ.oDB84iz18ECTrnnoDm96VtNDN.ES', NULL, 'volunteer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'drogba32@msn.com', 'Dominik', NULL, '$2y$10$eCRBbYk28MwyeYagTqyzke.ryJJLUslZbg1mXToAAhBnldxGMm4FC', NULL, 'volunteer', NULL, '2015-12-06', '2015-12-06', '9990d6fbd2ba7d8d54d74eb3db025b0c', NULL, NULL, 41.2926, -73.6794, NULL),
+(8, 'asdf@asdf.com', 'Dominik', NULL, '$2y$10$vlM7EO00SujtKp/AwU1FR.2JDfL8vzZYqKkb1VqnT6B7HEHvm8Eaq', 'img/profilePictures/ceadd08d8b8a2c9654f56e46e6a07690.jpg', 'volunteer', NULL, '2015-12-06', '2015-12-06', '1d7d40e3eff670ee39c0326da0cc7b70', NULL, NULL, 57.7089, 11.9746, '3f36bfbfd537be91892ee66668744d83'),
+(9, 'lobheswagh@gmail.com', 'Test', NULL, '$2y$10$3JF8IcrZCF79O0u6VWbvcenfqze5WP4a30DKbDthYE7bbM9hMsPEq', 'img/profilePictures/1b40f693391ee8ea75e6eacb9f72a2e1.jpg', 'volunteer', NULL, '2015-12-06', '2015-12-06', '6176582f9801d67b7147562f393dd877', NULL, NULL, 57.7089, 11.9746, NULL);
 
 -- --------------------------------------------------------
 
