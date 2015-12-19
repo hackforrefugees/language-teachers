@@ -6,23 +6,24 @@ angular.module('sweTea.authorization-service', ['ngStorage', 'mm.acl'])
             admin: false,
             student: false,
             volunteer: false,
-            organisation: false
+            organisation: false,
+            aclRole: "guest"
         });
 
         return {
-            isAdmin: function(){
+            isAdmin: function () {
                 return $storage.admin = true;
             },
-            isStudent: function(){
+            isStudent: function () {
                 return $storage.student = true;
             },
-            isVolunteer: function(){
+            isVolunteer: function () {
                 return $storage.volunteer = true;
             },
-            isOrganisation: function(){
+            isOrganisation: function () {
                 return $storage.organisation = true;
             },
-            setAdmin: function(value){
+            setAdmin: function (value) {
                 $storage.admin = !!value;
                 $storage.student = !value;
                 $storage.volunteer = !value;
@@ -32,8 +33,9 @@ angular.module('sweTea.authorization-service', ['ngStorage', 'mm.acl'])
                 AclService.detachRole('student');
                 AclService.detachRole('volunteer');
                 AclService.detachRole('organisation');
+                $sessionStorage.aclRole = 'admin';
             },
-            setStudent: function(value){
+            setStudent: function (value) {
                 $storage.admin = !value;
                 $storage.student = !!value;
                 $storage.volunteer = !value;
@@ -43,8 +45,9 @@ angular.module('sweTea.authorization-service', ['ngStorage', 'mm.acl'])
                 AclService.detachRole('admin');
                 AclService.detachRole('volunteer');
                 AclService.detachRole('organisation');
+                $sessionStorage.aclRole = 'student';
             },
-            setVolunteer: function(value){
+            setVolunteer: function (value) {
                 $storage.admin = !value;
                 $storage.student = !value;
                 $storage.volunteer = !!value;
@@ -54,8 +57,9 @@ angular.module('sweTea.authorization-service', ['ngStorage', 'mm.acl'])
                 AclService.detachRole('admin');
                 AclService.detachRole('student');
                 AclService.detachRole('organisation');
+                $sessionStorage.aclRole = 'volunteer';
             },
-            setOrganisation: function(value){
+            setOrganisation: function (value) {
                 $storage.admin = !value;
                 $storage.student = !value;
                 $storage.volunteer = !value;
@@ -65,13 +69,18 @@ angular.module('sweTea.authorization-service', ['ngStorage', 'mm.acl'])
                 AclService.detachRole('admin');
                 AclService.detachRole('student');
                 AclService.detachRole('volunteer');
+                $sessionStorage.aclRole = 'organisation';
             },
-            logout: function(){
+            getAclRole: function () {
+                return $sessionStorage.aclRole;
+            },
+            logout: function () {
                 $storage.admin = false;
                 $storage.student = false;
                 $storage.volunteer = false;
                 $storage.organisation = false;
                 AclService.flushRoles();
+                $sessionStorage.aclRole = 'guest';
             }
         }
     });

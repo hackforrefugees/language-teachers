@@ -28,12 +28,13 @@
       "feedback": false
     },
     {
-      "type": "template",
-      "template": "<p>Click <a href=\"#/login/password-reset\">here</a> if you have forgotten your password.</p>"
+      "type": "submit",
+      "title": "Login",
+      "fieldHtmlClass": "btn btn-success col-md-5"
     },
     {
-      "type": "submit",
-      "title": "Login"
+      "type": "template",
+      "template": "<a href=\"#\" class=\"btn btn-primary col-md-5 col-md-offset-2\">Register</a>"
     }
   ],
   "model": {}

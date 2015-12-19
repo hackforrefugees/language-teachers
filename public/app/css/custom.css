@@ -15,14 +15,15 @@ sandy-yellow: #EFE7BE
 .form-row{
     margin-top: 30px;
     color: #fff !important;
+    margin-bottom: 30px;
 }
 
 .login-row{
     margin-bottom: 10px !important;
 }
 
-.header-form-headline{
-    color: #fff;
+.white{
+    color: #fff !important;
 }
 
 .dark-grey{
@@ -53,4 +54,33 @@ sandy-yellow: #EFE7BE
     -webkit-box-shadow: 0 3px 0 0 #000000;
     -moz-box-shadow: 0 3px 0 0 #000000;
     box-shadow: 0 1px 3px 0 #000000;
+}
+
+#loading-bar .bar {
+    background: #002635;
+    height: 3px;
+}
+
+#loading-bar-spinner .spinner-icon {
+    width: 18px;
+    height: 18px;
+    border: solid 4px transparent;
+    border-top-color: #002635;
+    border-left-color: #002635;
+    border-radius: 10px;
+}
+
+.m30{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.content{
+    padding-top: 30px;
+}
+
+.hostyle
+{
+    font-family: 'Pacifico', cursive;
+    font-size: 60px;
 }

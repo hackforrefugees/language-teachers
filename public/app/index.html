@@ -21,169 +21,232 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <link href="img/favicon/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+    <!--Independent Stylesheets & Scripts-->
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-loading-bar/build/loading-bar.css"/>
+    <script src="lib/jquery.min.js"></script>
+    <script src="js/dashboard-layout/html5shiv.js"></script>
+    <script src="js/dashboard-layout/respond.min.js"></script>
+
+    <!--Dependent Stylesheets & Scripts-->
+    <link ng-repeat="stylesheet in styleSheets" ng-href="{{stylesheet.href}}" type="{{stylesheet.type}}" media="{{stylesheet.media}}" rel="stylesheet" />
+    <script ng-repeat="headScript in headScripts" ng-src="{{headScript.src}}"></script>
+
+    <!--Custom Stylesheet for overwriting stuff-->
+    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,700,200,100,300,500,600,800,900' rel='stylesheet'
           type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,700italic,900,400italic,300italic'
           rel='stylesheet' type='text/css'>
-    <script src="lib/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/sedulous/jquery.sticky.js"></script>
-    <script>
-        $(window).load(function () {
-            $("#menu").sticky({topSpacing: 0});
-        });
-    </script>
 </head>
-<div class="navbar menubar" id="menu">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle menu-button" data-toggle="collapse" data-target="#myNavbar">
-                <span class="glyphicon glyphicon-align-justify"></span>
-            </button>
-            <a class="navbar-brand logo" href="#">Swetea</a>
-        </div>
-        <div>
-            <nav class="collapse navbar-collapse" id="myNavbar" role="navigation">
-                <ul class="nav navbar-nav navbar-right navstyle">
-                    <li>
-                        <a href="#about">About us</a>
-                    </li>
-                    <li ng-show="!isLoggedIn()" ng-class="activeWhen(path() == '/login')">
-                        <a href="#/login">Login</a>
-                    </li>
-                    <li ng-show="can('profile')" ng-class="activeWhen(path() == '/profile')">
-                        <a href="#/profile">Profile</a>
-                    </li>
-                    <li ng-show="isLoggedIn()" ng-class="activeWhen(path() == '/logout')">
-                        <a ng-click="logout()">Logout</a>
-                    </li>
-                </ul>
-            </nav>
+<body>
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<div class="loggedOutLayout" ng-if="!isLoggedIn()">
+    <div class="navbar menubar" id="menu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle menu-button" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="glyphicon glyphicon-align-justify"></span>
+                </button>
+                <a class="navbar-brand logo" href="#">Swetea</a>
+            </div>
+            <div>
+                <nav class="collapse navbar-collapse" id="myNavbar" role="navigation">
+                    <ul class="nav navbar-nav navbar-right navstyle">
+                        <li ng-if="!isLoggedIn()">
+                            <a href="#about">About us</a>
+                        </li>
+                        <li ng-if="can('profile')" ng-class="activeWhen(path() == '/profile')">
+                            <a href="#/profile">Profile</a>
+                        </li>
+                        <li ng-if="isLoggedIn()" ng-class="activeWhen(path() == '/logout')">
+                            <a ng-click="logout()">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
-</div>
-<div class="container-fluid banner text-center" id="banner">
-    <div class="row">
-        <div class="col-md-12 line">
-            <div class="tablebox">
-                <div class="banner-text" id="bannertext">
-                    <h1 class="hostyle" id="heads"><img src="img/logo_light.png" class="header-logo"></h1>
-                    <div class="row form-row">
-                        <h3 class="header-form-headline">Login</h3>
-                        <div class="col-md-4 col-md-offset-4">
-                            <form>
-                                <div class="row login-row">
-                                    <div class="form-group login-row">
-                                        <label class="control-label col-md-2">Email</label>
-                                        <div class="col-md-10">
-                                            <input type="email" class="form-control" placeholder="Email">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row login-row">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2">Password</label>
-                                        <div class="col-md-10">
-                                            <input type="password" class="form-control" placeholder="Password">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row login-row">
-                                    <div class="form-group login-row">
-                                        <input type="submit" class="btn btn-success col-md-5" value="Login">
-                                        <a href="#" class="btn btn-primary col-md-5 col-md-offset-2">Register</a>
-                                    </div>
-                                </div>
-                            </form>
+    <div class="container-fluid banner text-center" id="banner">
+        <div class="row">
+            <div class="col-md-12 line">
+                <div class="tablebox">
+                    <div class="banner-text" id="bannertext">
+                        <h1 class="hostyle" id="heads"><img src="img/logo_light.png" class="header-logo"></h1>
+                        <div class="row form-row">
+                            <h3 class="white">Login</h3>
+                            <div class="col-md-4 col-md-offset-4">
+                                <div swe-tea-login-form></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container-fluid">
-    <div class="features" id="about">
-        <div class="container">
-            <div class="row">
-                <h1 class="hostyle super-dark-blue">About Us</h1>
-                <div class="divider"></div>
-                <p>We want to bring language learning people together</p>
-                <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
-                    <div class="feature-icons super-dark-blue"><i class="fa fa-map-marker fa-5x"></i></div>
-                    <div class="fh-desc">
-                        <h3>The Origin of the Idea</h3>
+    <div class="container-fluid">
+        <div class="features" id="about">
+            <div class="container">
+                <div class="row">
+                    <h1 class="hostyle super-dark-blue">About Us</h1>
+                    <div class="divider"></div>
+                    <p>We want to bring language learning people together</p>
+                    <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
+                        <div class="feature-icons super-dark-blue"><i class="fa fa-map-marker fa-5x"></i></div>
+                        <div class="fh-desc">
+                            <h3>The Origin of the Idea</h3>
 
-                        <p>
-                            The idea for this platform came up during the
-                            <a target="_blank" href="https://www.facebook.com/events/165309683822188/">Hack
-                                for Refugees-Event</a> in Gothenburg-Sweden
-                        </p>
+                            <p>
+                                The idea for this platform came up during the
+                                <a target="_blank" href="https://www.facebook.com/events/165309683822188/">Hack
+                                    for Refugees-Event</a> in Gothenburg-Sweden
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
-                    <div class="feature-icons super-dark-blue"><i class="fa fa-lightbulb-o fa-5x"></i></div>
-                    <div class="fh-desc">
-                        <h3>The Idea</h3>
+                    <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
+                        <div class="feature-icons super-dark-blue"><i class="fa fa-lightbulb-o fa-5x"></i></div>
+                        <div class="fh-desc">
+                            <h3>The Idea</h3>
 
-                        <p>
-                            The idea of this platform is to bring volunteers who want to help refugees and refugees who
-                            want to learn the local language together.
-                        </p>
+                            <p>
+                                The idea of this platform is to bring volunteers who want to help refugees and refugees who
+                                want to learn the local language together.
+                            </p>
 
-                        <p>
-                            Events can be created by volunteers as well as big organisations and refugees can find these
-                            events and reserve a seat.
-                        </p>
+                            <p>
+                                Events can be created by volunteers as well as big organisations and refugees can find these
+                                events and reserve a seat.
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
-                    <div class="feature-icons super-dark-blue"><i class="fa fa-question fa-5x"></i></div>
-                    <div class="fh-desc">
-                        <h3>How can I help?</h3>
+                    <div class="col-md-6 col-sm-6 col-xs-12 featurebox">
+                        <div class="feature-icons super-dark-blue"><i class="fa fa-question fa-5x"></i></div>
+                        <div class="fh-desc">
+                            <h3>How can I help?</h3>
 
-                        <p>
-                            If you know a language the refugees are native in and want to teach them the countries
-                            native language, just sign up, create an event and
-                            teach the refugees.
-                        </p>
+                            <p>
+                                If you know a language the refugees are native in and want to teach them the countries
+                                native language, just sign up, create an event and
+                                teach the refugees.
+                            </p>
 
-                        <p>
-                            If you are a big organisation that has a great idea for an event but lacks the volunteers
-                            for it - we are here to help out.
-                            As an organisation you can find volunteers in your area and ask them if they want to help
-                            with your event.
-                        </p>
+                            <p>
+                                If you are a big organisation that has a great idea for an event but lacks the volunteers
+                                for it - we are here to help out.
+                                As an organisation you can find volunteers in your area and ask them if they want to help
+                                with your event.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div ng-class="'alert alert-' + message().type" ng-show="message().show">
-        <button type="button" class="close" ng-click="message().show = false">&times;</button>
-        <msg key-expr="message().text"></msg>
-    </div>
-
-    <div class="col-md-12" ng-view>
-
-    </div>
-
-    <div class="footer">
-        <div class="row-fluid">
+        <div class="footer">
+            <div class="row-fluid">
+            </div>
         </div>
     </div>
-
 </div>
 
+<div class="loggedInLayout" ng-if="isLoggedIn()">
+    <!-- header start-->
+    <header class="header dark-bg">
+        <div class="toggle-nav">
+            <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="fa fa-bars"></i></div>
+        </div>
 
-<!-- In production use:
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
--->
+        <!--logo start-->
+        <a href="#" class="logo white hostyle">SweaTea</a>
+        <!--logo end-->
 
+        <div class="top-nav notification-row">
+            <!-- notificatoin dropdown start-->
+            <ul class="nav pull-right top-menu">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0)">
+                            <span class="profile-ava">
+                                <img alt="" src="img/dashboard/avatar1_small.jpg">
+                            </span>
+                        <span class="username">Jenifer Smith</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu extended logout">
+                        <div class="log-arrow-up"></div>
+                        <li class="eborder-top">
+                            <a href="#/profile"><i class="fa fa-user"></i> My Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-envelope"></i> My Inbox</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="logout()"><i class="fa fa-key"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- user login dropdown end -->
+            </ul>
+            <!-- notificatoin dropdown end-->
+        </div>
+    </header>
+    <!--header end-->
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar"  class="nav-collapse ">
+            <!-- sidebar menu start-->
+            <ul class="sidebar-menu">
+                <li ng-class="activeWhen(path() == '/dashbaord')">
+                    <a class="" href="index.html">
+                        <i class="fa fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li ng-class="activeWhen(path() == '/profile')">
+                    <a href="#/profile">
+                        <i class="fa fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- sidebar menu end-->
+        </div>
+    </aside>
+    <!-- sidebar end-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-md-12 content" ng-view>
+
+                </div>
+            </div>
+        </section>
+    </section>
+</div>
+<!--Dependent Scripts-->
+<!--Dashboard-Scripts-->
+<!--<script ng-repeat="script in scripts" ng-src="{{script.src}}"></script>-->
+<!--<script ng-if="!isLoggedIn()">-->
+    <!--$(window).load(function () {-->
+        <!--$("#menu").sticky({topSpacing: 0});-->
+    <!--});-->
+<!--</script>-->
+<script type="text/javascript" ng-if="isLoggedIn()">
+//    $(function() {
+//        $(".knob").knob({
+//            'draw' : function () {
+//                $(this.i).val(this.cv + '%')
+//            }
+//        })
+//    });
+</script>
+
+
+<!--Angular-Scripts-->
 <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="lib/jquery.i18n.properties-min-1.0.9.js"></script>
 <script type="text/javascript" src="lib/holder.js"></script>
@@ -198,6 +261,7 @@
 <script type="text/javascript" src="bower_components/ngtoast/dist/ngToast.js"></script>
 <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
 <script type="text/javascript" src="bower_components/angular-acl/angular-acl.js"></script>
+<script type="text/javascript" src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="module/authentication/authentication.js"></script>
 <script type="text/javascript" src="module/authentication/authentication-service.js"></script>
@@ -205,6 +269,7 @@
 <script type="text/javascript" src="module/authorization/authorization-service.js"></script>
 <script type="text/javascript" src="module/login/login.js"></script>
 <script type="text/javascript" src="module/login/login-service.js"></script>
+<script type="text/javascript" src="module/login/login-directive.js"></script>
 <script type="text/javascript" src="module/ng-resource/resource-service.js"></script>
 <script type="text/javascript" src="module/form/form.js"></script>
 <script type="text/javascript" src="module/form/form-functions.js"></script>
@@ -217,11 +282,6 @@
 <script type="text/javascript" src="module/logout/logout-service.js"></script>
 <script type="text/javascript" src="module/http/http.js"></script>
 <script type="text/javascript" src="module/http/interceptor-service.js"></script>
-<!--<script type="text/javascript" src="js/controllers.js"></script>-->
-<!--<script type="text/javascript" src="js/register.controller.js"></script>-->
-<!--<script type="text/javascript" src="js/profile.controller.js"></script>-->
-<!--<script type="text/javascript" src="js/filters.js"></script>-->
-<!--<script type="text/javascript" src="js/directives.js"></script>-->
 
 </body>
 </html>

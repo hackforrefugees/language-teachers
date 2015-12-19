@@ -1,15 +1,24 @@
 <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-4">
-            <img src="../{{profileCtrl.user.profilePicturePath}}" class="img-responsive">
-        </div>
-        <div class="col-md-8">
-            <ul>
-                <li>{{profileCtrl.user.email}}</li>
-                <li>{{profileCtrl.user.contactName}}</li>
-                <li>{{profileCtrl.user.registrationDate}}</li>
-                <li ng-show="profileCtrl.user.phone !== null">{{profileCtrl.user.phone}}</li>
-            </ul>
+    <!-- profile-widget -->
+    <div class="col-lg-12">
+        <div class="profile-widget profile-widget-info">
+            <div class="panel-body">
+                <div class="col-lg-2 col-sm-2">
+                    <h4>{{profileCtrl.user.contactName}}</h4>
+                    <div class="follow-ava">
+                        <img src="../{{profileCtrl.user.profilePicturePath}}" class="img-responsive">
+                    </div>
+                    <!--<h6>Administrator</h6>-->
+                </div>
+                <div class="col-lg-4 col-sm-4 follow-info">
+                    <p>Information:</p>
+                    <p><strong>Email:</strong> {{profileCtrl.user.email}}</p>
+                    <p ng-show="profileCtrl.user.phone !== null">{{profileCtrl.user.phone}}</p>
+                    <h6>
+                        <span><strong>Registered since: </strong><i class="fa fa-calendar"></i>{{profileCtrl.user.registrationDate}}</span>
+                    </h6>
+                </div>
+            </div>
         </div>
     </div>
 </div>

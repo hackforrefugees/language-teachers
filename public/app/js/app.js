@@ -10,7 +10,9 @@ angular.module('sweTea', [
         'sweTea.logout',
         'sweTea.profile',
         'sweTea.http',
-        'ngToast'
+        'ngToast',
+        'angular-loading-bar',
+        'sweTea.login-directive',
     ])
     .config(function ($routeProvider, AclServiceProvider) {
         var myConfig = {
@@ -19,7 +21,7 @@ angular.module('sweTea', [
         };
         AclServiceProvider.config(myConfig);
     })
-    .run(function (AclService, $rootScope) {
+    .run(function (AclService, $rootScope, AuthorizationService, AuthenticationService) {
         var aclData = {
             guest: ['login'],
             student: ['logout', 'profile', 'searchEvents', 'applyForEvent'],
@@ -27,8 +29,14 @@ angular.module('sweTea', [
             organisation: ['logout', 'profile', 'createEvent'],
             admin: ['logout', 'profile']
         };
+
         AclService.setAbilities(aclData);
-        AclService.attachRole('guest');
+        if ($rootScope.isLoggedIn()) {
+            AclService.attachRole(AuthorizationService.getAclRole());
+        } else {
+            AclService.attachRole('guest');
+        }
+        AuthenticationService.setScripts();
         $rootScope.can = AclService.can;
         $rootScope.appUrl = "http://language.teacher.backend.se";
     });

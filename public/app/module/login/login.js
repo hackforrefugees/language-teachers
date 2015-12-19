@@ -1,12 +1,6 @@
 'use strict';
 
 angular.module('sweTea.login', ['ngRoute', 'sweTea.login-service', 'sweTea.form-service', 'sweTea.user', 'sweTea.authentication-service', 'sweTea.authorization-service'])
-    .config(function ($routeProvider) {
-        $routeProvider.when('/login', {
-            templateUrl: 'module/login/login.html',
-            controller: 'LoginController as loginCtrl'
-        });
-    })
     .controller('LoginController', function (LoginService, FormService, User, $location, $scope, AuthenticationService, AuthorizationService) {
         var self = this;
         var user = new User();
@@ -20,6 +14,7 @@ angular.module('sweTea.login', ['ngRoute', 'sweTea.login-service', 'sweTea.form-
                 user.$login(function (permission) {
                     if (permission.error === 0) {
                         AuthenticationService.setAuthToken(permission.authToken);
+                        AuthenticationService.setScripts();
                         if (permission.userGroup === 'admin') {
                             AuthorizationService.setAdmin(1);
                         } else if (permission.userGroup === 'organisation') {
@@ -33,7 +28,7 @@ angular.module('sweTea.login', ['ngRoute', 'sweTea.login-service', 'sweTea.form-
 
                     }
                 });
-                $location.path('/');
+                $location.path('#/profile');
             }
         }
     });
